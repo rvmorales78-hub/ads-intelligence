@@ -164,11 +164,6 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
 def login_page():
     """Pantalla de login con diseño premium dark luxury"""
 
-    st.set_page_config(
-        page_title="Ads Intelligence — Acceso",
-        page_icon="◈",
-        layout="centered"
-    )
 
     st.markdown(AUTH_CSS, unsafe_allow_html=True)
 
