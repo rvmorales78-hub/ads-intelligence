@@ -645,11 +645,11 @@ def render_plan_info(plan: str):
 
 
 def client_dashboard():
-    st.set_page_config(
-        page_title=f"Ads Intelligence – {st.session_state.get('company_name', 'Mi Cuenta')}",
-        page_icon="◈",
-        layout="wide"
-    )
+    # st.set_page_config(
+    #     page_title=f"Ads Intelligence – {st.session_state.get('company_name', 'Mi Cuenta')}",
+    #     page_icon="◈",
+    #     layout="wide"
+    # )
 
     # Inyectar CSS premium
     st.markdown(DASHBOARD_CSS, unsafe_allow_html=True)

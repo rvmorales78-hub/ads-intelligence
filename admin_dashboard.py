@@ -13,7 +13,7 @@ from auth import require_admin, logout
 def admin_dashboard():
     require_admin()
     
-    st.set_page_config(page_title="Admin Panel", page_icon="👑", layout="wide")
+    # st.set_page_config(page_title="Admin Panel", page_icon="👑", layout="wide")
     
     st.title("👑 Panel de Administración")
     st.caption("Gestión de usuarios y configuración del sistema")
