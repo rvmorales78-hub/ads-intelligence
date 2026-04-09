@@ -10,10 +10,17 @@ def get_db_path():
     # Para producción en Render, usamos /data/ (disco persistente)
     if os.environ.get('RENDER'):
         data_dir = '/data'
+        # Intentar crear el directorio con permisos adecuados
+        try:
+            os.makedirs(data_dir, exist_ok=True)
+        except PermissionError:
+            # Fallback: usar directorio dentro del proyecto
+            data_dir = os.path.join(os.path.dirname(__file__), 'data')
+            os.makedirs(data_dir, exist_ok=True)
     else:
         data_dir = os.path.join(os.path.dirname(__file__), 'data')
+        os.makedirs(data_dir, exist_ok=True)
 
-    os.makedirs(data_dir, exist_ok=True)
     return os.path.join(data_dir, 'users.db')
 
 

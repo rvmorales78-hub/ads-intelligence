@@ -10,9 +10,19 @@ from config import PROCESSED_DIR, RAW_DIR, logger, get_today_str
 def get_storage_path():
     """Ruta para guardar los datos de Facebook Ads"""
     if os.environ.get('RENDER'):
-        return '/data/facebook_data'
+        try:
+            data_dir = '/data/facebook_data'
+            os.makedirs(data_dir, exist_ok=True)
+            return data_dir
+        except PermissionError:
+            # Fallback: usar directorio local
+            data_dir = os.path.join(os.path.dirname(__file__), 'data', 'facebook_data')
+            os.makedirs(data_dir, exist_ok=True)
+            return data_dir
     else:
-        return os.path.join(os.path.dirname(__file__), 'data', 'facebook_data')
+        data_dir = os.path.join(os.path.dirname(__file__), 'data', 'facebook_data')
+        os.makedirs(data_dir, exist_ok=True)
+        return data_dir
 
 
 class StorageManager:
