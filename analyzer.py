@@ -247,7 +247,10 @@ def generate_star_campaign_analysis(df: pd.DataFrame) -> Optional[dict]:
 
     campaigns = []
     for _, row in df.iterrows():
-        analysis = analyze_campaign_performance(row)
+        try:
+            analysis = analyze_campaign_performance(row)
+        except Exception:
+            continue
         campaigns.append({
             'name': row.get('campaign_name', ''),
             'objective': row.get('objective', ''),
@@ -338,7 +341,10 @@ def generate_detailed_insights(df: pd.DataFrame) -> dict:
     # Analizar cada campaña
     campaigns_analysis = []
     for _, row in df.iterrows():
-        analysis = analyze_campaign_performance(row)
+        try:
+            analysis = analyze_campaign_performance(row)
+        except Exception:
+            continue
         campaigns_analysis.append({
             'campaign_name': row.get('campaign_name', ''),
             'objective': row.get('objective', ''),

@@ -16,12 +16,13 @@ from storage import StorageManager
 # ============================================================================
 # CONFIGURACIÓN DE PÁGINA
 # ============================================================================
-st.set_page_config(
-    page_title='Ads Intelligence',
-    page_icon='📊',
-    layout='wide',
-    initial_sidebar_state='expanded'
-)
+# El set_page_config se define en landing.py para evitar duplicados en la app principal.
+# st.set_page_config(
+#     page_title='Ads Intelligence',
+#     page_icon='📊',
+#     layout='wide',
+#     initial_sidebar_state='expanded'
+# )
 
 # ============================================================================
 # PALETA DE COLORES PROFESIONAL CON ALTO CONTRASTE

@@ -20,8 +20,19 @@ class FacebookClient:
         self.app_secret = os.getenv('APP_SECRET', '')
         self.ad_account_id = os.getenv('AD_ACCOUNT_ID', '')
         self.api_version = os.getenv('FB_API_VERSION', 'v20.0')
+
+        if not self.access_token or not self.app_id or not self.ad_account_id:
+            raise ValueError('APP_ID, ACCESS_TOKEN y AD_ACCOUNT_ID deben estar definidos en el entorno')
+
+        normalized_account = self.ad_account_id.strip()
+        if normalized_account.startswith('act_'):
+            normalized_account = normalized_account[4:]
+
+        if not normalized_account:
+            raise ValueError('AD_ACCOUNT_ID no puede estar vacío')
+
         self.api = FacebookAdsApi.init(self.app_id, self.app_secret, self.access_token, api_version=self.api_version)
-        self.account = AdAccount(f'act_{self.ad_account_id}')
+        self.account = AdAccount(f'act_{normalized_account}')
 
     def verify_access_token(self) -> Dict:
         logger.info('Verificando token de acceso...')

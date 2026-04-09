@@ -45,26 +45,28 @@ def admin_dashboard():
                         if st.button(f"🗑️ Eliminar", key=f"del_{user['id']}"):
                             delete_user(user['id'])
                             st.rerun()
-                    
-                    with st.expander("📦 Cambiar Plan"):
+
+                    st.markdown('---')
+                    st.markdown('#### Cambiar Plan')
+                    with st.form(f"update_plan_form_{user['id']}"):
                         new_plan = st.selectbox(
                             "Seleccionar nuevo plan",
                             ["basic", "pro", "enterprise"],
                             index=["basic", "pro", "enterprise"].index(user['plan']) if user['plan'] in ["basic", "pro", "enterprise"] else 0,
                             key=f"plan_{user['id']}"
                         )
-                        if st.button(f"Actualizar Plan", key=f"update_plan_{user['id']}"):
+                        if st.form_submit_button("Actualizar Plan"):
                             update_user_plan(user['id'], new_plan)
                             st.success(f"Plan actualizado a {new_plan}")
                             st.rerun()
-                    
-                    # Configurar credenciales de Facebook
-                    with st.expander("🔑 Configurar credenciales Facebook"):
+
+                    st.markdown('---')
+                    st.markdown('#### Configurar credenciales Facebook')
+                    with st.form(f"save_credentials_form_{user['id']}"):
                         fb_app_id = st.text_input("App ID", key=f"app_{user['id']}")
                         fb_token = st.text_input("Access Token", type="password", key=f"token_{user['id']}")
                         fb_account = st.text_input("Account ID (act_...)", key=f"acc_{user['id']}")
-                        
-                        if st.button("💾 Guardar credenciales", key=f"save_{user['id']}"):
+                        if st.form_submit_button("💾 Guardar credenciales"):
                             update_user_credentials(user['id'], fb_app_id, fb_token, fb_account)
                             st.success("Credenciales guardadas")
         else:

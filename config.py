@@ -14,6 +14,8 @@ PROCESSED_DIR = DATA_ROOT / 'processed'
 LOG_FILE = BASE_DIR / 'app.log'
 ENV_PATH = BASE_DIR / '.env'
 
+DATA_ROOT.mkdir(parents=True, exist_ok=True)
+
 AVERAGE_PRODUCT_VALUE = float(os.getenv('AVERAGE_PRODUCT_VALUE', '100.0'))
 FB_API_VERSION = os.getenv('FB_API_VERSION', 'v20.0')
 

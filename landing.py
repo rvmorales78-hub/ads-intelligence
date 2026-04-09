@@ -1,7 +1,11 @@
 import streamlit as st
 from database import init_db
 
-init_db()
+try:
+    init_db()
+except Exception as exc:
+    st.error(f"Error inicializando la base de datos: {exc}")
+    st.stop()
 
 st.set_page_config(
     page_title="Ads Intelligence",

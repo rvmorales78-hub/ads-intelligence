@@ -28,19 +28,25 @@ def load_env_values() -> Dict[str, str]:
 def save_env_values(values: Dict[str, str]) -> None:
     ENV_PATH.parent.mkdir(parents=True, exist_ok=True)
     ENV_PATH.touch(exist_ok=True)
-    for key, value in values.items():
-        set_key(str(ENV_PATH), key, str(value or ''))
-    load_dotenv(dotenv_path=str(ENV_PATH), override=True)
-    logger.info('Guardado .env con valores: %s', ', '.join(values.keys()))
+    try:
+        for key, value in values.items():
+            set_key(str(ENV_PATH), key, str(value or ''))
+        load_dotenv(dotenv_path=str(ENV_PATH), override=True)
+        logger.info('Guardado .env con valores: %s', ', '.join(values.keys()))
+    except Exception as exc:
+        logger.error('Error guardando .env: %s', exc)
 
 
 def delete_env_keys(keys: List[str]) -> None:
     if not ENV_PATH.exists():
         return
-    for key in keys:
-        unset_key(str(ENV_PATH), key)
-    load_dotenv(dotenv_path=str(ENV_PATH), override=True)
-    logger.info('Eliminadas llaves de .env: %s', ', '.join(keys))
+    try:
+        for key in keys:
+            unset_key(str(ENV_PATH), key)
+        load_dotenv(dotenv_path=str(ENV_PATH), override=True)
+        logger.info('Eliminadas llaves de .env: %s', ', '.join(keys))
+    except Exception as exc:
+        logger.error('Error eliminando llaves de .env: %s', exc)
 
 
 def load_profiles() -> List[Dict[str, str]]:
@@ -51,7 +57,10 @@ def load_profiles() -> List[Dict[str, str]]:
         with USERS_FILE.open('r', encoding='utf-8') as handle:
             return json.load(handle)
     except json.JSONDecodeError:
-        return []
+        logger.warning('No se pudo leer USERS_FILE, archivo corrupto o vacío: %s', USERS_FILE)
+    except Exception as exc:
+        logger.error('Error cargando perfiles: %s', exc)
+    return []
 
 
 def save_profile(profile: Dict[str, str]) -> None:

@@ -21,19 +21,34 @@ from config import format_currency
 from auth import logout
 from database import save_user_credentials, get_user_by_id
 
-ENCRYPTION_KEY = os.getenv('ENCRYPTION_KEY', 'tu-clave-secreta-aqui')
+DEFAULT_ENCRYPTION_KEY = Fernet.generate_key().decode()
+ENCRYPTION_KEY = os.getenv('ENCRYPTION_KEY') or DEFAULT_ENCRYPTION_KEY
+
+def get_fernet() -> Fernet:
+    try:
+        return Fernet(ENCRYPTION_KEY.encode())
+    except Exception:
+        return Fernet(DEFAULT_ENCRYPTION_KEY.encode())
+
 
 def encrypt_text(text: str) -> str:
     if not text:
         return ""
-    f = Fernet(ENCRYPTION_KEY.encode())
-    return f.encrypt(text.encode()).decode()
+    try:
+        f = get_fernet()
+        return f.encrypt(text.encode()).decode()
+    except Exception:
+        return ""
+
 
 def decrypt_text(encrypted: str) -> str:
     if not encrypted:
         return ""
-    f = Fernet(ENCRYPTION_KEY.encode())
-    return f.decrypt(encrypted.encode()).decode()
+    try:
+        f = get_fernet()
+        return f.decrypt(encrypted.encode()).decode()
+    except Exception:
+        return ""
 
 
 # ========== CSS PREMIUM (compartido con app.py) ==========
