@@ -1,17 +1,21 @@
+import importlib
 import os
 import hashlib
 from datetime import datetime
 
 # Intentar importar psycopg2 para PostgreSQL
+psycopg2 = None
+RealDictCursor = None
 try:
-    import psycopg2
-    from psycopg2.extras import RealDictCursor
+    psycopg2 = importlib.import_module('psycopg2')
+    psycopg2_extras = importlib.import_module('psycopg2.extras')
+    RealDictCursor = getattr(psycopg2_extras, 'RealDictCursor', None)
     PSYCOPG2_AVAILABLE = True
 except ImportError:
     PSYCOPG2_AVAILABLE = False
 
-DATABASE_URL = os.getenv('DATABASE_URL')
-IS_POSTGRES = DATABASE_URL and PSYCOPG2_AVAILABLE
+DATABASE_URL = os.getenv('DATABASE_URL', '')
+IS_POSTGRES = bool(DATABASE_URL and PSYCOPG2_AVAILABLE)
 
 
 # ========== CONEXIÓN ==========
@@ -22,8 +26,9 @@ def get_db_connection():
         return psycopg2.connect(DATABASE_URL, sslmode='require')
     else:
         import sqlite3
-        os.makedirs('data', exist_ok=True)
-        conn = sqlite3.connect('data/users.db')
+        db_dir = os.path.join(os.path.dirname(__file__), 'data')
+        os.makedirs(db_dir, exist_ok=True)
+        conn = sqlite3.connect(os.path.join(db_dir, 'users.db'))
         conn.row_factory = sqlite3.Row
         return conn
 
