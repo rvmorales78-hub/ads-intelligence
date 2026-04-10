@@ -1,40 +1,31 @@
 import os
 import hashlib
 from datetime import datetime
-import sqlite3
 
-# ========== CONEXIÓN Y CONFIGURACIÓN ==========
+# Intentar importar psycopg2 para PostgreSQL
+try:
+    import psycopg2
+    from psycopg2.extras import RealDictCursor
+    PSYCOPG2_AVAILABLE = True
+except ImportError:
+    PSYCOPG2_AVAILABLE = False
 
-def get_db_path():
-    """Retorna la ruta correcta para la base de datos SQLite"""
-    # En Render, usar el directorio /data (disco persistente)
-    if os.environ.get('RENDER'):
-        try:
-            db_dir = '/data'
-            os.makedirs(db_dir, exist_ok=True)
-            # Probar si podemos escribir
-            test_file = os.path.join(db_dir, '.write_test')
-            with open(test_file, 'w') as f:
-                f.write('test')
-            os.remove(test_file)
-            return os.path.join(db_dir, 'users.db')
-        except (PermissionError, OSError):
-            # Fallback a directorio local
-            db_dir = os.path.join(os.path.dirname(__file__), 'data')
-            os.makedirs(db_dir, exist_ok=True)
-            return os.path.join(db_dir, 'users.db')
-    else:
-        # Desarrollo local
-        db_dir = os.path.join(os.path.dirname(__file__), 'data')
-        os.makedirs(db_dir, exist_ok=True)
-        return os.path.join(db_dir, 'users.db')
+DATABASE_URL = os.getenv('DATABASE_URL')
+IS_POSTGRES = DATABASE_URL and PSYCOPG2_AVAILABLE
 
+
+# ========== CONEXIÓN ==========
 
 def get_db_connection():
-    """Retorna conexión a SQLite"""
-    conn = sqlite3.connect(get_db_path())
-    conn.row_factory = sqlite3.Row
-    return conn
+    """Retorna conexión a PostgreSQL o SQLite según entorno"""
+    if IS_POSTGRES:
+        return psycopg2.connect(DATABASE_URL, sslmode='require')
+    else:
+        import sqlite3
+        os.makedirs('data', exist_ok=True)
+        conn = sqlite3.connect('data/users.db')
+        conn.row_factory = sqlite3.Row
+        return conn
 
 
 def hash_password(password: str) -> str:
@@ -45,55 +36,100 @@ def hash_password(password: str) -> str:
 # ========== INICIALIZACIÓN ==========
 
 def init_db():
-    """Inicializa las tablas en SQLite"""
+    """Inicializa las tablas según el motor de BD"""
     conn = get_db_connection()
     cursor = conn.cursor()
     
-    # Crear tabla admin
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS admin (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            email TEXT UNIQUE NOT NULL,
-            password_hash TEXT NOT NULL
-        )
-    ''')
-    
-    # Crear tabla users
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS users (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            email TEXT UNIQUE NOT NULL,
-            password_hash TEXT NOT NULL,
-            company_name TEXT,
-            plan TEXT DEFAULT 'basic',
-            is_active INTEGER DEFAULT 1,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            last_login TIMESTAMP,
-            fb_app_id TEXT,
-            fb_access_token TEXT,
-            fb_account_id TEXT
-        )
-    ''')
-    
-    # Crear tabla access_logs
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS access_logs (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            user_id INTEGER,
-            action TEXT,
-            ip_address TEXT,
-            timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        )
-    ''')
+    if IS_POSTGRES:
+        # PostgreSQL syntax
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS admin (
+                id SERIAL PRIMARY KEY,
+                email TEXT UNIQUE NOT NULL,
+                password_hash TEXT NOT NULL
+            )
+        ''')
+        
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS users (
+                id SERIAL PRIMARY KEY,
+                email TEXT UNIQUE NOT NULL,
+                password_hash TEXT NOT NULL,
+                company_name TEXT,
+                plan TEXT DEFAULT 'basic',
+                is_active INTEGER DEFAULT 1,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                last_login TIMESTAMP,
+                fb_app_id TEXT,
+                fb_access_token TEXT,
+                fb_account_id TEXT
+            )
+        ''')
+        
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS access_logs (
+                id SERIAL PRIMARY KEY,
+                user_id INTEGER,
+                action TEXT,
+                ip_address TEXT,
+                timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        ''')
+    else:
+        # SQLite syntax
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS admin (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                email TEXT UNIQUE NOT NULL,
+                password_hash TEXT NOT NULL
+            )
+        ''')
+        
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS users (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                email TEXT UNIQUE NOT NULL,
+                password_hash TEXT NOT NULL,
+                company_name TEXT,
+                plan TEXT DEFAULT 'basic',
+                is_active INTEGER DEFAULT 1,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                last_login TIMESTAMP,
+                fb_app_id TEXT,
+                fb_access_token TEXT,
+                fb_account_id TEXT
+            )
+        ''')
+        
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS access_logs (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                user_id INTEGER,
+                action TEXT,
+                ip_address TEXT,
+                timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        ''')
     
     # Crear admin por defecto si no existe
     admin_password_hash = hash_password("admin123")
-    cursor.execute("SELECT * FROM admin WHERE email = ?", ("admin@adsintelligence.com",))
+    
+    if IS_POSTGRES:
+        cursor.execute("SELECT * FROM admin WHERE email = %s", ("admin@adsintelligence.com",))
+    else:
+        cursor.execute("SELECT * FROM admin WHERE email = ?", ("admin@adsintelligence.com",))
+    
     if not cursor.fetchone():
-        cursor.execute(
-            "INSERT INTO admin (email, password_hash) VALUES (?, ?)",
-            ("admin@adsintelligence.com", admin_password_hash)
-        )
+        if IS_POSTGRES:
+            cursor.execute(
+                "INSERT INTO admin (email, password_hash) VALUES (%s, %s)",
+                ("admin@adsintelligence.com", admin_password_hash)
+            )
+        else:
+            cursor.execute(
+                "INSERT INTO admin (email, password_hash) VALUES (?, ?)",
+                ("admin@adsintelligence.com", admin_password_hash)
+            )
     
     conn.commit()
     conn.close()
@@ -106,14 +142,24 @@ def verify_user(email: str, password: str) -> dict | None:
     conn = get_db_connection()
     cursor = conn.cursor()
     
-    cursor.execute("SELECT * FROM users WHERE email = ? AND is_active = 1", (email,))
+    if IS_POSTGRES:
+        cursor.execute("SELECT * FROM users WHERE email = %s AND is_active = 1", (email,))
+    else:
+        cursor.execute("SELECT * FROM users WHERE email = ? AND is_active = 1", (email,))
+    
     user = cursor.fetchone()
     
     if user and user['password_hash'] == hash_password(password):
-        cursor.execute(
-            "UPDATE users SET last_login = ? WHERE id = ?",
-            (datetime.now(), user['id'])
-        )
+        if IS_POSTGRES:
+            cursor.execute(
+                "UPDATE users SET last_login = %s WHERE id = %s",
+                (datetime.now(), user['id'])
+            )
+        else:
+            cursor.execute(
+                "UPDATE users SET last_login = ? WHERE id = ?",
+                (datetime.now(), user['id'])
+            )
         conn.commit()
         conn.close()
         return dict(user)
@@ -127,7 +173,11 @@ def verify_admin(email: str, password: str) -> dict | None:
     conn = get_db_connection()
     cursor = conn.cursor()
     
-    cursor.execute("SELECT * FROM admin WHERE email = ?", (email,))
+    if IS_POSTGRES:
+        cursor.execute("SELECT * FROM admin WHERE email = %s", (email,))
+    else:
+        cursor.execute("SELECT * FROM admin WHERE email = ?", (email,))
+    
     admin = cursor.fetchone()
     
     if admin and admin['password_hash'] == hash_password(password):
@@ -146,14 +196,20 @@ def create_user(email: str, password: str, company_name: str, plan: str = 'basic
     cursor = conn.cursor()
     
     try:
-        cursor.execute(
-            "INSERT INTO users (email, password_hash, company_name, plan) VALUES (?, ?, ?, ?)",
-            (email, hash_password(password), company_name, plan)
-        )
+        if IS_POSTGRES:
+            cursor.execute(
+                "INSERT INTO users (email, password_hash, company_name, plan) VALUES (%s, %s, %s, %s)",
+                (email, hash_password(password), company_name, plan)
+            )
+        else:
+            cursor.execute(
+                "INSERT INTO users (email, password_hash, company_name, plan) VALUES (?, ?, ?, ?)",
+                (email, hash_password(password), company_name, plan)
+            )
         conn.commit()
         conn.close()
         return True
-    except sqlite3.IntegrityError:
+    except Exception:
         conn.close()
         return False
 
@@ -163,7 +219,11 @@ def get_all_users() -> list:
     conn = get_db_connection()
     cursor = conn.cursor()
     
-    cursor.execute("SELECT id, email, company_name, plan, is_active, created_at, last_login FROM users")
+    if IS_POSTGRES:
+        cursor.execute("SELECT id, email, company_name, plan, is_active, created_at, last_login FROM users")
+    else:
+        cursor.execute("SELECT id, email, company_name, plan, is_active, created_at, last_login FROM users")
+    
     users = cursor.fetchall()
     conn.close()
     
@@ -175,7 +235,11 @@ def get_user_by_id(user_id: int) -> dict | None:
     conn = get_db_connection()
     cursor = conn.cursor()
     
-    cursor.execute("SELECT * FROM users WHERE id = ?", (user_id,))
+    if IS_POSTGRES:
+        cursor.execute("SELECT * FROM users WHERE id = %s", (user_id,))
+    else:
+        cursor.execute("SELECT * FROM users WHERE id = ?", (user_id,))
+    
     user = cursor.fetchone()
     conn.close()
     
@@ -187,7 +251,10 @@ def delete_user(user_id: int):
     conn = get_db_connection()
     cursor = conn.cursor()
     
-    cursor.execute("DELETE FROM users WHERE id = ?", (user_id,))
+    if IS_POSTGRES:
+        cursor.execute("DELETE FROM users WHERE id = %s", (user_id,))
+    else:
+        cursor.execute("DELETE FROM users WHERE id = ?", (user_id,))
     conn.commit()
     conn.close()
 
@@ -197,7 +264,10 @@ def update_user_plan(user_id: int, new_plan: str):
     conn = get_db_connection()
     cursor = conn.cursor()
     
-    cursor.execute("UPDATE users SET plan = ? WHERE id = ?", (new_plan, user_id))
+    if IS_POSTGRES:
+        cursor.execute("UPDATE users SET plan = %s WHERE id = %s", (new_plan, user_id))
+    else:
+        cursor.execute("UPDATE users SET plan = ? WHERE id = ?", (new_plan, user_id))
     conn.commit()
     conn.close()
 
@@ -209,10 +279,16 @@ def update_user_credentials(user_id: int, fb_app_id: str, fb_access_token: str, 
     conn = get_db_connection()
     cursor = conn.cursor()
     
-    cursor.execute(
-        "UPDATE users SET fb_app_id = ?, fb_access_token = ?, fb_account_id = ? WHERE id = ?",
-        (fb_app_id, fb_access_token, fb_account_id, user_id)
-    )
+    if IS_POSTGRES:
+        cursor.execute(
+            "UPDATE users SET fb_app_id = %s, fb_access_token = %s, fb_account_id = %s WHERE id = %s",
+            (fb_app_id, fb_access_token, fb_account_id, user_id)
+        )
+    else:
+        cursor.execute(
+            "UPDATE users SET fb_app_id = ?, fb_access_token = ?, fb_account_id = ? WHERE id = ?",
+            (fb_app_id, fb_access_token, fb_account_id, user_id)
+        )
     conn.commit()
     conn.close()
 
@@ -222,10 +298,17 @@ def get_user_credentials(user_id: int) -> dict:
     conn = get_db_connection()
     cursor = conn.cursor()
     
-    cursor.execute(
-        "SELECT fb_app_id, fb_access_token, fb_account_id FROM users WHERE id = ?",
-        (user_id,)
-    )
+    if IS_POSTGRES:
+        cursor.execute(
+            "SELECT fb_app_id, fb_access_token, fb_account_id FROM users WHERE id = %s",
+            (user_id,)
+        )
+    else:
+        cursor.execute(
+            "SELECT fb_app_id, fb_access_token, fb_account_id FROM users WHERE id = ?",
+            (user_id,)
+        )
+    
     user = cursor.fetchone()
     conn.close()
     
@@ -251,10 +334,16 @@ def log_access(user_id: int, action: str, ip: str):
     cursor = conn.cursor()
     
     try:
-        cursor.execute(
-            "INSERT INTO access_logs (user_id, action, ip_address) VALUES (?, ?, ?)",
-            (user_id, action, ip)
-        )
+        if IS_POSTGRES:
+            cursor.execute(
+                "INSERT INTO access_logs (user_id, action, ip_address) VALUES (%s, %s, %s)",
+                (user_id, action, ip)
+            )
+        else:
+            cursor.execute(
+                "INSERT INTO access_logs (user_id, action, ip_address) VALUES (?, ?, ?)",
+                (user_id, action, ip)
+            )
         conn.commit()
     except Exception as e:
         print(f"Error en log_access: {e}")
@@ -267,13 +356,22 @@ def get_recent_logs(limit: int = 10) -> list:
     conn = get_db_connection()
     cursor = conn.cursor()
     
-    cursor.execute("""
-        SELECT l.*, u.email 
-        FROM access_logs l
-        LEFT JOIN users u ON l.user_id = u.id
-        ORDER BY l.timestamp DESC
-        LIMIT ?
-    """, (limit,))
+    if IS_POSTGRES:
+        cursor.execute("""
+            SELECT l.*, u.email 
+            FROM access_logs l
+            LEFT JOIN users u ON l.user_id = u.id
+            ORDER BY l.timestamp DESC
+            LIMIT %s
+        """, (limit,))
+    else:
+        cursor.execute("""
+            SELECT l.*, u.email 
+            FROM access_logs l
+            LEFT JOIN users u ON l.user_id = u.id
+            ORDER BY l.timestamp DESC
+            LIMIT ?
+        """, (limit,))
     
     logs = cursor.fetchall()
     conn.close()
