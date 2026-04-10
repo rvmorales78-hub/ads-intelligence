@@ -216,3 +216,30 @@ def update_user_plan(user_id: int, new_plan: str):
     cursor.execute("UPDATE users SET plan = ? WHERE id = ?", (new_plan, user_id))
     conn.commit()
     conn.close()
+
+
+def log_access(user_id: int, action: str, ip: str):
+    """Registra un acceso en el log"""
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    try:
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS access_logs (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                user_id INTEGER,
+                action TEXT,
+                ip_address TEXT,
+                timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        ''')
+        
+        cursor.execute(
+            "INSERT INTO access_logs (user_id, action, ip_address) VALUES (?, ?, ?)",
+            (user_id, action, ip)
+        )
+        conn.commit()
+    except Exception as e:
+        print(f"Error en log_access: {e}")
+    finally:
+        conn.close()
