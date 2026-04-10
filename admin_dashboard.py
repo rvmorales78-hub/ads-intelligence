@@ -15,13 +15,19 @@ def admin_dashboard():
     
     # st.set_page_config(page_title="Admin Panel", page_icon="👑", layout="wide")
     
-    st.title("👑 Panel de Administración")
-    st.caption("Gestión de usuarios y configuración del sistema")
+    col1, col2 = st.columns([4, 1])
+    with col1:
+        st.title("👑 Panel de Administración")
+        st.caption("Gestión de usuarios y configuración del sistema")
+    with col2:
+        if st.button("🚪 Cerrar sesión", use_container_width=True):
+            logout()
     
     # Sidebar
     with st.sidebar:
         st.markdown(f"**Admin:** {st.session_state.get('admin_email', '')}")
-        if st.button("🚪 Cerrar sesión", use_container_width=True):
+        st.markdown("---")
+        if st.button("🚪 Cerrar sesión", use_container_width=True, key="sidebar_logout"):
             logout()
     
     # Tabs
