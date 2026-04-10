@@ -3,22 +3,28 @@ import hashlib
 from datetime import datetime
 import sqlite3
 
+# ========== CONEXIÓN Y CONFIGURACIÓN ==========
+
 def get_db_path():
     """Retorna la ruta correcta para la base de datos SQLite"""
+    # En Render, usar el directorio /data (disco persistente)
     if os.environ.get('RENDER'):
         try:
             db_dir = '/data'
             os.makedirs(db_dir, exist_ok=True)
+            # Probar si podemos escribir
             test_file = os.path.join(db_dir, '.write_test')
-            with open(test_file, 'w', encoding='utf-8') as f:
+            with open(test_file, 'w') as f:
                 f.write('test')
             os.remove(test_file)
             return os.path.join(db_dir, 'users.db')
         except (PermissionError, OSError):
+            # Fallback a directorio local
             db_dir = os.path.join(os.path.dirname(__file__), 'data')
             os.makedirs(db_dir, exist_ok=True)
             return os.path.join(db_dir, 'users.db')
     else:
+        # Desarrollo local
         db_dir = os.path.join(os.path.dirname(__file__), 'data')
         os.makedirs(db_dir, exist_ok=True)
         return os.path.join(db_dir, 'users.db')
@@ -35,6 +41,8 @@ def hash_password(password: str) -> str:
     """Hashea una contraseña con SHA256"""
     return hashlib.sha256(password.encode()).hexdigest()
 
+
+# ========== INICIALIZACIÓN ==========
 
 def init_db():
     """Inicializa las tablas en SQLite"""
@@ -67,6 +75,17 @@ def init_db():
         )
     ''')
     
+    # Crear tabla access_logs
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS access_logs (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER,
+            action TEXT,
+            ip_address TEXT,
+            timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
+    
     # Crear admin por defecto si no existe
     admin_password_hash = hash_password("admin123")
     cursor.execute("SELECT * FROM admin WHERE email = ?", ("admin@adsintelligence.com",))
@@ -79,6 +98,8 @@ def init_db():
     conn.commit()
     conn.close()
 
+
+# ========== VERIFICACIONES ==========
 
 def verify_user(email: str, password: str) -> dict | None:
     """Verifica credenciales de un cliente"""
@@ -117,6 +138,8 @@ def verify_admin(email: str, password: str) -> dict | None:
     return None
 
 
+# ========== CRUD USUARIOS ==========
+
 def create_user(email: str, password: str, company_name: str, plan: str = 'basic') -> bool:
     """Crea un nuevo usuario cliente"""
     conn = get_db_connection()
@@ -134,6 +157,52 @@ def create_user(email: str, password: str, company_name: str, plan: str = 'basic
         conn.close()
         return False
 
+
+def get_all_users() -> list:
+    """Obtiene todos los usuarios clientes"""
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    cursor.execute("SELECT id, email, company_name, plan, is_active, created_at, last_login FROM users")
+    users = cursor.fetchall()
+    conn.close()
+    
+    return [dict(user) for user in users]
+
+
+def get_user_by_id(user_id: int) -> dict | None:
+    """Obtiene un usuario por su ID"""
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    cursor.execute("SELECT * FROM users WHERE id = ?", (user_id,))
+    user = cursor.fetchone()
+    conn.close()
+    
+    return dict(user) if user else None
+
+
+def delete_user(user_id: int):
+    """Elimina un usuario"""
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    cursor.execute("DELETE FROM users WHERE id = ?", (user_id,))
+    conn.commit()
+    conn.close()
+
+
+def update_user_plan(user_id: int, new_plan: str):
+    """Actualiza el plan de un usuario"""
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    cursor.execute("UPDATE users SET plan = ? WHERE id = ?", (new_plan, user_id))
+    conn.commit()
+    conn.close()
+
+
+# ========== CREDENCIALES FACEBOOK ==========
 
 def update_user_credentials(user_id: int, fb_app_id: str, fb_access_token: str, fb_account_id: str):
     """Actualiza credenciales de Facebook de un cliente"""
@@ -174,49 +243,7 @@ def save_user_credentials(user_id: int, fb_app_id: str, fb_token: str, fb_accoun
     update_user_credentials(user_id, fb_app_id, fb_token, fb_account)
 
 
-def get_all_users() -> list:
-    """Obtiene todos los usuarios clientes"""
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    
-    cursor.execute("SELECT id, email, company_name, plan, is_active, created_at, last_login FROM users")
-    users = cursor.fetchall()
-    conn.close()
-    
-    return [dict(user) for user in users]
-
-
-def delete_user(user_id: int):
-    """Elimina un usuario"""
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    
-    cursor.execute("DELETE FROM users WHERE id = ?", (user_id,))
-    conn.commit()
-    conn.close()
-
-
-def get_user_by_id(user_id: int) -> dict | None:
-    """Obtiene un usuario por su ID"""
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    
-    cursor.execute("SELECT * FROM users WHERE id = ?", (user_id,))
-    user = cursor.fetchone()
-    conn.close()
-    
-    return dict(user) if user else None
-
-
-def update_user_plan(user_id: int, new_plan: str):
-    """Actualiza el plan de un usuario"""
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    
-    cursor.execute("UPDATE users SET plan = ? WHERE id = ?", (new_plan, user_id))
-    conn.commit()
-    conn.close()
-
+# ========== LOGS ==========
 
 def log_access(user_id: int, action: str, ip: str):
     """Registra un acceso en el log"""
@@ -224,16 +251,6 @@ def log_access(user_id: int, action: str, ip: str):
     cursor = conn.cursor()
     
     try:
-        cursor.execute('''
-            CREATE TABLE IF NOT EXISTS access_logs (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                user_id INTEGER,
-                action TEXT,
-                ip_address TEXT,
-                timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            )
-        ''')
-        
         cursor.execute(
             "INSERT INTO access_logs (user_id, action, ip_address) VALUES (?, ?, ?)",
             (user_id, action, ip)
@@ -243,3 +260,22 @@ def log_access(user_id: int, action: str, ip: str):
         print(f"Error en log_access: {e}")
     finally:
         conn.close()
+
+
+def get_recent_logs(limit: int = 10) -> list:
+    """Obtiene los últimos logs de acceso"""
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    cursor.execute("""
+        SELECT l.*, u.email 
+        FROM access_logs l
+        LEFT JOIN users u ON l.user_id = u.id
+        ORDER BY l.timestamp DESC
+        LIMIT ?
+    """, (limit,))
+    
+    logs = cursor.fetchall()
+    conn.close()
+    
+    return [dict(log) for log in logs]
