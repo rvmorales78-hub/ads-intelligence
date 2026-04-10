@@ -5,14 +5,23 @@ import sqlite3
 
 def get_db_path():
     """Retorna la ruta correcta para la base de datos SQLite"""
-    # En Render, usar el directorio /data (disco persistente)
     if os.environ.get('RENDER'):
-        db_dir = '/data'
+        try:
+            db_dir = '/data'
+            os.makedirs(db_dir, exist_ok=True)
+            test_file = os.path.join(db_dir, '.write_test')
+            with open(test_file, 'w', encoding='utf-8') as f:
+                f.write('test')
+            os.remove(test_file)
+            return os.path.join(db_dir, 'users.db')
+        except (PermissionError, OSError):
+            db_dir = os.path.join(os.path.dirname(__file__), 'data')
+            os.makedirs(db_dir, exist_ok=True)
+            return os.path.join(db_dir, 'users.db')
     else:
         db_dir = os.path.join(os.path.dirname(__file__), 'data')
-    
-    os.makedirs(db_dir, exist_ok=True)
-    return os.path.join(db_dir, 'users.db')
+        os.makedirs(db_dir, exist_ok=True)
+        return os.path.join(db_dir, 'users.db')
 
 
 def get_db_connection():
