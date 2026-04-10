@@ -57,7 +57,13 @@ DASHBOARD_CSS = """
 @import url('https://fonts.googleapis.com/css2?family=Satoshi:wght@300;400;500;700;900&display=swap');
 
 *, *::before, *::after { box-sizing: border-box; }
-body, .stApp { background: #080810 !important; color: #E8E6F0; font-family: 'Satoshi', sans-serif; }
+body, .stApp { 
+    background: #080810 !important; 
+    color: #E8E6F0; 
+    font-family: 'Satoshi', sans-serif;
+    overflow-y: auto !important;  /* ← AGREGAR ESTA LÍNEA */
+    height: auto !important;       /* ← AGREGAR ESTA LÍNEA */
+}
 h1,h2,h3,h4 { font-family: 'Satoshi', sans-serif; }
 
 /* ---- HEADER BAR ---- */
@@ -368,6 +374,25 @@ div[data-testid="stExpander"] > div:first-child { border-radius: 14px !important
 .stMetric label { color: rgba(232,230,240,0.45) !important; font-size: 0.75rem !important; }
 .stMetric [data-testid="metric-container"] > div:nth-child(2) { color: #F5F3FF !important; }
 div[data-testid="stSidebar"] { background: #0D0D18 !important; border-right: 1px solid rgba(255,255,255,0.06) !important; }
+
+section.main > div {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    overflow-y: visible !important;  /* ← AGREGAR */
+    height: auto !important;          /* ← AGREGAR */
+}
+
+/* Fix scroll */
+.block-container {
+    overflow-y: visible !important;
+    height: auto !important;
+    padding-bottom: 3rem !important;
+}
+
+.main > div {
+    overflow-y: visible !important;
+}
 </style>
 """
 
