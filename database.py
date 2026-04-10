@@ -140,11 +140,12 @@ def init_db():
 def verify_user(email: str, password: str) -> dict | None:
     """Verifica credenciales de un cliente"""
     conn = get_db_connection()
-    cursor = conn.cursor()
     
     if IS_POSTGRES:
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
         cursor.execute("SELECT * FROM users WHERE email = %s AND is_active = 1", (email,))
     else:
+        cursor = conn.cursor()
         cursor.execute("SELECT * FROM users WHERE email = ? AND is_active = 1", (email,))
     
     user = cursor.fetchone()
@@ -171,11 +172,12 @@ def verify_user(email: str, password: str) -> dict | None:
 def verify_admin(email: str, password: str) -> dict | None:
     """Verifica credenciales de administrador"""
     conn = get_db_connection()
-    cursor = conn.cursor()
     
     if IS_POSTGRES:
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
         cursor.execute("SELECT * FROM admin WHERE email = %s", (email,))
     else:
+        cursor = conn.cursor()
         cursor.execute("SELECT * FROM admin WHERE email = ?", (email,))
     
     admin = cursor.fetchone()
@@ -233,11 +235,12 @@ def get_all_users() -> list:
 def get_user_by_id(user_id: int) -> dict | None:
     """Obtiene un usuario por su ID"""
     conn = get_db_connection()
-    cursor = conn.cursor()
     
     if IS_POSTGRES:
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
         cursor.execute("SELECT * FROM users WHERE id = %s", (user_id,))
     else:
+        cursor = conn.cursor()
         cursor.execute("SELECT * FROM users WHERE id = ?", (user_id,))
     
     user = cursor.fetchone()
@@ -296,14 +299,15 @@ def update_user_credentials(user_id: int, fb_app_id: str, fb_access_token: str, 
 def get_user_credentials(user_id: int) -> dict:
     """Obtiene credenciales de Facebook de un cliente"""
     conn = get_db_connection()
-    cursor = conn.cursor()
     
     if IS_POSTGRES:
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
         cursor.execute(
             "SELECT fb_app_id, fb_access_token, fb_account_id FROM users WHERE id = %s",
             (user_id,)
         )
     else:
+        cursor = conn.cursor()
         cursor.execute(
             "SELECT fb_app_id, fb_access_token, fb_account_id FROM users WHERE id = ?",
             (user_id,)
