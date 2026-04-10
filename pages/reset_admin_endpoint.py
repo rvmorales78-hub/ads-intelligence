@@ -4,21 +4,16 @@ import sqlite3
 import hashlib
 import os
 
-# No llamar a set_page_config aquí
-
 st.title("🔧 Herramienta de Reseteo")
 st.markdown("Usa esta página para resetear el administrador del sistema.")
 
 if st.button("🚀 Resetear Administrador", use_container_width=True):
     with st.spinner("Procesando..."):
-        # Determinar la ruta de la base de datos
-        if os.environ.get('RENDER'):
-            db_path = '/data/users.db'
-        else:
-            db_path = 'data/users.db'
+        # Usar directorio local en lugar de /data
+        db_path = 'data/users.db'
         
-        # Crear directorio si no existe
-        os.makedirs(os.path.dirname(db_path) if os.path.dirname(db_path) else '.', exist_ok=True)
+        # Crear directorio data local
+        os.makedirs('data', exist_ok=True)
         
         # Conectar a la BD
         conn = sqlite3.connect(db_path)
@@ -30,6 +25,22 @@ if st.button("🚀 Resetear Administrador", use_container_width=True):
                 id INTEGER PRIMARY KEY,
                 email TEXT UNIQUE NOT NULL,
                 password_hash TEXT NOT NULL
+            )
+        ''')
+        
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS users (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                email TEXT UNIQUE NOT NULL,
+                password_hash TEXT NOT NULL,
+                company_name TEXT,
+                plan TEXT DEFAULT 'basic',
+                is_active INTEGER DEFAULT 1,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                last_login TIMESTAMP,
+                fb_app_id TEXT,
+                fb_access_token TEXT,
+                fb_account_id TEXT
             )
         ''')
         
@@ -50,6 +61,7 @@ if st.button("🚀 Resetear Administrador", use_container_width=True):
         
         st.success("✅ Administrador reseteado exitosamente!")
         st.code(f"Email: {admin_email}\nContraseña: {admin_password}")
+        st.info("Ahora puedes cerrar sesión y volver a entrar con estas credenciales.")
 
 st.markdown("---")
 st.caption("Esta página es temporal. Puedes eliminarla después de usarla.")
