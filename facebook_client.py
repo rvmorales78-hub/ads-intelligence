@@ -14,15 +14,15 @@ from config import logger
 
 
 class FacebookClient:
-    def __init__(self):
-        self.access_token = os.getenv('ACCESS_TOKEN', '')
-        self.app_id = os.getenv('APP_ID', '')
+    def __init__(self, app_id: str = None, access_token: str = None, ad_account_id: str = None):
+        self.access_token = access_token or os.getenv('ACCESS_TOKEN', '')
+        self.app_id = app_id or os.getenv('APP_ID', '')
         self.app_secret = os.getenv('APP_SECRET', '')
-        self.ad_account_id = os.getenv('AD_ACCOUNT_ID', '')
+        self.ad_account_id = ad_account_id or os.getenv('AD_ACCOUNT_ID', '')
         self.api_version = os.getenv('FB_API_VERSION', 'v20.0')
 
         if not self.access_token or not self.app_id or not self.ad_account_id:
-            raise ValueError('APP_ID, ACCESS_TOKEN y AD_ACCOUNT_ID deben estar definidos en el entorno')
+            raise ValueError('APP_ID, ACCESS_TOKEN y AD_ACCOUNT_ID deben estar definidos')
 
         normalized_account = self.ad_account_id.strip()
         if normalized_account.startswith('act_'):
@@ -73,15 +73,17 @@ class FacebookClient:
 
     def _retry(self, func, max_attempts=3, initial_backoff=1, **kwargs):
         attempt = 0
+        last_exc = None
         while attempt < max_attempts:
             try:
                 return func(**kwargs)
             except (requests.RequestException, FacebookRequestError) as exc:
+                last_exc = exc
                 wait = initial_backoff * (2 ** attempt)
                 attempt += 1
                 logger.warning('Intento %s falló: %s. Reintentando en %ss', attempt, exc, wait)
                 time.sleep(wait)
-        raise RuntimeError('Máximo de reintentos alcanzado para la petición a Meta API')
+        raise RuntimeError(f'Máximo de reintentos alcanzado para la petición a Meta API: {last_exc}')
 
     def _call_insights(self, fields: List[str], params: Dict) -> Any:
         try:
@@ -91,18 +93,40 @@ class FacebookClient:
             return self.account.get_insights(fields=fields, params=params)
 
     def _fetch_insights(self, fields: List[str], time_range: Dict, level: str, async_mode: bool = False) -> List[Dict]:
-        params = {
-            'time_range': time_range,
-            'time_increment': 1,
-            'level': level,
-            'limit': 500,
-            'breakdowns': []
-        }
-        if async_mode:
-            params['async'] = True
+        days = 1
+        try:
+            start = datetime.fromisoformat(time_range.get('since', ''))
+            end = datetime.fromisoformat(time_range.get('until', ''))
+            days = (end - start).days + 1
+        except Exception:
+            pass
 
-        logger.info('Solicitando insights para nivel=%s, rango=%s', level, time_range)
-        insights: Any = self._retry(self._call_insights, fields=fields, params=params)
+        def build_params(time_increment_value):
+            params = {
+                'time_range': time_range,
+                'time_increment': time_increment_value,
+                'level': level,
+                'limit': 500,
+                'breakdowns': []
+            }
+            if async_mode:
+                params['async'] = True
+            return params
+
+        preferred_increment = 1 if days == 1 else 'all'
+        params = build_params(preferred_increment)
+
+        logger.info('Solicitando insights para nivel=%s, rango=%s, time_increment=%s', level, time_range, params['time_increment'])
+        try:
+            insights: Any = self._retry(self._call_insights, fields=fields, params=params)
+        except Exception as exc:
+            logger.warning('Fallo con time_increment=%s: %s', params['time_increment'], exc)
+            if preferred_increment == 'all':
+                params = build_params(1)
+                logger.info('Reintentando insights con time_increment=1')
+                insights = self._retry(self._call_insights, fields=fields, params=params)
+            else:
+                raise
 
         if async_mode and isinstance(insights, dict):  # response may be async job object
             if insights.get('async_status') and insights.get('async_status') != 'Job Completed':
@@ -311,39 +335,62 @@ class FacebookClient:
 
         time_range = {'since': date_from, 'until': date_to}
         campaign_objectives = self.get_campaigns_with_objectives()
-        delivery_fields = [
-            'campaign_name', 'campaign_id', 'adset_name', 'adset_id',
+
+        common_delivery_fields = [
+            'campaign_name', 'campaign_id',
             'date_start', 'date_stop',
             'impressions', 'clicks', 'spend', 'ctr', 'cpc', 'cpm', 'frequency', 'reach',
             'quality_ranking', 'engagement_rate_ranking', 'conversion_rate_ranking',
             'effective_status', 'objective'
         ]
-        action_fields = [
-            'campaign_name', 'campaign_id', 'adset_name', 'adset_id',
+        common_action_fields = [
+            'campaign_name', 'campaign_id',
             'date_start', 'date_stop',
             'actions', 'action_values', 'conversions', 'cost_per_action_type',
             'purchase_roas', 'cost_per_purchase',
             'effective_status', 'objective'
         ]
 
+        if level == 'adset':
+            delivery_fields = common_delivery_fields[:2] + ['adset_name', 'adset_id'] + common_delivery_fields[2:]
+            action_fields = common_action_fields[:2] + ['adset_name', 'adset_id'] + common_action_fields[2:]
+        else:
+            delivery_fields = common_delivery_fields
+            action_fields = common_action_fields
+
         try:
             delivery_rows = self._fetch_insights(delivery_fields, time_range, level, async_mode=async_mode)
             action_rows = self._fetch_insights(action_fields, time_range, level, async_mode=async_mode)
         except Exception as exc:
             logger.warning('No se pudo obtener effective_status directamente: %s. Reintentando sin campo de estado.', exc)
-            delivery_fields = [
-                'campaign_name', 'campaign_id', 'adset_name', 'adset_id',
-                'date_start', 'date_stop',
-                'impressions', 'clicks', 'spend', 'ctr', 'cpc', 'cpm', 'frequency', 'reach',
-                'quality_ranking', 'engagement_rate_ranking', 'conversion_rate_ranking',
-                'objective'
-            ]
-            action_fields = [
-                'campaign_name', 'campaign_id', 'adset_name', 'adset_id',
-                'date_start', 'date_stop',
-                'actions', 'action_values', 'purchase_roas', 'cost_per_purchase',
-                'objective'
-            ]
+            if level == 'adset':
+                delivery_fields = [
+                    'campaign_name', 'campaign_id', 'adset_name', 'adset_id',
+                    'date_start', 'date_stop',
+                    'impressions', 'clicks', 'spend', 'ctr', 'cpc', 'cpm', 'frequency', 'reach',
+                    'quality_ranking', 'engagement_rate_ranking', 'conversion_rate_ranking',
+                    'objective'
+                ]
+                action_fields = [
+                    'campaign_name', 'campaign_id', 'adset_name', 'adset_id',
+                    'date_start', 'date_stop',
+                    'actions', 'action_values', 'purchase_roas', 'cost_per_purchase',
+                    'objective'
+                ]
+            else:
+                delivery_fields = [
+                    'campaign_name', 'campaign_id',
+                    'date_start', 'date_stop',
+                    'impressions', 'clicks', 'spend', 'ctr', 'cpc', 'cpm', 'frequency', 'reach',
+                    'quality_ranking', 'engagement_rate_ranking', 'conversion_rate_ranking',
+                    'objective'
+                ]
+                action_fields = [
+                    'campaign_name', 'campaign_id',
+                    'date_start', 'date_stop',
+                    'actions', 'action_values', 'purchase_roas', 'cost_per_purchase',
+                    'objective'
+                ]
             delivery_rows = self._fetch_insights(delivery_fields, time_range, level, async_mode=async_mode)
             action_rows = self._fetch_insights(action_fields, time_range, level, async_mode=async_mode)
 

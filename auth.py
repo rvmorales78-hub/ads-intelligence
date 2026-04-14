@@ -1,5 +1,7 @@
 import streamlit as st
+print('>>> auth.py cargado')
 from database import verify_user, verify_admin, log_access, get_user_credentials
+print('>>> importaciones desde database.py realizadas')
 import hashlib
 
 AUTH_CSS = """

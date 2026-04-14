@@ -8,6 +8,7 @@ from typing import Optional
 
 def calculate_kpis(df: pd.DataFrame) -> pd.DataFrame:
     """Calcula KPIs según el objetivo de cada campaña."""
+    df = df.copy()
 
     # Asegurar columnas necesarias y valores por defecto
     for col, default in [
@@ -21,38 +22,38 @@ def calculate_kpis(df: pd.DataFrame) -> pd.DataFrame:
         ('video_views', 0),
     ]:
         if col not in df.columns:
-            df[col] = default
-        df[col] = df[col].fillna(default)
+            df.loc[:, col] = default
+        df.loc[:, col] = df[col].fillna(default)
 
     # KPIs base
-    df['ctr'] = np.where(
+    df.loc[:, 'ctr'] = np.where(
         df['impressions'] > 0,
         (df['clicks'] / df['impressions']) * 100,
         0
     )
-    df['cpc'] = np.where(
+    df.loc[:, 'cpc'] = np.where(
         df['clicks'] > 0,
         df['spend'] / df['clicks'],
         np.nan
     )
-    df['cpm'] = np.where(
+    df.loc[:, 'cpm'] = np.where(
         df['impressions'] > 0,
         (df['spend'] / df['impressions']) * 1000,
         0
     )
-    df['frequency'] = np.where(
+    df.loc[:, 'frequency'] = np.where(
         df['reach'] > 0,
         df['impressions'] / df['reach'],
         1
     )
-    
+
     # Inicializar columnas
-    df['conversion_metric'] = 0
-    df['conversion_value'] = 0.0
-    df['cpa'] = np.nan
-    df['roas'] = 0.0
-    df['efficiency_score'] = 0.0
-    
+    df.loc[:, 'conversion_metric'] = 0
+    df.loc[:, 'conversion_value']  = 0.0
+    df.loc[:, 'cpa']               = np.nan
+    df.loc[:, 'roas']              = 0.0
+    df.loc[:, 'efficiency_score']  = 0.0
+
     return df
 
 
@@ -347,13 +348,17 @@ def generate_detailed_insights(df: pd.DataFrame) -> dict:
             continue
         campaigns_analysis.append({
             'campaign_name': row.get('campaign_name', ''),
+            'adset_name': row.get('adset_name', ''),
             'objective': row.get('objective', ''),
             'spend': row.get('spend', 0),
             'ctr': row.get('ctr', 0),
-            'cpc': row.get('cpc', 0),
+            'cpc': row.get('cpc', 0) if row.get('cpc') else 0,
             'frequency': row.get('frequency', 0),
             'clicks': row.get('clicks', 0),
             'impressions': row.get('impressions', 0),
+            'reach': row.get('reach', 0),
+            'cpm': row.get('cpm', 0),
+            'roas': row.get('roas', 0),
             **analysis
         })
     
@@ -474,12 +479,12 @@ def estimate_roi_potential(row: pd.Series) -> Optional[dict]:
 
 def add_recommendations(df: pd.DataFrame) -> pd.DataFrame:
     """Genera recomendaciones simples para la tabla (compatibilidad)"""
-    
+    df = df.copy()
     recommendations = []
     for _, row in df.iterrows():
         analysis = analyze_campaign_performance(row)
         recommendations.append(f"{analysis['ctr_emoji']} {analysis['ctr_message'][:50]} | {analysis['action']}")
-    
+
     df['recommendation'] = recommendations
     return df
 
@@ -504,3 +509,169 @@ def generate_insights(df: pd.DataFrame) -> dict:
         alerts.append(f"⚠️ {row['campaign_name']}: CTR bajo ({row['ctr']:.1f}%)")
     
     return {'message': message, 'alerts': alerts[:5]}
+
+
+def calculate_account_health_score(df: pd.DataFrame) -> dict:
+    """Calcula un score 0-100 del health de la cuenta de ads."""
+    if df.empty:
+        return {'score': 0, 'grade': 'F', 'color': '#FC8181', 'breakdown': {
+            'performance': 0, 'performance_max': 35,
+            'cpc_efficiency': 0, 'cpc_max': 25,
+            'audience': 0, 'audience_max': 20,
+            'distribution': 0, 'distribution_max': 20
+        }}
+
+    has_roas = 'roas' in df.columns and df['roas'].fillna(0).sum() > 0
+
+    # 1. Performance (0-35 pts)
+    if has_roas:
+        avg_roas = df['roas'].mean()
+        perf_score = 35 if avg_roas >= 4 else 27 if avg_roas >= 2 else 15 if avg_roas >= 1 else 5
+    else:
+        avg_ctr = df['ctr'].mean() if 'ctr' in df.columns else 0
+        perf_score = 32 if avg_ctr >= 3 else 22 if avg_ctr >= 1.5 else 10 if avg_ctr >= 0.8 else 2
+
+    # 2. Eficiencia de CPC (0-25 pts)
+    cpc_vals = df['cpc'].dropna() if 'cpc' in df.columns else pd.Series(dtype=float)
+    cpc_vals = cpc_vals[cpc_vals > 0]
+    if cpc_vals.empty:
+        cpc_score = 12
+    else:
+        avg_cpc = cpc_vals.mean()
+        cpc_score = 25 if avg_cpc <= 0.30 else 18 if avg_cpc <= 0.60 else 10 if avg_cpc <= 1.0 else 3
+
+    # 3. Salud de audiencia / frecuencia (0-20 pts)
+    if 'frequency' in df.columns:
+        avg_freq = df['frequency'].mean()
+        freq_score = 20 if avg_freq <= 2 else 14 if avg_freq <= 3 else 6 if avg_freq <= 5 else 0
+    else:
+        freq_score = 10
+
+    # 4. Distribución del presupuesto (0-20 pts)
+    total_spend = df['spend'].sum() if 'spend' in df.columns else 0
+    if total_spend > 0 and len(df) > 1:
+        spend_pcts = df['spend'] / total_spend
+        cv = float(spend_pcts.std() / spend_pcts.mean()) if spend_pcts.mean() > 0 else 0
+        conc_score = 20 if cv <= 0.4 else 13 if cv <= 0.8 else 5
+    else:
+        conc_score = 12
+
+    total = perf_score + cpc_score + freq_score + conc_score
+
+    if total >= 85:
+        grade, color = 'A+', '#64DC96'
+    elif total >= 75:
+        grade, color = 'A', '#64DC96'
+    elif total >= 65:
+        grade, color = 'B+', '#86EFAC'
+    elif total >= 55:
+        grade, color = 'B', '#FBbf24'
+    elif total >= 40:
+        grade, color = 'C', '#FBbf24'
+    elif total >= 25:
+        grade, color = 'D', '#FC8181'
+    else:
+        grade, color = 'F', '#FC8181'
+
+    return {
+        'score': total,
+        'grade': grade,
+        'color': color,
+        'breakdown': {
+            'performance': perf_score, 'performance_max': 35,
+            'cpc_efficiency': cpc_score, 'cpc_max': 25,
+            'audience': freq_score, 'audience_max': 20,
+            'distribution': conc_score, 'distribution_max': 20
+        }
+    }
+
+
+def get_priority_actions(df: pd.DataFrame) -> list:
+    """Genera lista de acciones priorizadas por impacto."""
+    actions = []
+
+    for _, row in df.iterrows():
+        name = str(row.get('adset_name') or row.get('campaign_name') or 'Sin nombre')[:40]
+        spend   = float(row.get('spend', 0) or 0)
+        ctr     = float(row.get('ctr', 0) or 0)
+        freq    = float(row.get('frequency', 0) or 0)
+        roas    = float(row.get('roas', 0) or 0)
+
+        if freq > 6:
+            confidence = 'High'
+            impact = 'High' if spend > 50 else 'Medium' if spend > 20 else 'Low'
+            time_context = 'Audience fatigue detected'
+            actions.append({
+                'priority': 1, 'urgency': 'CRÍTICO',
+                'color': '#FC8181', 'bg': 'rgba(252,129,129,0.07)',
+                'border': 'rgba(252,129,129,0.3)', 'icon': '🔴',
+                'title': f'Creatividad agotada — {name}',
+                'detail': f'Frecuencia {freq:.1f}x · La audiencia ha visto este anuncio demasiadas veces. CTR y conversión caen.',
+                'action': 'Crear 3 variaciones nuevas de imagen/video esta semana. Rotar creatividades.',
+                'confidence': confidence,
+                'impact': impact,
+                'time_context': time_context
+            })
+        elif roas > 0 and roas < 1 and spend > 30:
+            confidence = 'High'
+            impact = 'High' if spend > 50 else 'Medium' if spend > 20 else 'Low'
+            time_context = 'Losing money daily'
+            actions.append({
+                'priority': 2, 'urgency': 'URGENTE',
+                'color': '#FC8181', 'bg': 'rgba(252,129,129,0.07)',
+                'border': 'rgba(252,129,129,0.25)', 'icon': '🔴',
+                'title': f'Pérdida activa — {name}',
+                'detail': f'ROAS {roas:.2f}x · ${spend:.0f} gastados sin retorno positivo.',
+                'action': 'Pausar inmediatamente. Revisar segmentación y oferta antes de reactivar.',
+                'confidence': confidence,
+                'impact': impact,
+                'time_context': time_context
+            })
+        elif freq > 4:
+            confidence = 'Medium'
+            impact = 'High' if spend > 50 else 'Medium' if spend > 20 else 'Low'
+            time_context = 'Performance declining'
+            actions.append({
+                'priority': 3, 'urgency': 'ATENCIÓN',
+                'color': '#FBbf24', 'bg': 'rgba(251,191,36,0.07)',
+                'border': 'rgba(251,191,36,0.25)', 'icon': '🟡',
+                'title': f'Frecuencia elevada — {name}',
+                'detail': f'Frecuencia {freq:.1f}x · Señales tempranas de saturación de audiencia.',
+                'action': 'Renovar creatividad o ampliar audiencia lookalike antes de que el rendimiento caiga.',
+                'confidence': confidence,
+                'impact': impact,
+                'time_context': time_context
+            })
+        elif ctr < 0.5 and spend > 20:
+            confidence = 'Medium'
+            impact = 'High' if spend > 50 else 'Medium' if spend > 20 else 'Low'
+            time_context = 'Low engagement'
+            actions.append({
+                'priority': 4, 'urgency': 'ATENCIÓN',
+                'color': '#FBbf24', 'bg': 'rgba(251,191,36,0.07)',
+                'border': 'rgba(251,191,36,0.25)', 'icon': '🟡',
+                'title': f'CTR crítico — {name}',
+                'detail': f'CTR {ctr:.2f}% · Creatividad sin tracción. ${spend:.0f} invertidos sin impacto.',
+                'action': 'A/B test: nuevo visual + copy. Probar formato carrusel vs imagen única vs video.',
+                'confidence': confidence,
+                'impact': impact,
+                'time_context': time_context
+            })
+        elif (roas >= 3 or (roas == 0 and ctr >= 2.5)) and spend > 5:
+            confidence = 'High'
+            impact = 'High' if spend > 50 else 'Medium' if spend > 20 else 'Low'
+            time_context = 'High potential'
+            actions.append({
+                'priority': 5, 'urgency': 'OPORTUNIDAD',
+                'color': '#64DC96', 'bg': 'rgba(100,220,150,0.06)',
+                'border': 'rgba(100,220,150,0.25)', 'icon': '🟢',
+                'title': f'Escalar presupuesto — {name}',
+                'detail': f'{"ROAS " + str(round(roas,1)) + "x" if roas > 0 else "CTR " + str(round(ctr,1)) + "%"} · Por encima del benchmark.',
+                'action': 'Aumentar presupuesto +20-30%. Duplicar campaña para audiencias lookalike.',
+                'confidence': confidence,
+                'impact': impact,
+                'time_context': time_context
+            })
+
+    actions.sort(key=lambda x: x['priority'])
+    return actions[:8]

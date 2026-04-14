@@ -6,3 +6,7 @@ __pycache__/
 .env.*
 app.log
 data/
+.claude/
+credenciales facebook.txt
+*.txt
+*.log
