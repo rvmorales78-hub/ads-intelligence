@@ -830,16 +830,16 @@ def main():
     
     # Gráficos
     if not df.empty:
-        render_charts(df, level)
+        with st.expander("📈 Gráficos de Desempeño", expanded=True):
+            render_charts(df, level)
     
-    st.markdown('<div class="section-title">📋 Detalle de Campañas</div>', unsafe_allow_html=True)
-    render_table(df, level)
+    with st.expander("📋 Detalle de Campañas y Conjuntos de Anuncios", expanded=True):
+        render_table(df, level)
     
     # Alertas
     if not df.empty:
-        st.markdown('<br>', unsafe_allow_html=True)
-        render_alerts(summary, df)
-
+        with st.expander("⚠️ Alertas y Plan de Acción", expanded=True):
+            render_alerts(summary, df)
 
 if __name__ == '__main__':
     main()

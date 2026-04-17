@@ -1,0 +1,9 @@
+# Set the default behavior, in case users don't have core.autocrlf set.
+# For any file that Git considers a text file, it will normalize line endings
+# to LF (Unix-style) in the repository.
+* text=auto eol=lf
+
+# Explicitly declare files that are truly binary and should not be modified.
+*.db binary
+*.parquet binary
+*.ico binary

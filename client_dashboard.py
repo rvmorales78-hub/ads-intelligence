@@ -1,11 +1,12 @@
 import streamlit as st
-import os
-from datetime import date, timedelta, datetime
+import os, math, stripe
+from datetime import date, timedelta, datetime, timezone
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 from cryptography.fernet import Fernet
 
+from config import logger
 from facebook_client import FacebookClient
 from analyzer import (
     calculate_kpis,
@@ -23,20 +24,40 @@ from config import format_currency
 from auth import logout
 from database import (
     save_user_credentials, get_user_by_id, get_fb_accounts, add_fb_account, delete_fb_account,
-    save_daily_actions_summary, get_today_actions_summary, get_last_week_actions,
-    save_user_progress, get_user_progress_history, mark_action_as_completed,
+    get_all_system_fb_accounts, save_daily_actions_summary, get_today_actions_summary, 
+    get_last_week_actions, save_user_progress, get_user_progress_history, mark_action_as_completed,
     get_completed_actions, get_total_completed_actions
 )
 
-DEFAULT_ENCRYPTION_KEY = Fernet.generate_key().decode()
-ENCRYPTION_KEY = os.getenv('ENCRYPTION_KEY') or DEFAULT_ENCRYPTION_KEY
+ENCRYPTION_KEY = os.getenv('ENCRYPTION_KEY')
+if not ENCRYPTION_KEY:
+    raise ValueError("ENCRYPTION_KEY environment variable must be set for production.")
 
 def get_fernet() -> Fernet:
-    try:
-        return Fernet(ENCRYPTION_KEY.encode())
-    except Exception:
-        return Fernet(DEFAULT_ENCRYPTION_KEY.encode())
+    return Fernet(ENCRYPTION_KEY.encode())
 
+def create_stripe_checkout_session(price_id: str, user_id: int) -> str:
+    """Crea una sesión de checkout de Stripe y devuelve la URL."""
+    try:
+        stripe.api_key = os.getenv('STRIPE_API_KEY')
+        domain_url = os.getenv('DOMAIN_URL', 'http://localhost:8501')
+        checkout_session = stripe.checkout.Session.create(
+            line_items=[{'price': price_id, 'quantity': 1}],
+            mode='subscription',
+            success_url=f'{domain_url}/?page=dashboard&payment=success',
+            cancel_url=f'{domain_url}/?page=dashboard&payment=cancelled',
+            client_reference_id=user_id,
+            subscription_data={
+                'metadata': {
+                    'user_id': user_id
+                }
+            }
+        )
+        return checkout_session.url
+    except Exception as e:
+        logger.error(f"Error al crear sesión de Stripe: {e}")
+        st.error(f"Error al contactar con el sistema de pagos: {e}")
+        return ""
 
 def encrypt_text(text: str) -> str:
     if not text:
@@ -613,7 +634,7 @@ section.main > div {
 def check_plan_limits(df: pd.DataFrame, plan: str, date_range_days: int):
     plan = plan.lower() if plan else 'basic'
     limits = {
-        'basic':      {'max_ads': 3,      'max_days': 30,  'can_export': False, 'can_see_alerts': False},
+        'basic':      {'max_ads': 1,      'max_days': 30,  'can_export': False, 'can_see_alerts': False},
         'pro':        {'max_ads': 20,     'max_days': 90,  'can_export': True,  'can_see_alerts': True},
         'enterprise': {'max_ads': 999999, 'max_days': 365, 'can_export': True,  'can_see_alerts': True}
     }
@@ -829,9 +850,9 @@ def render_plan_info(plan: str):
     plan = plan.lower() if plan else 'basic'
 
     if plan == 'basic':
-        icon, label = "◈", "Plan Basic"
+        icon, label = "◈", "Plan Gratuito"
         items = [
-            ("ok",  "✓ 3 anuncios máximo"),
+            ("ok",  "✓ 1 campaña máximo"),
             ("ok",  "✓ 30 días de historial"),
             ("off", "✗ Sin exportación"),
             ("off", "✗ Sin alertas avanzadas"),
@@ -1842,7 +1863,7 @@ def render_progress_history(user_id: int):
             """, unsafe_allow_html=True)
 
 
-def render_action_center(actions: list, user_id: int = None):
+def client_dashboard():
     # st.set_page_config(
     #     page_title=f"Ads Intelligence – {st.session_state.get('company_name', 'Mi Cuenta')}",
     #     page_icon="◈",
@@ -1883,6 +1904,39 @@ def render_action_center(actions: list, user_id: int = None):
         if st.button("Cerrar sesión →", use_container_width=True):
             logout()
         st.markdown('</div>', unsafe_allow_html=True)
+
+    # Banner y botones de Upgrade para usuarios del plan gratuito
+    if plan == 'basic':
+        st.markdown("""
+        <div style="background:rgba(138,106,224,0.07); border:1px solid rgba(138,106,224,0.18);
+             border-radius:12px; padding:1rem 1.5rem; margin-bottom:1rem; display:flex; 
+             justify-content:space-between; align-items:center;">
+            <div>
+                <div style="color:#A890F0; font-weight:700; font-size:0.95rem; margin-bottom:0.25rem;">
+                    🚀 Desbloquea todo el potencial de Ads Intelligence
+                </div>
+                <div style="color:rgba(232,230,240,0.7); font-size:0.85rem;">
+                    Actualiza a PRO para analizar hasta 20 campañas y recibir alertas de la IA.
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        col1, col2 = st.columns(2)
+        with col1:
+            if st.button("⭐ Mejorar a PRO ($79/mes)", use_container_width=True, key="upgrade_pro"):
+                price_id = os.getenv('STRIPE_PRO_PRICE_ID')
+                if price_id and user_id:
+                    checkout_url = create_stripe_checkout_session(price_id, user_id)
+                    if checkout_url:
+                        st.markdown(f'<meta http-equiv="refresh" content="0; url={checkout_url}">', unsafe_allow_html=True)
+        with col2:
+            if st.button("♛ Mejorar a ENTERPRISE ($199/mes)", use_container_width=True, key="upgrade_enterprise"):
+                price_id = os.getenv('STRIPE_ENTERPRISE_PRICE_ID')
+                if price_id and user_id:
+                    checkout_url = create_stripe_checkout_session(price_id, user_id)
+                    if checkout_url:
+                        st.markdown(f'<meta http-equiv="refresh" content="0; url={checkout_url}">', unsafe_allow_html=True)
 
     st.markdown('<hr class="divider">', unsafe_allow_html=True)
 
@@ -1996,21 +2050,33 @@ def render_action_center(actions: list, user_id: int = None):
 
         if st.button("➕ Agregar cuenta", use_container_width=True, key="add_fb_account_btn"):
             if all([new_app_id, new_token, new_account]):
-                enc_app_id  = encrypt_text(new_app_id)
-                enc_token   = encrypt_text(new_token)
-                enc_account = encrypt_text(new_account)
-                add_fb_account(user_id, enc_app_id, enc_token, enc_account, account_name=new_name)
-                # Activar la cuenta recién añadida
-                new_accounts = get_fb_accounts(user_id)
-                if new_accounts:
-                    newest = new_accounts[-1]
-                    st.session_state['active_fb_account_id'] = newest['id']
-                    st.session_state['fb_app_id_enc']         = newest['app_id_enc']
-                    st.session_state['fb_token_enc']           = newest['access_token_enc']
-                    st.session_state['fb_account_enc']         = newest['account_id_enc']
-                    st.session_state['fb_configured']          = True
-                st.success("✅ Cuenta agregada y activada")
-                st.rerun()
+                # Verificación de duplicados a nivel de sistema
+                system_accounts = get_all_system_fb_accounts()
+                is_duplicate = False
+                for acc in system_accounts:
+                    decrypted_id = decrypt_text(acc['account_id_enc'])
+                    if decrypted_id == new_account:
+                        is_duplicate = True
+                        break
+                
+                if is_duplicate:
+                    st.error("❌ Este Account ID ya está registrado en otra cuenta del sistema. No se puede reutilizar en el periodo de prueba.")
+                else:
+                    enc_app_id  = encrypt_text(new_app_id)
+                    enc_token   = encrypt_text(new_token)
+                    enc_account = encrypt_text(new_account)
+                    add_fb_account(user_id, enc_app_id, enc_token, enc_account, account_name=new_name)
+                    # Activar la cuenta recién añadida
+                    new_accounts = get_fb_accounts(user_id)
+                    if new_accounts:
+                        newest = new_accounts[-1]
+                        st.session_state['active_fb_account_id'] = newest['id']
+                        st.session_state['fb_app_id_enc']         = newest['app_id_enc']
+                        st.session_state['fb_token_enc']           = newest['access_token_enc']
+                        st.session_state['fb_account_enc']         = newest['account_id_enc']
+                        st.session_state['fb_configured']          = True
+                    st.success("✅ Cuenta agregada y activada")
+                    st.rerun()
             else:
                 st.error("Completa App ID, Access Token y Account ID")
 
@@ -2206,16 +2272,16 @@ def render_action_center(actions: list, user_id: int = None):
                     </div>
                     """, unsafe_allow_html=True)
 
-                    with st.expander("Ver próximos pasos recomendados"):
-                        for step in star['next_steps']:
-                            st.markdown(step)
+                    st.markdown('<div style="margin-top:1rem; border-top:1px solid rgba(255,255,255,0.06); padding-top:1rem;"></div>', unsafe_allow_html=True)
+                    st.markdown('<div style="font-size:0.8rem; font-weight:700; color:#F5F3FF; margin-bottom:0.5rem;">Próximos pasos recomendados:</div>', unsafe_allow_html=True)
+                    for step in star['next_steps']:
+                        st.markdown(f"<div style='font-size:0.85rem; color:rgba(232,230,240,0.6); padding-left:1rem; margin-bottom:0.25rem;'>{step}</div>", unsafe_allow_html=True)
 
                 st.markdown('<div style="margin:1rem 0;"></div>', unsafe_allow_html=True)
 
             # ===== ANÁLISIS DETALLADO POR CAMPAÑA =====
-            with st.expander("📋 Análisis Detallado por Campaña", expanded=False):
-                render_campaign_cards_v2(detailed, level, plan_limits)
-                st.markdown('<div style="margin:1rem 0;"></div>', unsafe_allow_html=True)
+            render_campaign_cards_v2(detailed, level, plan_limits)
+            st.markdown('<div style="margin:1rem 0;"></div>', unsafe_allow_html=True)
 
             st.markdown('<hr class="divider">', unsafe_allow_html=True)
 

@@ -1,5 +1,9 @@
 import streamlit as st
+import traceback
+import os
 from database import init_db
+from auth import register_page # Importar la nueva página de registro
+
 
 try:
     init_db()
@@ -16,8 +20,12 @@ st.set_page_config(
 
 st.markdown("""
 <style>
+    /* Oculta el header por defecto de Streamlit y el botón de la sidebar */
     [data-testid="stSidebar"] { display: none; }
     [data-testid="stSidebarCollapsedControl"] { display: none; }
+    .stApp > header { display: none; }
+
+    /* Centra el contenido principal */
     section.main > div { max-width: 1280px; margin: 0 auto; padding: 0 1.5rem; }
     .stApp { background: #080810; }
     .block-container { padding-top: 0 !important; }
@@ -25,6 +33,14 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ========== NAVEGACIÓN ==========
+# Revisa si la navegación se está pidiendo por query params (para botones en HTML)
+query_params = st.query_params
+if "page" in query_params:
+    page_to_go = query_params.get("page")
+    if page_to_go in ['login', 'register', 'demo', 'landing', 'strategy']:
+        st.session_state.page = page_to_go
+        st.query_params.clear() # Limpia para evitar bucles
+
 if 'page' not in st.session_state:
     st.session_state.page = 'landing'
 
@@ -32,6 +48,11 @@ if st.session_state.page == 'login':
     from auth import login_page
     login_page()
     st.stop()
+
+if st.session_state.page == 'register': # Nueva página de registro
+    register_page()
+    st.stop()
+
 
 if st.session_state.page == 'demo':
     st.markdown("""
@@ -46,13 +67,46 @@ if st.session_state.page == 'demo':
     """, unsafe_allow_html=True)
     st.stop()
 
+if st.session_state.page == 'strategy':
+    st.markdown("""
+    <style>
+        [data-testid="stSidebar"] { display: none; }
+        [data-testid="stSidebarCollapsedControl"] { display: none; }
+        .stApp > header { display: none; }
+        .stApp { background: #080810; color: #E8E6F0; font-family: 'Satoshi', sans-serif; }
+        .block-container { max-width: 900px !important; padding-top: 3rem !important; padding-bottom: 4rem !important; }
+        .strategy-box { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 20px; padding: 3rem; margin-top: 1rem; }
+        .strategy-box h1 { color: #F5F3FF; font-size: 2.2rem; margin-bottom: 1rem; line-height: 1.2; }
+        .strategy-box h2 { color: #A890F0; margin-top: 2.5rem; font-size: 1.6rem; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 0.5rem; }
+        .strategy-box h3 { color: #C9A84C; margin-top: 1.5rem; font-size: 1.2rem; }
+        .strategy-box p, .strategy-box li { color: rgba(232,230,240,0.7); line-height: 1.6; margin-bottom: 0.8rem; font-size: 0.95rem; }
+        .strategy-box hr { border-color: rgba(255,255,255,0.1); margin: 2rem 0; }
+        .back-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; color: #F5F3FF; text-decoration: none; font-size: 0.9rem; transition: background 0.2s; }
+        .back-btn:hover { background: rgba(255,255,255,0.1); }
+    </style>
+    <a href='?' class='back-btn'>← Volver al Inicio</a>
+    <div class='strategy-box'>
+    """, unsafe_allow_html=True)
+    try:
+        with open("ESTRATEGIA_META_ADS.md", "r", encoding="utf-8") as f:
+            st.markdown(f.read())
+    except Exception:
+        st.warning("El archivo de guía estratégica no se encontró. Verifica que ESTRATEGIA_META_ADS.md exista.")
+    st.markdown("</div>", unsafe_allow_html=True)
+    st.stop()
+
 if st.session_state.page == 'dashboard' and st.session_state.get('authenticated', False):
     if st.session_state.get('user_type') == 'admin':
         from admin_dashboard import admin_dashboard
         admin_dashboard()
     else:
-        from client_dashboard import client_dashboard
-        client_dashboard()
+        try:
+            from client_dashboard import client_dashboard
+            client_dashboard()
+        except Exception as e:
+            st.error(f"Error al cargar el dashboard: {e}")
+            st.text(traceback.format_exc())
+            st.stop()
     st.stop()
 
 # ========== CSS PREMIUM ==========
@@ -80,34 +134,10 @@ body, .stApp {
 }
 
 /* ---- GLOBALS ---- */
+html { scroll-behavior: smooth; }
 h1, h2, h3, h4 { font-family: 'Satoshi', sans-serif; font-weight: 700; }
 
 /* ---- NAV ---- */
-.nav-wrap {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1.5rem 0;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-    margin-bottom: 0;
-}
-.nav-logo {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    font-family: 'Satoshi', sans-serif;
-    font-size: 1.15rem;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    color: #F0EEF8;
-}
-.nav-logo .logo-mark {
-    width: 32px; height: 32px;
-    background: linear-gradient(135deg, #C9A84C, #8A6AE0);
-    border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1rem;
-}
 .nav-links {
     display: flex;
     gap: 2.5rem;
@@ -121,6 +151,73 @@ h1, h2, h3, h4 { font-family: 'Satoshi', sans-serif; font-weight: 700; }
     transition: color 0.2s;
 }
 .nav-links a:hover { color: #E8E6F0; }
+
+/* ---- NUEVO HEADER RESPONSIVE ---- */
+.main-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    position: sticky;
+    top: 0;
+    background: rgba(8, 8, 16, 0.8);
+    backdrop-filter: blur(12px);
+    z-index: 100;
+    width: 100%;
+    left: 0;
+}
+.nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: 'Satoshi', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #F0EEF8;
+    text-decoration: none;
+}
+.nav-logo .logo-mark {
+    width: 30px; height: 30px;
+    background: linear-gradient(135deg, #C9A84C, #8A6AE0);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.9rem;
+}
+.nav-actions { display: flex; align-items: center; gap: 0.75rem; }
+.nav-toggle { display: none; } /* Oculto en desktop */
+
+/* ---- PANEL DE NAVEGACIÓN MÓVIL ---- */
+.mobile-nav-panel {
+    position: fixed;
+    top: 0; right: 0; bottom: 0; left: 0;
+    background: #080810;
+    z-index: 99;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    transform: translateX(100%);
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.mobile-nav-panel a {
+    color: #E8E6F0;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: 500;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+/* Estado abierto para nav móvil */
+#nav-toggle-cb:checked ~ .mobile-nav-panel { transform: translateX(0); }
+#nav-toggle-cb:checked ~ .mobile-nav-panel a { opacity: 1; transform: translateY(0); transition-delay: 0.15s; }
+#nav-toggle-cb:checked ~ .main-header .nav-toggle span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+#nav-toggle-cb:checked ~ .main-header .nav-toggle span:nth-child(2) { opacity: 0; }
+#nav-toggle-cb:checked ~ .main-header .nav-toggle span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
 
 /* ---- HERO ---- */
 .hero-section {
@@ -176,8 +273,11 @@ h1, h2, h3, h4 { font-family: 'Satoshi', sans-serif; font-weight: 700; }
     font-weight: 300;
     color: rgba(232,230,240,0.6);
     max-width: 520px;
-    margin: 0 auto 2.5rem;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 2.5rem;
     line-height: 1.7;
+    text-align: center;
 }
 .hero-stats {
     display: flex;
@@ -225,8 +325,10 @@ h1, h2, h3, h4 { font-family: 'Satoshi', sans-serif; font-weight: 700; }
     font-size: 1rem;
     color: rgba(232,230,240,0.5);
     max-width: 500px;
-    margin: 0 auto;
+    margin-left: auto;
+    margin-right: auto;
     line-height: 1.6;
+    text-align: center;
 }
 .section-header {
     text-align: center;
@@ -300,12 +402,18 @@ h1, h2, h3, h4 { font-family: 'Satoshi', sans-serif; font-weight: 700; }
     border-radius: 20px;
     padding: 2rem;
     position: relative;
-    transition: transform 0.3s;
+    transition: transform 0.3s, border-color 0.3s;
 }
-.price-card:hover { transform: translateY(-4px); }
+.price-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255,255,255,0.15);
+}
 .price-card.popular {
     background: rgba(138,106,224,0.07);
     border-color: rgba(138,106,224,0.35);
+}
+.price-card.popular:hover {
+    border-color: rgba(138,106,224,0.5);
 }
 .popular-badge {
     position: absolute;
@@ -464,6 +572,10 @@ h1, h2, h3, h4 { font-family: 'Satoshi', sans-serif; font-weight: 700; }
     font-size: 1rem;
     color: rgba(232,230,240,0.5);
     margin-bottom: 2rem;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
 }
 .trial-note {
     font-size: 0.78rem;
@@ -505,53 +617,121 @@ h1, h2, h3, h4 { font-family: 'Satoshi', sans-serif; font-weight: 700; }
     background: rgba(255,255,255,0.06) !important;
     border: 1px solid rgba(255,255,255,0.12) !important;
 }
+
+/* ---- RESPONSIVE DESIGN ---- */
+@media (max-width: 1024px) {
+    .feat-grid, .pricing-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .hero-stats {
+        gap: 2rem;
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 768px) {
+    .feat-grid, .pricing-grid, .testi-grid {
+        grid-template-columns: 1fr;
+    }
+    /* Menú Hamburguesa */
+    .main-nav { display: none; }
+        .nav-actions { display: none; }
+    .nav-toggle {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        width: 24px;
+        height: 24px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        z-index: 101;
+    }
+    .nav-toggle:focus { outline: none; }
+    .nav-toggle span {
+        width: 24px;
+        height: 2px;
+        background: #E8E6F0;
+        border-radius: 10px;
+        transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+        position: relative;
+        transform-origin: 1px;
+    }
+    .nav-actions .stButton button {
+        font-size: 0.8rem !important;
+        padding: 0.5rem 1rem !important;
+    }
+    .hero-section {
+        padding: 4rem 0 3rem;
+    }
+    .hero-glow, .hero-glow-gold, .cta-section::before {
+        max-width: 100vw;
+        overflow: hidden;
+    }
+    .hero-stats {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    .cta-section {
+        padding: 3rem 1.5rem;
+    }
+    .footer-wrap {
+        flex-direction: column;
+        gap: 1.25rem;
+        text-align: center;
+    }
+    .footer-links {
+        justify-content: center;
+    }
+}
 </style>
 """, unsafe_allow_html=True)
 
-# Smooth scroll for anchor links
-st.markdown("""
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({ behavior: 'smooth' });
-            }
-        });
-    });
-});
-</script>
-""", unsafe_allow_html=True)
-
 # ========== NAV ==========
-col_logo, col_links, col_cta = st.columns([2, 4, 2])
-
-with col_logo:
-    st.markdown("""
-    <div class="nav-logo" style="padding: 1.5rem 0;">
+st.markdown("""
+<input type="checkbox" id="nav-toggle-cb" style="display: none;">
+<header class="main-header">
+    <a href="#inicio" class="nav-logo">
         <div class="logo-mark">◈</div>
         Ads Intelligence
+    </a>
+    <nav class="main-nav">
+        <div class="nav-links">
+            <a href="#inicio">Inicio</a>
+            <a href="#caracteristicas">Características</a>
+            <a href="#precios">Precios</a>
+            <a href="#testimonios">Testimonios</a>
+            <a href="/?page=strategy">Guía de Estrategia</a>
+        </div>
+    </nav>
+    <div class="nav-actions">
+        <a href="/?page=login" class="stButton"><button>Acceso Clientes →</button></a>
     </div>
-    """, unsafe_allow_html=True)
+    <label for="nav-toggle-cb" class="nav-toggle" aria-label="Abrir menú">
+        <span></span>
+        <span></span>
+        <span></span>
+    </label>
+</header>
 
-with col_links:
-    st.markdown("""
-    <div class="nav-links" style="justify-content: center; padding: 1.5rem 0;">
-        <a href="#inicio">Inicio</a>
-        <a href="#caracteristicas">Características</a>
-        <a href="#precios">Precios</a>
-        <a href="#testimonios">Testimonios</a>
-    </div>
-    """, unsafe_allow_html=True)
-
-with col_cta:
-    st.markdown('<div style="padding-top: 1.1rem;">', unsafe_allow_html=True)
-    if st.button("Acceso Clientes →", key="nav_cta"):
-        st.session_state.page = 'login'
-        st.rerun()
-    st.markdown('</div>', unsafe_allow_html=True)
+<!-- Panel para navegación móvil -->
+<div class="mobile-nav-panel">
+    <a href="#inicio" onclick="document.getElementById('nav-toggle-cb').checked = false;">Inicio</a>
+    <a href="#caracteristicas" onclick="document.getElementById('nav-toggle-cb').checked = false;">Características</a>
+    <a href="#precios" onclick="document.getElementById('nav-toggle-cb').checked = false;">Precios</a>
+    <a href="#testimonios" onclick="document.getElementById('nav-toggle-cb').checked = false;">Testimonios</a>
+    <a href="/?page=strategy">Guía de Estrategia</a>
+    <a href="/?page=login" style="margin-top: 2rem; background: #8A6AE0; color: white; border: none; padding: 0.85rem 1.5rem; border-radius: 12px;">Acceso Clientes</a>
+    <script>
+        document.querySelectorAll('.mobile-nav-panel a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('nav-toggle-cb').checked = false;
+            });
+        });
+    </script>
+</div>
+""", unsafe_allow_html=True)
 
 # ========== HERO ==========
 st.markdown('<div id="inicio"></div>', unsafe_allow_html=True)
@@ -571,17 +751,11 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-c1, c2, c3, c4, c5 = st.columns([1, 1.5, 0.3, 1.5, 1])
+c1, c2, c3 = st.columns([1, 1, 1])
 with c2:
     if st.button("🚀 Comenzar Gratis", key="hero_cta1", use_container_width=True):
-        st.session_state.page = 'login'
+        st.session_state.page = 'register' # Este botón ahora va al registro
         st.rerun()
-with c4:
-    st.markdown('<div class="btn-secondary">', unsafe_allow_html=True)
-    if st.button("Ver demo →", key="hero_cta2", use_container_width=True):
-        st.session_state.page = 'demo'
-        st.rerun()
-    st.markdown('</div>', unsafe_allow_html=True)
 st.markdown("""
 <div style="display:flex; justify-content:center; gap:3rem; padding: 3rem 0 1rem; border-top: 1px solid rgba(255,255,255,0.06); margin-top: 2rem;">
     <div class="stat-item">
@@ -659,15 +833,18 @@ st.markdown("""
 </div>
 <div class="pricing-grid">
     <div class="price-card">
-        <div class="price-plan-name">Basic</div>
-        <div class="price-amount"><span class="currency">$</span>29<span class="period">/mes</span></div>
-        <p class="price-desc">Ideal para freelancers y proyectos pequeños.</p>
+        <div class="price-plan-name">Gratis</div>
+        <div class="price-amount"><span class="currency">$</span>0<span class="period">/para siempre</span></div>
+        <p class="price-desc">Ideal para probar la plataforma con un proyecto.</p>
         <ul class="feat-list">
-            <li><span class="check">✓</span> Hasta 3 campañas activas</li>
+            <li><span class="check">✓</span> 1 campaña activa*</li>
             <li><span class="check">✓</span> 30 días de historial</li>
             <li><span class="check">✓</span> Dashboard básico</li>
             <li><span class="check">✓</span> Alertas por email</li>
         </ul>
+        <div style="font-size: 0.7rem; color: rgba(232,230,240,0.4); margin-top: 1rem; line-height: 1.4;">
+            *Si tienes varias, analizaremos la de mayor inversión.
+        </div>
     </div>
     <div class="price-card popular">
         <div class="popular-badge">⭐ Más popular</div>
@@ -739,14 +916,14 @@ st.markdown("""
 <div class="cta-section">
     <span class="section-label">Empieza hoy</span>
     <h2 class="cta-title">¿Listo para multiplicar<br>tu retorno publicitario?</h2>
-    <p class="cta-sub">14 días gratis. Sin tarjeta de crédito. Cancela cuando quieras.</p>
+    <p class="cta-sub">Empieza gratis. Sin tarjeta de crédito. Mejora tu plan cuando quieras.</p>
 </div>
 """, unsafe_allow_html=True)
 
 c1, c2, c3 = st.columns([1, 2, 1])
 with c2:
-    if st.button("🚀 Probar Gratis 14 Días", key="cta_final", use_container_width=True):
-        st.session_state.page = 'login'
+    if st.button("🚀 Comenzar Gratis Ahora", key="cta_final", use_container_width=True):
+        st.session_state.page = 'register' # Este botón ahora va al registro
         st.rerun()
 
 # ========== FOOTER ==========

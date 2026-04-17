@@ -3,13 +3,9 @@ services:
     name: ads-intelligence
     runtime: python
     buildCommand: pip install -r requirements.txt
-    startCommand: streamlit run landing.py --server.port=10000 --server.address=0.0.0.0
+    startCommand: streamlit run landing.py --server.port=8501 --server.address=0.0.0.0
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.0
       - key: RENDER
         value: true
-    disk:
-      name: data
-      mountPath: /data
-      sizeGB: 1

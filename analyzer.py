@@ -590,6 +590,22 @@ def get_priority_actions(df: pd.DataFrame) -> list:
     """Genera lista de acciones priorizadas por impacto."""
     actions = []
 
+    # --- ANÁLISIS GLOBAL: Consolidación de Campañas ---
+    if 'campaign_name' in df.columns:
+        num_campaigns = df['campaign_name'].nunique()
+        if num_campaigns >= 4:
+            actions.append({
+                'priority': 2.5, 'urgency': 'OPORTUNIDAD',
+                'color': '#60A5FA', 'bg': 'rgba(96,165,250,0.07)',
+                'border': 'rgba(96,165,250,0.25)', 'icon': '🧩',
+                'title': 'Estructura Fragmentada',
+                'detail': f'Detectamos {num_campaigns} campañas activas. Demasiadas campañas dividen el presupuesto y limitan el aprendizaje de Meta.',
+                'action': 'Consolida campañas con el mismo objetivo (1 o 2 máximo) usando Presupuesto Advantage+ (CBO).',
+                'confidence': 'High',
+                'impact': 'High',
+                'time_context': 'Estrategia global'
+            })
+
     for _, row in df.iterrows():
         name = str(row.get('adset_name') or row.get('campaign_name') or 'Sin nombre')[:40]
         spend   = float(row.get('spend', 0) or 0)

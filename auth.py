@@ -1,7 +1,7 @@
 import streamlit as st
 print('>>> auth.py cargado')
-from database import verify_user, verify_admin, log_access, get_user_credentials
-print('>>> importaciones desde database.py realizadas')
+from database import verify_user, verify_admin, log_access, get_user_credentials, create_user, get_user_with_trial_info
+print('>>> importaciones desde database.py realizadas, incluyendo create_user y get_user_with_trial_info')
 import hashlib
 
 AUTH_CSS = """
@@ -208,6 +208,10 @@ def login_page():
                     st.session_state['company_name']  = str(user.get('company_name') or '')
                     st.session_state['plan']          = str(user.get('plan') or 'basic')
 
+                    # Obtener la fecha de inicio de la prueba (created_at)
+                    user_full_info = get_user_with_trial_info(st.session_state['user_id'])
+                    st.session_state['trial_start_date'] = user_full_info['created_at'] # Usamos created_at como trial_start_date
+
                     st.session_state['fb_app_id_enc']  = str(user.get('fb_app_id') or '')
                     st.session_state['fb_token_enc']   = str(user.get('fb_access_token') or '')
                     st.session_state['fb_account_enc'] = str(user.get('fb_account_id') or '')
@@ -259,6 +263,69 @@ def login_page():
     </div>
     """, unsafe_allow_html=True)
 
+
+def register_page():
+    """Pantalla de registro de usuario con diseño premium dark luxury"""
+    st.markdown(AUTH_CSS, unsafe_allow_html=True)
+
+    # ---- LOGO ----
+    st.markdown("""
+    <div class="auth-logo">
+        <div class="auth-logo-mark">◈</div>
+        Ads Intelligence
+    </div>
+    """, unsafe_allow_html=True)
+
+    # ---- CARD WRAPPER ----
+    st.markdown('<div class="auth-card">', unsafe_allow_html=True)
+
+    st.markdown("""
+    <div class="auth-card-title">Crea tu cuenta</div>
+    <div class="auth-card-sub">Empieza con nuestro plan gratuito para siempre.<br>
+    <span style="font-size: 0.75rem; color: rgba(201,168,76,0.8);">*Si tienes varias campañas, analizaremos la de mayor inversión.</span></div>
+    """, unsafe_allow_html=True)
+
+    with st.form("register_form"):
+        email = st.text_input("Email", placeholder="tu@empresa.com", key="register_email")
+        password = st.text_input("Contraseña", type="password", placeholder="••••••••", key="register_pass")
+        company_name = st.text_input("Nombre de la empresa", placeholder="Tu Empresa S.L.", key="register_company")
+        
+        submitted = st.form_submit_button("Crear cuenta gratis →", use_container_width=True)
+
+        if submitted:
+            if not email or not password or not company_name:
+                st.error("Por favor, completa todos los campos.")
+            elif create_user(email, password, company_name, plan='basic'):
+                st.success("✅ Cuenta creada exitosamente. ¡Bienvenido! Tu plan analizará automáticamente la campaña de mayor inversión.")
+                # Redirigir al login para que el usuario inicie sesión con su nueva cuenta
+                st.session_state.page = 'login'
+                st.rerun()
+            else:
+                st.error("❌ El email ya está registrado o hubo un error al crear la cuenta.")
+
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    # ---- FOOTER ----
+    st.markdown("""
+    <div class="auth-footer">
+        © 2024 Ads Intelligence · Todos los derechos reservados
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("""
+    <div style="text-align:center; margin-top:1.5rem; font-size:0.85rem; color:rgba(232,230,240,0.5);">
+        ¿Ya tienes una cuenta?
+    </div>
+    """, unsafe_allow_html=True)
+    # Usamos un botón de Streamlit para la navegación, que es más robusto que el JavaScript en markdown.
+    if st.button("Inicia sesión aquí", key="go_to_login_from_register", use_container_width=True):
+        st.session_state.page = 'login'
+        st.rerun()
+    # Ocultamos el botón si no queremos que se vea, pero la funcionalidad de navegación es clave.
+    # st.markdown(
+    #     """<style>button[data-testid="stButton"] {display: none;} </style>""",
+    #     unsafe_allow_html=True,
+    # )
 
 def logout():
     """Cierra sesión y redirige al landing"""
