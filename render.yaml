@@ -1,11 +1,72 @@
+# render.yaml
+# Archivo de configuración para despliegue en Render.com
+# Define dos servicios: la app principal de Streamlit y el servidor de webhooks de Stripe.
+
 services:
+  # 1. Servicio principal de la aplicación Streamlit
   - type: web
-    name: ads-intelligence
-    runtime: python
-    buildCommand: pip install -r requirements.txt
-    startCommand: streamlit run landing.py --server.port=8501 --server.address=0.0.0.0
+    name: ads-intelligence-app
+    env: python
+    plan: starter # El plan 'starter' es bueno para empezar. Puedes ajustarlo.
+    # Comando para instalar dependencias
+    buildCommand: |
+      pip install --upgrade pip
+      pip install -r requirements.txt
+    # Comando para iniciar la aplicación. ¡Esta es la corrección clave!
+    startCommand: "streamlit run landing.py --server.port 8501 --server.address 0.0.0.0"
+    healthCheckPath: /healthz # Ruta de chequeo de salud de Streamlit
     envVars:
       - key: PYTHON_VERSION
-        value: 3.11.0
-      - key: RENDER
-        value: true
+        value: 3.11
+      - key: STREAMLIT_SERVER_ENABLE_XSRF_PROTECTION
+        value: "false" # Necesario en algunos despliegues de Streamlit
+      # Conecta la URL de la base de datos PostgreSQL
+      - key: DATABASE_URL
+        fromDatabase:
+          name: ads-db
+          property: connectionString
+      # Claves secretas (se deben configurar en el dashboard de Render)
+      - key: ENCRYPTION_KEY
+        sync: false
+      - key: STRIPE_API_KEY
+        sync: false
+      - key: STRIPE_WEBHOOK_SECRET
+        sync: false
+      - key: STRIPE_PRO_PRICE_ID
+        sync: false
+      - key: STRIPE_ENTERPRISE_PRICE_ID
+        sync: false
+      - key: DOMAIN_URL
+        sync: false # Ej: https://ads-intelligence-app.onrender.com
+
+  # 2. Servicio para el webhook de Stripe (se ejecuta por separado)
+  - type: web
+    name: ads-intelligence-webhook
+    env: python
+    plan: free # El plan gratuito es suficiente para el webhook
+    buildCommand: "pip install -r requirements.txt"
+    # Usa gunicorn para correr la app Flask en producción
+    startCommand: "gunicorn webhook_server:app"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11
+      - key: DATABASE_URL
+        fromDatabase:
+          name: ads-db
+          property: connectionString
+      # Las mismas claves secretas que la app principal
+      - key: STRIPE_API_KEY
+        sync: false
+      - key: STRIPE_WEBHOOK_SECRET
+        sync: false
+      - key: STRIPE_PRO_PRICE_ID
+        sync: false
+      - key: STRIPE_ENTERPRISE_PRICE_ID
+        sync: false
+
+# Define la base de datos PostgreSQL que usarán ambos servicios
+databases:
+  - name: ads-db
+    databaseName: ads_db
+    user: ads_user
+    plan: free # El plan gratuito de PostgreSQL es suficiente para empezar
