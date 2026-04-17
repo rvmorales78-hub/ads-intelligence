@@ -4,19 +4,17 @@ import hashlib
 from datetime import datetime
 
 # Intentar importar psycopg2 para PostgreSQL
-psycopg2 = None
-RealDictCursor = None
 try:
-    psycopg2 = importlib.import_module('psycopg2')
-    psycopg2_extras = importlib.import_module('psycopg2.extras')
-    RealDictCursor = getattr(psycopg2_extras, 'RealDictCursor', None)
+    import psycopg2
+    from psycopg2.extras import RealDictCursor
     PSYCOPG2_AVAILABLE = True
 except ImportError:
+    psycopg2 = None
+    RealDictCursor = None
     PSYCOPG2_AVAILABLE = False
 
 DATABASE_URL = os.getenv('DATABASE_URL', '')
 IS_POSTGRES = bool(DATABASE_URL and PSYCOPG2_AVAILABLE)
-
 
 # ========== CONEXIÓN ==========
 
@@ -32,6 +30,21 @@ def get_db_connection():
         conn.row_factory = sqlite3.Row
         return conn
 
+
+def get_user_with_trial_info(user_id: int) -> dict | None:
+    """Obtiene un usuario por su ID incluyendo la fecha de inicio de la prueba (created_at)"""
+    conn = get_db_connection()
+    if IS_POSTGRES:
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
+        cursor.execute("SELECT *, created_at as trial_start_date FROM users WHERE id = %s", (user_id,))
+    else:
+        cursor = conn.cursor()
+        # SQLite no soporta 'AS' en SELECT * para RealDictCursor, pero sí para sqlite3.Row
+        # Aseguramos que 'created_at' esté presente y lo renombramos en Python si es necesario
+        cursor.execute("SELECT *, created_at FROM users WHERE id = ?", (user_id,))
+    user = cursor.fetchone()
+    conn.close()
+    return dict(user) if user else None
 
 def hash_password(password: str) -> str:
     """Hashea una contraseña con SHA256"""
@@ -67,7 +80,9 @@ def init_db():
                 last_login TIMESTAMP,
                 fb_app_id TEXT,
                 fb_access_token TEXT,
-                fb_account_id TEXT
+                fb_account_id TEXT,
+                stripe_customer_id TEXT,
+                stripe_subscription_id TEXT
             )
         ''')
         
@@ -154,7 +169,9 @@ def init_db():
                 last_login TIMESTAMP,
                 fb_app_id TEXT,
                 fb_access_token TEXT,
-                fb_account_id TEXT
+                fb_account_id TEXT,
+                stripe_customer_id TEXT,
+                stripe_subscription_id TEXT
             )
         ''')
         
@@ -438,6 +455,19 @@ def get_fb_accounts(user_id: int):
     conn.close()
     return [dict(row) for row in rows]
 
+def get_all_system_fb_accounts():
+    """Obtiene TODAS las cuentas de Facebook registradas en el sistema (para verificar duplicados)"""
+    conn = get_db_connection()
+    if IS_POSTGRES:
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
+        cursor.execute("SELECT user_id, account_id_enc FROM fb_accounts")
+    else:
+        cursor = conn.cursor()
+        cursor.execute("SELECT user_id, account_id_enc FROM fb_accounts")
+    rows = cursor.fetchall()
+    conn.close()
+    return [dict(row) for row in rows]
+
 def delete_fb_account(account_db_id: int):
     """Elimina una cuenta de Facebook"""
     conn = get_db_connection()
@@ -459,6 +489,26 @@ def delete_all_fb_accounts(user_id: int):
         cursor.execute("DELETE FROM fb_accounts WHERE user_id = ?", (user_id,))
     conn.commit()
     conn.close()
+
+def update_user_stripe_info(user_id: int, customer_id: str, subscription_id: str):
+    """Guarda el ID de cliente y suscripción de Stripe para un usuario"""
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    try:
+        if IS_POSTGRES:
+            cursor.execute(
+                "UPDATE users SET stripe_customer_id = %s, stripe_subscription_id = %s WHERE id = %s",
+                (customer_id, subscription_id, user_id)
+            )
+        else:
+            cursor.execute(
+                "UPDATE users SET stripe_customer_id = ?, stripe_subscription_id = ? WHERE id = ?",
+                (customer_id, subscription_id, user_id)
+            )
+        conn.commit()
+    finally:
+        conn.close()
 
 
 # ========== GESTIÓN DE ACCIONES DIARIAS Y PROGRESO ==========
