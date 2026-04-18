@@ -39,7 +39,12 @@ def get_fernet() -> Fernet:
 def create_stripe_checkout_session(price_id: str, user_id: int) -> str:
     """Crea una sesión de checkout de Stripe y devuelve la URL."""
     try:
-        stripe.api_key = os.getenv('STRIPE_API_KEY')
+        api_key = os.getenv('STRIPE_API_KEY')
+        if not api_key:
+            logger.error("STRIPE_API_KEY no está configurada en las variables de entorno.")
+            st.error("El sistema de pagos no está configurado correctamente. Por favor, contacta al administrador.")
+            return ""
+        stripe.api_key = api_key
         domain_url = os.getenv('DOMAIN_URL', 'http://localhost:8501')
         checkout_session = stripe.checkout.Session.create(
             line_items=[{'price': price_id, 'quantity': 1}],

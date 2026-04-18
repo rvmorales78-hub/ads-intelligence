@@ -17,6 +17,11 @@ app = Flask(__name__)
 stripe.api_key = os.getenv('STRIPE_API_KEY')
 webhook_secret = os.getenv('STRIPE_WEBHOOK_SECRET')
 
+# Verificación de variables de entorno al iniciar
+if not stripe.api_key or not webhook_secret:
+    print("FATAL: Las variables de entorno STRIPE_API_KEY y STRIPE_WEBHOOK_SECRET son obligatorias.")
+    # En un entorno de producción, esto debería detener el servidor.
+
 # Mapeo de Price ID de Stripe a planes internos
 PRICE_ID_TO_PLAN = {
     os.getenv('STRIPE_PRO_PRICE_ID'): 'pro',
