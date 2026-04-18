@@ -1,7 +1,7 @@
 # reset_admin.py
 import sqlite3
-import hashlib
 import os
+from database import hash_password
 
 def reset_admin():
     """Resetea o crea el administrador por defecto"""
@@ -38,7 +38,7 @@ def reset_admin():
     # Datos del admin
     admin_email = "admin@adsintelligence.com"
     admin_password = "admin123"
-    admin_password_hash = hashlib.sha256(admin_password.encode()).hexdigest()
+    admin_password_hash = hash_password(admin_password)
     
     # Verificar si ya existe
     cursor.execute("SELECT id, email FROM admin WHERE email = ?", (admin_email,))
@@ -62,9 +62,6 @@ def reset_admin():
     conn.commit()
     conn.close()
     
-    # Verificar que funciona
-    verify = hashlib.sha256(admin_password.encode()).hexdigest()
-    print(f"   Hash: {verify[:20]}...")
 
 if __name__ == "__main__":
     reset_admin()

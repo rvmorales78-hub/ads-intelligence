@@ -1,8 +1,12 @@
 # reset_admin_endpoint.py
 import streamlit as st
 import sqlite3
-import hashlib
 import os
+import sys
+
+# Añadir el directorio raíz al path para poder importar 'database'
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from database import hash_password
 
 st.title("🔧 Herramienta de Reseteo")
 st.markdown("Usa esta página para resetear el administrador del sistema.")
@@ -47,7 +51,7 @@ if st.button("🚀 Resetear Administrador", use_container_width=True):
         # Datos del admin
         admin_email = "admin@adsintelligence.com"
         admin_password = "admin123"
-        admin_password_hash = hashlib.sha256(admin_password.encode()).hexdigest()
+        admin_password_hash = hash_password(admin_password)
         
         # Resetear admin
         cursor.execute("DELETE FROM admin WHERE email = ?", (admin_email,))
