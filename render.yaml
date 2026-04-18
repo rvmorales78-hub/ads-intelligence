@@ -5,9 +5,9 @@
 services:
   # 1. Servicio principal de la aplicación Streamlit
   - type: web
-    name: ads-intelligence # Cambiado para que coincida con el nombre del proyecto
+    name: ads-intelligence-dashboard
     env: python
-    plan: starter # El plan 'starter' es bueno para empezar. Puedes ajustarlo.
+    plan: free # Cambiado a 'free' para evitar el requisito de tarjeta de crédito.
     # Comando para instalar dependencias
     buildCommand: |
       pip install --upgrade pip
@@ -44,7 +44,9 @@ services:
     name: ads-intelligence-webhook
     env: python
     plan: free # El plan gratuito es suficiente para el webhook
-    buildCommand: "pip install -r requirements.txt"
+    buildCommand: |
+      pip install --upgrade pip
+      pip install -r requirements.txt
     # Usa gunicorn para correr la app Flask en producción
     startCommand: "gunicorn webhook_server:app"
     envVars:
