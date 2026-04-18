@@ -34,15 +34,13 @@ st.markdown("""
 
 # ========== NAVEGACIÓN ==========
 # Revisa si la navegación se está pidiendo por query params (para botones en HTML)
-query_params = st.experimental_get_query_params()
+query_params = st.query_params
 if "page" in query_params:
-    # The experimental API returns a list for each parameter
-    page_to_go_list = query_params.get("page")
-    if page_to_go_list:
-        page_to_go = page_to_go_list[0]
-        if page_to_go in ['login', 'register', 'demo', 'landing', 'strategy']:
-            st.session_state.page = page_to_go
-            st.experimental_set_query_params() # Use the corresponding setter to clear params
+    # The new st.query_params API gets the first value of a parameter directly.
+    page_to_go = query_params["page"]
+    if page_to_go in ['login', 'register', 'demo', 'landing', 'strategy']:
+        st.session_state.page = page_to_go
+        st.query_params.clear() # Use the corresponding setter to clear params
 
 if 'page' not in st.session_state:
     st.session_state.page = 'landing'

@@ -104,189 +104,106 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
         password_bytes = password_bytes[:72]
     return pwd_context.verify(password_bytes.decode('utf-8', 'ignore'), hashed_password)
 
+# ========== DEFINICIÓN DE TABLAS (UNIFICADO) ==========
+
+TABLE_DEFINITIONS = {
+    'admin': """
+        CREATE TABLE IF NOT EXISTS admin (
+            id {serial_pk},
+            email TEXT UNIQUE NOT NULL,
+            password_hash TEXT NOT NULL
+        )
+    """,
+    'users': """
+        CREATE TABLE IF NOT EXISTS users (
+            id {serial_pk},
+            email TEXT UNIQUE NOT NULL,
+            password_hash TEXT NOT NULL,
+            company_name TEXT,
+            plan TEXT DEFAULT 'basic',
+            is_active INTEGER DEFAULT 1,
+            created_at {timestamp_default},
+            last_login {timestamp},
+            fb_app_id TEXT,
+            fb_access_token TEXT,
+            fb_account_id TEXT,
+            stripe_customer_id TEXT,
+            stripe_subscription_id TEXT
+        )
+    """,
+    'access_logs': """
+        CREATE TABLE IF NOT EXISTS access_logs (
+            id {serial_pk},
+            user_id INTEGER,
+            action TEXT,
+            ip_address TEXT,
+            timestamp {timestamp_default}
+        )
+    """,
+    'fb_accounts': """
+        CREATE TABLE IF NOT EXISTS fb_accounts (
+            id {serial_pk},
+            user_id INTEGER NOT NULL,
+            account_name TEXT DEFAULT '',
+            app_id_enc TEXT NOT NULL,
+            access_token_enc TEXT NOT NULL,
+            account_id_enc TEXT NOT NULL,
+            created_at {timestamp_default}
+        )
+    """,
+    'user_actions_daily': """
+        CREATE TABLE IF NOT EXISTS user_actions_daily (
+            id {serial_pk},
+            user_id INTEGER NOT NULL,
+            date {date} NOT NULL,
+            kill_count INTEGER DEFAULT 0,
+            fix_count INTEGER DEFAULT 0,
+            scale_count INTEGER DEFAULT 0,
+            account_score INTEGER DEFAULT 0,
+            total_actions INTEGER DEFAULT 0,
+            created_at {timestamp_default},
+            UNIQUE(user_id, date)
+        )
+    """,
+    'user_progress': """
+        CREATE TABLE IF NOT EXISTS user_progress (
+            id {serial_pk},
+            user_id INTEGER NOT NULL,
+            date {date} NOT NULL,
+            score INTEGER DEFAULT 0,
+            actions_completed INTEGER DEFAULT 0,
+            improvements_made INTEGER DEFAULT 0,
+            notes TEXT,
+            created_at {timestamp_default}
+        )
+    """,
+    'completed_actions': """
+        CREATE TABLE IF NOT EXISTS completed_actions (
+            id {serial_pk},
+            user_id INTEGER NOT NULL,
+            action_type TEXT NOT NULL, -- 'kill', 'fix', 'scale'
+            campaign_name TEXT NOT NULL,
+            action_text TEXT NOT NULL,
+            completed_at {timestamp_default},
+            marked_done_at {timestamp_default}
+        )
+    """
+}
+
 # ========== INICIALIZACIÓN ==========
 
 def init_db():
-    """Inicializa las tablas según el motor de BD"""
+    """Inicializa las tablas según el motor de BD de forma unificada."""
+    dialect_specifics = {
+        'serial_pk': "SERIAL PRIMARY KEY" if IS_POSTGRES else "INTEGER PRIMARY KEY AUTOINCREMENT",
+        'timestamp': "TIMESTAMP",
+        'timestamp_default': "TIMESTAMP DEFAULT CURRENT_TIMESTAMP",
+        'date': "DATE",
+    }
+
     with managed_cursor(commit=True) as cursor:
-        if IS_POSTGRES:
-        # PostgreSQL syntax
-            cursor.execute('''
-            CREATE TABLE IF NOT EXISTS admin (
-                id SERIAL PRIMARY KEY,
-                email TEXT UNIQUE NOT NULL,
-                password_hash TEXT NOT NULL
-            )
-        ''')
-        
-            cursor.execute('''
-            CREATE TABLE IF NOT EXISTS users (
-                id SERIAL PRIMARY KEY,
-                email TEXT UNIQUE NOT NULL,
-                password_hash TEXT NOT NULL,
-                company_name TEXT,
-                plan TEXT DEFAULT 'basic',
-                is_active INTEGER DEFAULT 1,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                last_login TIMESTAMP,
-                fb_app_id TEXT,
-                fb_access_token TEXT,
-                fb_account_id TEXT,
-                stripe_customer_id TEXT,
-                stripe_subscription_id TEXT
-            )
-        ''')
-        
-            cursor.execute('''
-            CREATE TABLE IF NOT EXISTS access_logs (
-                id SERIAL PRIMARY KEY,
-                user_id INTEGER,
-                action TEXT,
-                ip_address TEXT,
-                timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            )
-        ''')
-
-            cursor.execute('''
-            CREATE TABLE IF NOT EXISTS fb_accounts (
-                id SERIAL PRIMARY KEY,
-                user_id INTEGER NOT NULL,
-                account_name TEXT DEFAULT '',
-                app_id_enc TEXT NOT NULL,
-                access_token_enc TEXT NOT NULL,
-                account_id_enc TEXT NOT NULL,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            )
-        ''')
-
-            cursor.execute('''
-            CREATE TABLE IF NOT EXISTS user_actions_daily (
-                id SERIAL PRIMARY KEY,
-                user_id INTEGER NOT NULL,
-                date DATE NOT NULL,
-                kill_count INTEGER DEFAULT 0,
-                fix_count INTEGER DEFAULT 0,
-                scale_count INTEGER DEFAULT 0,
-                account_score INTEGER DEFAULT 0,
-                total_actions INTEGER DEFAULT 0,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                UNIQUE(user_id, date)
-            )
-        ''')
-
-            cursor.execute('''
-            CREATE TABLE IF NOT EXISTS user_progress (
-                id SERIAL PRIMARY KEY,
-                user_id INTEGER NOT NULL,
-                date DATE NOT NULL,
-                score INTEGER DEFAULT 0,
-                actions_completed INTEGER DEFAULT 0,
-                improvements_made INTEGER DEFAULT 0,
-                notes TEXT,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            )
-        ''')
-
-            cursor.execute('''
-            CREATE TABLE IF NOT EXISTS completed_actions (
-                id SERIAL PRIMARY KEY,
-                user_id INTEGER NOT NULL,
-                action_type TEXT NOT NULL,
-                campaign_name TEXT NOT NULL,
-                action_text TEXT NOT NULL,
-                completed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                marked_done_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            )
-        ''')
-        else:
-        # SQLite syntax
-            cursor.execute('''
-            CREATE TABLE IF NOT EXISTS admin (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                email TEXT UNIQUE NOT NULL,
-                password_hash TEXT NOT NULL
-            )
-        ''')
-        
-            cursor.execute('''
-            CREATE TABLE IF NOT EXISTS users (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                email TEXT UNIQUE NOT NULL,
-                password_hash TEXT NOT NULL,
-                company_name TEXT,
-                plan TEXT DEFAULT 'basic',
-                is_active INTEGER DEFAULT 1,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                last_login TIMESTAMP,
-                fb_app_id TEXT,
-                fb_access_token TEXT,
-                fb_account_id TEXT,
-                stripe_customer_id TEXT,
-                stripe_subscription_id TEXT
-            )
-        ''')
-        
-            cursor.execute('''
-            CREATE TABLE IF NOT EXISTS access_logs (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                user_id INTEGER,
-                action TEXT,
-                ip_address TEXT,
-                timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            )
-        ''')
-
-            cursor.execute('''
-            CREATE TABLE IF NOT EXISTS fb_accounts (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                user_id INTEGER NOT NULL,
-                account_name TEXT DEFAULT '',
-                app_id_enc TEXT NOT NULL,
-                access_token_enc TEXT NOT NULL,
-                account_id_enc TEXT NOT NULL,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            )
-        ''')
-
-            cursor.execute('''
-            CREATE TABLE IF NOT EXISTS user_actions_daily (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                user_id INTEGER NOT NULL,
-                date DATE NOT NULL,
-                kill_count INTEGER DEFAULT 0,
-                fix_count INTEGER DEFAULT 0,
-                scale_count INTEGER DEFAULT 0,
-                account_score INTEGER DEFAULT 0,
-                total_actions INTEGER DEFAULT 0,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                UNIQUE(user_id, date)
-            )
-        ''')
-
-            cursor.execute('''
-            CREATE TABLE IF NOT EXISTS user_progress (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                user_id INTEGER NOT NULL,
-                date DATE NOT NULL,
-                score INTEGER DEFAULT 0,
-                actions_completed INTEGER DEFAULT 0,
-                improvements_made INTEGER DEFAULT 0,
-                notes TEXT,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            )
-        ''')
-
-            cursor.execute('''
-            CREATE TABLE IF NOT EXISTS completed_actions (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                user_id INTEGER NOT NULL,
-                action_type TEXT NOT NULL, -- 'kill', 'fix', 'scale'
-                campaign_name TEXT NOT NULL,
-                action_text TEXT NOT NULL,
-                completed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                marked_done_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            )
-        ''')
+        for table_sql_template in TABLE_DEFINITIONS.values():
+            cursor.execute(table_sql_template.format(**dialect_specifics))
 
         # Migración: agregar columna account_name si no existe (tabla creada antes del multi-cuenta)
         try:

@@ -362,35 +362,18 @@ class FacebookClient:
             delivery_rows = self._fetch_insights(delivery_fields, time_range, level, async_mode=async_mode)
             action_rows = self._fetch_insights(action_fields, time_range, level, async_mode=async_mode)
         except Exception as exc:
-            logger.warning('No se pudo obtener effective_status directamente: %s. Reintentando sin campo de estado.', exc)
-            if level == 'adset':
-                delivery_fields = [
-                    'campaign_name', 'campaign_id', 'adset_name', 'adset_id',
-                    'date_start', 'date_stop',
-                    'impressions', 'clicks', 'spend', 'ctr', 'cpc', 'cpm', 'frequency', 'reach',
-                    'quality_ranking', 'engagement_rate_ranking', 'conversion_rate_ranking',
-                    'objective'
-                ]
-                action_fields = [
-                    'campaign_name', 'campaign_id', 'adset_name', 'adset_id',
-                    'date_start', 'date_stop',
-                    'actions', 'action_values', 'purchase_roas', 'cost_per_purchase',
-                    'objective'
-                ]
-            else:
-                delivery_fields = [
-                    'campaign_name', 'campaign_id',
-                    'date_start', 'date_stop',
-                    'impressions', 'clicks', 'spend', 'ctr', 'cpc', 'cpm', 'frequency', 'reach',
-                    'quality_ranking', 'engagement_rate_ranking', 'conversion_rate_ranking',
-                    'objective'
-                ]
-                action_fields = [
-                    'campaign_name', 'campaign_id',
-                    'date_start', 'date_stop',
-                    'actions', 'action_values', 'purchase_roas', 'cost_per_purchase',
-                    'objective'
-                ]
+            logger.warning('Fallo en la petición de insights: %s. Reintentando sin campos de estado/calidad.', exc)
+            
+            # En lugar de redefinir las listas, eliminamos los campos problemáticos.
+            # Esto es más robusto si las listas originales cambian.
+            problematic_fields = ['effective_status', 'quality_ranking', 'engagement_rate_ranking', 'conversion_rate_ranking']
+            
+            for field in problematic_fields:
+                if field in delivery_fields:
+                    delivery_fields.remove(field)
+                if field in action_fields:
+                    action_fields.remove(field)
+
             delivery_rows = self._fetch_insights(delivery_fields, time_range, level, async_mode=async_mode)
             action_rows = self._fetch_insights(action_fields, time_range, level, async_mode=async_mode)
 
