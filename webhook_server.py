@@ -16,17 +16,28 @@ app = Flask(__name__)
 # Configurar claves de Stripe
 stripe.api_key = os.getenv('STRIPE_API_KEY')
 webhook_secret = os.getenv('STRIPE_WEBHOOK_SECRET')
+pro_price_id = os.getenv('STRIPE_PRO_PRICE_ID')
+enterprise_price_id = os.getenv('STRIPE_ENTERPRISE_PRICE_ID')
 
 # Verificación de variables de entorno al iniciar
-if not stripe.api_key or not webhook_secret:
-    print("FATAL: Las variables de entorno STRIPE_API_KEY y STRIPE_WEBHOOK_SECRET son obligatorias.")
-    # En un entorno de producción, esto debería detener el servidor.
+missing_vars = []
+if not stripe.api_key: missing_vars.append('STRIPE_API_KEY')
+if not webhook_secret: missing_vars.append('STRIPE_WEBHOOK_SECRET')
+if not pro_price_id: missing_vars.append('STRIPE_PRO_PRICE_ID')
+if not enterprise_price_id: missing_vars.append('STRIPE_ENTERPRISE_PRICE_ID')
+
+if missing_vars:
+    # Usar print porque el logger puede no estar configurado. En producción, esto debería detener el servidor.
+    print(f"FATAL: Faltan variables de entorno de Stripe obligatorias: {', '.join(missing_vars)}")
 
 # Mapeo de Price ID de Stripe a planes internos
 PRICE_ID_TO_PLAN = {
-    os.getenv('STRIPE_PRO_PRICE_ID'): 'pro',
-    os.getenv('STRIPE_ENTERPRISE_PRICE_ID'): 'enterprise',
+    pro_price_id: 'pro',
+    enterprise_price_id: 'enterprise',
 }
+# Eliminar claves nulas si falta algún ID de precio, para evitar errores.
+PRICE_ID_TO_PLAN = {k: v for k, v in PRICE_ID_TO_PLAN.items() if k is not None}
+
 
 @app.route('/stripe-webhook', methods=['POST'])
 def stripe_webhook():
