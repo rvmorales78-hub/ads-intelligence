@@ -447,21 +447,21 @@ def save_daily_actions_summary(user_id: int, date: str, kill_count: int, fix_cou
     try:
         with managed_cursor(commit=True) as cursor:
             if IS_POSTGRES:
-            cursor.execute("""
-                INSERT INTO user_actions_daily (user_id, date, kill_count, fix_count, scale_count, account_score, total_actions)
-                VALUES (%s, %s, %s, %s, %s, %s, %s)
-                ON CONFLICT (user_id, date) DO UPDATE SET
-                kill_count = EXCLUDED.kill_count,
-                fix_count = EXCLUDED.fix_count,
-                scale_count = EXCLUDED.scale_count,
-                account_score = EXCLUDED.account_score,
-                total_actions = EXCLUDED.total_actions
-            """, (user_id, date, kill_count, fix_count, scale_count, account_score, total_actions))
+                cursor.execute("""
+                    INSERT INTO user_actions_daily (user_id, date, kill_count, fix_count, scale_count, account_score, total_actions)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s)
+                    ON CONFLICT (user_id, date) DO UPDATE SET
+                    kill_count = EXCLUDED.kill_count,
+                    fix_count = EXCLUDED.fix_count,
+                    scale_count = EXCLUDED.scale_count,
+                    account_score = EXCLUDED.account_score,
+                    total_actions = EXCLUDED.total_actions
+                """, (user_id, date, kill_count, fix_count, scale_count, account_score, total_actions))
             else:
-            cursor.execute("""
-                INSERT OR REPLACE INTO user_actions_daily (user_id, date, kill_count, fix_count, scale_count, account_score, total_actions)
-                VALUES (?, ?, ?, ?, ?, ?, ?)
-            """, (user_id, date, kill_count, fix_count, scale_count, account_score, total_actions))
+                cursor.execute("""
+                    INSERT OR REPLACE INTO user_actions_daily (user_id, date, kill_count, fix_count, scale_count, account_score, total_actions)
+                    VALUES (?, ?, ?, ?, ?, ?, ?)
+                """, (user_id, date, kill_count, fix_count, scale_count, account_score, total_actions))
     except Exception as e:
         print(f"Error saving daily actions: {e}")
 
