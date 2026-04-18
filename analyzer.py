@@ -1,4 +1,4 @@
-﻿﻿"""Análisis de KPIs y recomendaciones inteligentes por tipo de campaña."""
+"""Análisis de KPIs y recomendaciones inteligentes por tipo de campaña."""
 
 import os
 import numpy as np
