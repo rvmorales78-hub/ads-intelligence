@@ -150,16 +150,16 @@ def login_page():
 
     st.markdown(AUTH_CSS, unsafe_allow_html=True)
 
+    # ---- CARD WRAPPER ----
+    st.markdown('<div class="auth-card">', unsafe_allow_html=True)
+
     # ---- LOGO ----
     st.markdown("""
-    <div class="auth-logo">
+    <div class="auth-logo" style="margin-bottom: 1.5rem; margin-top: 0.5rem;">
         <img src="https://impulsolocal.com.mx/wp-content/uploads/2026/04/Logo-1.png" class="auth-logo-mark" alt="Logo">
         Ads Intelligence
     </div>
     """, unsafe_allow_html=True)
-
-    # ---- CARD WRAPPER ----
-    st.markdown('<div class="auth-card">', unsafe_allow_html=True)
 
     # Tabs
     tab1, tab2 = st.tabs(["Cliente", "Administrador"])
@@ -208,6 +208,10 @@ def login_page():
                     st.rerun()
                 else:
                     st.error("Email o contraseña incorrectos")
+        
+        st.markdown("<br>", unsafe_allow_html=True)
+        if st.button("¿Olvidaste tu contraseña?", key="forgot_pass_client", use_container_width=True):
+            st.info("Para recuperar tu contraseña, envíanos un correo a soporte@adsintelligence.com o contacta a tu administrador.")
 
     # ---- TAB ADMIN ----
     with tab2:
@@ -249,16 +253,16 @@ def register_page():
     """Pantalla de registro de usuario con diseño premium dark luxury"""
     st.markdown(AUTH_CSS, unsafe_allow_html=True)
 
+    # ---- CARD WRAPPER ----
+    st.markdown('<div class="auth-card">', unsafe_allow_html=True)
+
     # ---- LOGO ----
     st.markdown("""
-    <div class="auth-logo">
+    <div class="auth-logo" style="margin-bottom: 1.5rem; margin-top: 0.5rem;">
         <img src="https://impulsolocal.com.mx/wp-content/uploads/2026/04/Logo-1.png" class="auth-logo-mark" alt="Logo">
         Ads Intelligence
     </div>
     """, unsafe_allow_html=True)
-
-    # ---- CARD WRAPPER ----
-    st.markdown('<div class="auth-card">', unsafe_allow_html=True)
 
     st.markdown("""
     <div class="auth-card-title">Crea tu cuenta</div>
@@ -294,7 +298,7 @@ def register_page():
     """, unsafe_allow_html=True)
 
     st.markdown("""
-    <div style="text-align:center; margin-top:1.5rem; font-size:0.85rem; color:rgba(232,230,240,0.5);">
+    <div style="text-align:center; margin-top:1.5rem; font-size:0.85rem; color:rgba(28,30,33,0.5);">
         ¿Ya tienes una cuenta?
     </div>
     """, unsafe_allow_html=True)
@@ -341,7 +345,7 @@ def require_admin():
         <div style="background:rgba(252,129,129,0.07); border:1px solid rgba(252,129,129,0.2);
              border-radius:14px; padding:1.25rem; font-size:0.875rem; color:#FC8181; text-align:center;">
             <strong>Acceso denegado</strong><br>
-            <span style="color:rgba(232,230,240,0.4); font-size:0.8rem;">Se requieren privilegios de administrador.</span>
+            <span style="color:rgba(28,30,33,0.4); font-size:0.8rem;">Se requieren privilegios de administrador.</span>
         </div>
         """, unsafe_allow_html=True)
         st.stop()

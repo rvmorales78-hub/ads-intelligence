@@ -27,7 +27,7 @@ st.markdown("""
 
     /* Centra el contenido principal */
     section.main > div { max-width: 1280px; margin: 0 auto; padding: 0 1.5rem; }
-    .stApp { background: #080810; }
+    .stApp { background: #FFFFFF; }
     .block-container { 
         padding-top: 0 !important; 
         max-width: 1280px !important; 
@@ -63,9 +63,9 @@ if st.session_state.page == 'demo':
     st.markdown("""
     <div style='padding: 4rem 0; color: #E8E6F0;'>
         <h1 style='font-size: 2.5rem; margin-bottom: 1rem;'>Demo de Ads Intelligence</h1>
-        <p style='max-width: 680px; color: rgba(232,230,240,0.75); margin-bottom: 1.5rem;'>Aquí puedes mostrar un video de demo, capturas de pantalla o un dashboard de ejemplo para que los usuarios vean la experiencia antes de registrarse.</p>
-        <div style='background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 2rem;'>
-            <p style='color: rgba(232,230,240,0.8);'>Demo no disponible aún. Esta sección se puede extender con un video incrustado o un walkthrough interactivo.</p>
+        <p style='max-width: 680px; color: rgba(28,30,33,0.75); margin-bottom: 1.5rem;'>Aquí puedes mostrar un video de demo, capturas de pantalla o un dashboard de ejemplo para que los usuarios vean la experiencia antes de registrarse.</p>
+        <div style='background: rgba(0,0,0,0.04); border: 1px solid rgba(0,0,0,0.1); border-radius: 20px; padding: 2rem;'>
+            <p style='color: rgba(28,30,33,0.8);'>Demo no disponible aún. Esta sección se puede extender con un video incrustado o un walkthrough interactivo.</p>
         </div>
         <button style='margin-top: 2rem; background: #8A6AE0; color: white; border: none; padding: 0.85rem 1.5rem; border-radius: 999px; cursor: pointer;' onclick="window.location.href='?';">Volver al landing</button>
     </div>
@@ -78,16 +78,16 @@ if st.session_state.page == 'strategy':
         [data-testid="stSidebar"] { display: none; }
         [data-testid="stSidebarCollapsedControl"] { display: none; }
         .stApp > header { display: none; }
-        .stApp { background: #080810; color: #E8E6F0; font-family: 'Satoshi', sans-serif; }
+        .stApp { background: #FFFFFF; color: #E8E6F0; font-family: 'Satoshi', sans-serif; }
         .block-container { max-width: 900px !important; padding-top: 3rem !important; padding-bottom: 4rem !important; }
-        .strategy-box { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 20px; padding: 3rem; margin-top: 1rem; }
-        .strategy-box h1 { color: #F5F3FF; font-size: 2.2rem; margin-bottom: 1rem; line-height: 1.2; }
-        .strategy-box h2 { color: #A890F0; margin-top: 2.5rem; font-size: 1.6rem; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 0.5rem; }
+        .strategy-box { background: rgba(0,0,0,0.02); border: 1px solid rgba(0,0,0,0.04); border-radius: 20px; padding: 3rem; margin-top: 1rem; }
+        .strategy-box h1 { color: #1c1e21; font-size: 2.2rem; margin-bottom: 1rem; line-height: 1.2; }
+        .strategy-box h2 { color: #A890F0; margin-top: 2.5rem; font-size: 1.6rem; border-bottom: 1px solid rgba(0,0,0,0.04); padding-bottom: 0.5rem; }
         .strategy-box h3 { color: #C9A84C; margin-top: 1.5rem; font-size: 1.2rem; }
-        .strategy-box p, .strategy-box li { color: rgba(232,230,240,0.7); line-height: 1.6; margin-bottom: 0.8rem; font-size: 0.95rem; }
-        .strategy-box hr { border-color: rgba(255,255,255,0.1); margin: 2rem 0; }
-        .back-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; color: #F5F3FF; text-decoration: none; font-size: 0.9rem; transition: background 0.2s; }
-        .back-btn:hover { background: rgba(255,255,255,0.1); }
+        .strategy-box p, .strategy-box li { color: rgba(28,30,33,0.7); line-height: 1.6; margin-bottom: 0.8rem; font-size: 0.95rem; }
+        .strategy-box hr { border-color: rgba(0,0,0,0.1); margin: 2rem 0; }
+        .back-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: rgba(0,0,0,0.05); border-radius: 8px; color: #1c1e21; text-decoration: none; font-size: 0.9rem; transition: background 0.2s; }
+        .back-btn:hover { background: rgba(0,0,0,0.1); }
     </style>
     <a href='?' class='back-btn'>← Volver al Inicio</a>
     <div class='strategy-box'>
@@ -704,7 +704,7 @@ with c2:
         st.session_state.page = 'register' # Este botón ahora va al registro
         st.rerun()
 st.markdown("""
-<div style="display:flex; justify-content:center; gap:3rem; padding: 3rem 0 1rem; border-top: 1px solid rgba(255,255,255,0.06); margin-top: 2rem;">
+<div style="display:flex; justify-content:center; gap:3rem; padding: 3rem 0 1rem; border-top: 1px solid rgba(0,0,0,0.04); margin-top: 2rem;">
     <div class="stat-item">
         <div class="stat-number">+340%</div>
         <div class="stat-label">ROI promedio</div>
@@ -789,7 +789,7 @@ st.markdown("""
             <li><span class="check">✓</span> Dashboard básico</li>
             <li><span class="check">✓</span> Alertas por email</li>
         </ul>
-        <div style="font-size: 0.7rem; color: rgba(232,230,240,0.4); margin-top: 1rem; line-height: 1.4;">
+        <div style="font-size: 0.7rem; color: rgba(28,30,33,0.4); margin-top: 1rem; line-height: 1.4;">
             *Si tienes varias, analizaremos la de mayor inversión.
         </div>
     </div>

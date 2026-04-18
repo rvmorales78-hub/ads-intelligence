@@ -746,7 +746,7 @@ def render_performance_table(df: pd.DataFrame, plan: str, plan_limits: dict):
     if not plan_limits['can_see_alerts']:
         st.markdown("""
         <div style="background:rgba(138,106,224,0.07); border:1px solid rgba(138,106,224,0.18);
-             border-radius:12px; padding:1rem; font-size:0.82rem; color:rgba(232,230,240,0.55); margin-top:1rem;">
+             border-radius:12px; padding:1rem; font-size:0.82rem; color:rgba(28,30,33,0.55); margin-top:1rem;">
             ✦ Mejora a <strong style="color:#A890F0;">PRO</strong> o <strong style="color:#C9A84C;">ENTERPRISE</strong>
             para ver recomendaciones personalizadas por anuncio.
         </div>
@@ -940,8 +940,8 @@ def render_account_score(score_data: dict, df: pd.DataFrame, date_from: str, dat
             f'<div style="text-align:center;padding:1.25rem 0 0.5rem;">'
             f'<div style="font-size:2.8rem;font-weight:900;color:{color};line-height:1;">{score}</div>'
             f'<div style="font-size:1rem;font-weight:700;color:{color};margin-top:0.15rem;">{grade}</div>'
-            f'<div style="font-size:0.6rem;color:rgba(232,230,240,0.3);text-transform:uppercase;'
-            f'letter-spacing:0.12em;margin-top:0.3rem;">Account Score</div>'
+            f'<div style="font-size:0.6rem;color:rgba(28,30,33,0.3);text-transform:uppercase;'
+            f'letter-spacing:0.12em;margin-top:0.3rem;">Puntuación de Cuenta</div>'
             f'</div>',
             unsafe_allow_html=True
         )
@@ -949,7 +949,7 @@ def render_account_score(score_data: dict, df: pd.DataFrame, date_from: str, dat
     with c_bars:
         st.markdown(
             '<div style="font-size:0.65rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;'
-            'color:rgba(232,230,240,0.3);margin-bottom:0.6rem;margin-top:1rem;">Desglose del score</div>',
+            'color:rgba(28,30,33,0.3);margin-bottom:0.6rem;margin-top:1rem;">Desglose del score</div>',
             unsafe_allow_html=True
         )
         for lbl, val, mx in [
@@ -962,11 +962,11 @@ def render_account_score(score_data: dict, df: pd.DataFrame, date_from: str, dat
             st.markdown(
                 f'<div style="margin-bottom:0.45rem;">'
                 f'<div style="display:flex;justify-content:space-between;font-size:0.68rem;'
-                f'color:rgba(232,230,240,0.4);margin-bottom:0.2rem;">'
+                f'color:rgba(28,30,33,0.4);margin-bottom:0.2rem;">'
                 f'<span>{lbl}</span>'
-                f'<span style="color:rgba(232,230,240,0.7);">{val}/{mx}</span>'
+                f'<span style="color:rgba(28,30,33,0.7);">{val}/{mx}</span>'
                 f'</div>'
-                f'<div style="background:rgba(255,255,255,0.06);border-radius:4px;height:4px;">'
+                f'<div style="background:rgba(0,0,0,0.04);border-radius:4px;height:4px;">'
                 f'<div style="width:{pct}%;background:{color};border-radius:4px;height:4px;"></div>'
                 f'</div>'
                 f'</div>',
@@ -976,11 +976,11 @@ def render_account_score(score_data: dict, df: pd.DataFrame, date_from: str, dat
     with c_info:
         st.markdown(
             f'<div style="padding:1rem 0;text-align:right;">'
-            f'<div style="font-size:0.7rem;color:rgba(232,230,240,0.3);margin-bottom:0.3rem;">'
+            f'<div style="font-size:0.7rem;color:rgba(28,30,33,0.3);margin-bottom:0.3rem;">'
             f'{date_from} al {date_to}</div>'
-            f'<div style="font-size:0.82rem;color:rgba(232,230,240,0.55);margin-bottom:0.5rem;">'
+            f'<div style="font-size:0.82rem;color:rgba(28,30,33,0.55);margin-bottom:0.5rem;">'
             f'{count} {level_label} analizados</div>'
-            f'<div style="font-size:0.84rem;color:rgba(232,230,240,0.8);line-height:1.4;">'
+            f'<div style="font-size:0.84rem;color:rgba(28,30,33,0.8);line-height:1.4;">'
             f'{insight}</div>'
             f'</div>',
             unsafe_allow_html=True
@@ -1091,14 +1091,14 @@ def render_spend_charts(df: pd.DataFrame, level: str):
             marker=dict(color=colors, line=dict(width=0)),
             text=[f'${v:,.0f}' for v in chart_df['spend']],
             textposition='outside',
-            textfont=dict(color='rgba(232,230,240,0.55)', size=10, family='Satoshi')
+            textfont=dict(color='rgba(28,30,33,0.55)', size=10, family='Satoshi')
         ))
         fig.update_layout(
             paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
             margin=dict(l=0, r=55, t=8, b=8), height=260,
             xaxis=dict(showgrid=False, showticklabels=False, zeroline=False),
             yaxis=dict(gridcolor='rgba(255,255,255,0)',
-                       tickfont=dict(color='rgba(232,230,240,0.55)', size=10, family='Satoshi'),
+                       tickfont=dict(color='rgba(28,30,33,0.55)', size=10, family='Satoshi'),
                        ticksuffix='  '),
             font=dict(family='Satoshi, sans-serif'),
         )
@@ -1130,11 +1130,11 @@ def render_spend_charts(df: pd.DataFrame, level: str):
                     size=max(9, min(float(row['spend']) / 8, 36)),
                     color=freq_color(float(row.get('frequency', 0))),
                     opacity=0.82,
-                    line=dict(color='rgba(255,255,255,0.08)', width=1)
+                    line=dict(color='rgba(0,0,0,0.08)', width=1)
                 ),
                 text=[row[name_col]],
                 textposition='top center',
-                textfont=dict(color='rgba(232,230,240,0.45)', size=9, family='Satoshi'),
+                textfont=dict(color='rgba(28,30,33,0.45)', size=9, family='Satoshi'),
                 showlegend=False,
                 hovertemplate=(
                     f"<b>{row[name_col]}</b><br>"
@@ -1144,27 +1144,27 @@ def render_spend_charts(df: pd.DataFrame, level: str):
                 )
             ))
 
-        fig2.add_hline(y=1.0, line_dash='dot', line_color='rgba(255,255,255,0.12)',
+        fig2.add_hline(y=1.0, line_dash='dot', line_color='rgba(0,0,0,0.12)',
                        annotation_text='Benchmark 1%',
-                       annotation_font=dict(color='rgba(232,230,240,0.2)', size=9),
+                       annotation_font=dict(color='rgba(28,30,33,0.2)', size=9),
                        annotation_position='bottom right')
         fig2.update_layout(
             paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
             margin=dict(l=10, r=10, t=8, b=30), height=260,
-            xaxis=dict(title=dict(text='Gasto ($)', font=dict(color='rgba(232,230,240,0.3)', size=9)),
-                       gridcolor='rgba(255,255,255,0.04)',
-                       tickfont=dict(color='rgba(232,230,240,0.4)', size=9, family='Satoshi'),
+            xaxis=dict(title=dict(text='Gasto ($)', font=dict(color='rgba(28,30,33,0.3)', size=9)),
+                       gridcolor='rgba(0,0,0,0.04)',
+                       tickfont=dict(color='rgba(28,30,33,0.4)', size=9, family='Satoshi'),
                        zeroline=False),
-            yaxis=dict(title=dict(text='CTR (%)', font=dict(color='rgba(232,230,240,0.3)', size=9)),
-                       gridcolor='rgba(255,255,255,0.04)',
-                       tickfont=dict(color='rgba(232,230,240,0.4)', size=9, family='Satoshi'),
+            yaxis=dict(title=dict(text='CTR (%)', font=dict(color='rgba(28,30,33,0.3)', size=9)),
+                       gridcolor='rgba(0,0,0,0.04)',
+                       tickfont=dict(color='rgba(28,30,33,0.4)', size=9, family='Satoshi'),
                        zeroline=False),
             font=dict(family='Satoshi, sans-serif'),
         )
         st.plotly_chart(fig2, use_container_width=True, config={'displayModeBar': False})
 
     st.markdown("""
-    <div style="display:flex;gap:1.5rem;font-size:0.69rem;color:rgba(232,230,240,0.38);
+    <div style="display:flex;gap:1.5rem;font-size:0.69rem;color:rgba(28,30,33,0.38);
          margin-top:-0.75rem;margin-bottom:0.5rem;padding-left:52%;">
         <span><span style="color:#64DC96;">●</span> Frecuencia ≤2 (saludable)</span>
         <span><span style="color:#FBbf24;">●</span> 2–4 (monitorear)</span>
@@ -1178,7 +1178,7 @@ def render_priority_queue(actions: list):
         return
     st.markdown('<div class="section-label">Inteligencia</div>', unsafe_allow_html=True)
     st.markdown('<div class="section-title">Cola de Prioridades</div>', unsafe_allow_html=True)
-    st.markdown('<div style="font-size:0.8rem;color:rgba(232,230,240,0.4);margin-bottom:1rem;">Acciones ordenadas por impacto. Completa de arriba hacia abajo.</div>', unsafe_allow_html=True)
+    st.markdown('<div style="font-size:0.8rem;color:rgba(28,30,33,0.4);margin-bottom:1rem;">Acciones ordenadas por impacto. Completa de arriba hacia abajo.</div>', unsafe_allow_html=True)
 
     for i, a in enumerate(actions, 1):
         st.markdown(f"""
@@ -1235,7 +1235,7 @@ def render_frequency_panel(df: pd.DataFrame, level: str):
                     <span class="freq-name">{name}</span>
                     <span class="freq-badge" style="color:{clr};border-color:{bc};">{status}</span>
                 </div>
-                <div style="font-size:0.71rem;color:rgba(232,230,240,0.35);margin-top:0.3rem;">
+                <div style="font-size:0.71rem;color:rgba(28,30,33,0.35);margin-top:0.3rem;">
                     {_fmt_big(impr)} impresiones · {_fmt_big(reach)} alcance · ${spend:,.0f} gastado
                 </div>
                 <div class="freq-bar-track">
@@ -1379,7 +1379,7 @@ def render_campaign_cards_v2(detailed: dict, level: str, plan_limits: dict):
                     </div>
                     <div class="camp-v2-metric">
                         <div class="camp-v2-lbl">ROAS</div>
-                        <div class="camp-v2-val" style="color:{'#64DC96' if roas >= 2 else '#FBbf24' if roas >= 1 else '#FC8181' if roas > 0 else '#F5F3FF'};">{f'{roas:.2f}x' if roas > 0 else 'N/A'}</div>
+                        <div class="camp-v2-val" style="color:{'#64DC96' if roas >= 2 else '#FBbf24' if roas >= 1 else '#FC8181' if roas > 0 else '#1c1e21'};">{f'{roas:.2f}x' if roas > 0 else 'N/A'}</div>
                         <div class="camp-v2-sub">retorno sobre inversión</div>
                     </div>
                     <div class="camp-v2-metric">
@@ -1387,27 +1387,27 @@ def render_campaign_cards_v2(detailed: dict, level: str, plan_limits: dict):
                         <div class="camp-v2-val" style="font-size:0.9rem;">{get_objective_label(camp.get('objective',''))}</div>
                     </div>
                 </div>
-                <div style="border-top:1px solid rgba(255,255,255,0.06);padding-top:0.75rem;
+                <div style="border-top:1px solid rgba(0,0,0,0.04);padding-top:0.75rem;
                      display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;">
                     <div>
                         <div style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;
-                             color:rgba(232,230,240,0.3);margin-bottom:0.25rem;">CTR</div>
+                             color:rgba(28,30,33,0.3);margin-bottom:0.25rem;">CTR</div>
                         <div style="font-size:0.82rem;color:{ctr_c};">{camp['ctr_emoji']} {camp['ctr_message']}</div>
                     </div>
                     <div>
                         <div style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;
-                             color:rgba(232,230,240,0.3);margin-bottom:0.25rem;">CPC</div>
-                        <div style="font-size:0.82rem;color:rgba(232,230,240,0.7);">{camp['cpc_emoji']} {camp['cpc_message']}</div>
+                             color:rgba(28,30,33,0.3);margin-bottom:0.25rem;">CPC</div>
+                        <div style="font-size:0.82rem;color:rgba(28,30,33,0.7);">{camp['cpc_emoji']} {camp['cpc_message']}</div>
                     </div>
                     <div>
                         <div style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;
-                             color:rgba(232,230,240,0.3);margin-bottom:0.25rem;">Frecuencia</div>
+                             color:rgba(28,30,33,0.3);margin-bottom:0.25rem;">Frecuencia</div>
                         <div style="font-size:0.82rem;color:{freq_c};">{camp['frequency_message']}</div>
                     </div>
                     <div>
                         <div style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;
-                             color:rgba(232,230,240,0.3);margin-bottom:0.25rem;">CPM estimado</div>
-                        <div style="font-size:0.82rem;color:rgba(232,230,240,0.7);">
+                             color:rgba(28,30,33,0.3);margin-bottom:0.25rem;">CPM estimado</div>
+                        <div style="font-size:0.82rem;color:rgba(28,30,33,0.7);">
                             {f'${spend / impr * 1000:.2f} por mil imp.' if impr > 0 else 'N/A'}</div>
                     </div>
                 </div>
@@ -1426,7 +1426,7 @@ def render_campaign_cards_v2(detailed: dict, level: str, plan_limits: dict):
                 st.markdown("""
                 <div style="background:rgba(138,106,224,0.07);border:1px solid rgba(138,106,224,0.18);
                      border-radius:10px;padding:0.75rem 1rem;font-size:0.78rem;
-                     color:rgba(232,230,240,0.45);margin-top:0.5rem;">
+                     color:rgba(28,30,33,0.45);margin-top:0.5rem;">
                     ✦ Actualiza a <strong style="color:#A890F0;">PRO</strong> para ver recomendaciones y acciones específicas.
                 </div>
                 """, unsafe_allow_html=True)
@@ -1440,7 +1440,7 @@ def render_action_center(actions: list):
              border-radius:16px; padding:2rem; text-align:center;">
             <div style="font-family:'Satoshi',sans-serif; font-size:1.1rem; font-weight:700;
                  color:#A890F0; margin-bottom:0.5rem;">✅ Todo bajo control</div>
-            <div style="font-size:0.85rem; color:rgba(232,230,240,0.4);">
+            <div style="font-size:0.85rem; color:rgba(28,30,33,0.4);">
                 No hay acciones urgentes pendientes. Tus campañas están funcionando correctamente.
             </div>
         </div>
@@ -1463,7 +1463,7 @@ def render_action_center(actions: list):
 
     st.markdown('<div class="section-label">Acción</div>', unsafe_allow_html=True)
     st.markdown('<div class="section-title">🚨 Acciones Prioritarias</div>', unsafe_allow_html=True)
-    st.markdown('<div style="font-size:0.8rem;color:rgba(232,230,240,0.4);margin-bottom:1.5rem;">Ordenadas por impacto. Enfócate en Kill primero, luego Fix, finalmente Scale.</div>', unsafe_allow_html=True)
+    st.markdown('<div style="font-size:0.8rem;color:rgba(28,30,33,0.4);margin-bottom:1.5rem;">Ordenadas por impacto. Enfócate en Kill primero, luego Fix, finalmente Scale.</div>', unsafe_allow_html=True)
 
     # Contadores
     col1, col2, col3 = st.columns(3)
@@ -1472,7 +1472,7 @@ def render_action_center(actions: list):
         <div style="background:rgba(252,129,129,0.07); border:1px solid rgba(252,129,129,0.2);
              border-radius:12px; padding:1rem; text-align:center;">
             <div style="font-size:1.5rem; font-weight:800; color:#FC8181;">{len(kill_actions)}</div>
-            <div style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em; color:#FC8181;">Kill</div>
+            <div style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em; color:#FC8181;">Detener</div>
         </div>
         """, unsafe_allow_html=True)
     with col2:
@@ -1480,7 +1480,7 @@ def render_action_center(actions: list):
         <div style="background:rgba(251,191,36,0.07); border:1px solid rgba(251,191,36,0.2);
              border-radius:12px; padding:1rem; text-align:center;">
             <div style="font-size:1.5rem; font-weight:800; color:#FBbf24;">{len(fix_actions)}</div>
-            <div style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em; color:#FBbf24;">Fix</div>
+            <div style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em; color:#FBbf24;">Corregir</div>
         </div>
         """, unsafe_allow_html=True)
     with col3:
@@ -1488,7 +1488,7 @@ def render_action_center(actions: list):
         <div style="background:rgba(100,220,150,0.07); border:1px solid rgba(100,220,150,0.2);
              border-radius:12px; padding:1rem; text-align:center;">
             <div style="font-size:1.5rem; font-weight:800; color:#64DC96;">{len(scale_actions)}</div>
-            <div style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em; color:#64DC96;">Scale</div>
+            <div style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em; color:#64DC96;">Escalar</div>
         </div>
         """, unsafe_allow_html=True)
 
@@ -1504,8 +1504,8 @@ def render_action_center(actions: list):
                 <div style="display:flex; align-items:start; gap:0.75rem;">
                     <div style="font-size:1.2rem;">{a['icon']}</div>
                     <div style="flex:1;">
-                        <div style="font-weight:700; color:#F5F3FF; font-size:0.9rem;">{a['title']}</div>
-                        <div style="font-size:0.8rem; color:rgba(232,230,240,0.55); margin:0.25rem 0;">{a['detail']}</div>
+                        <div style="font-weight:700; color:#1c1e21; font-size:0.9rem;">{a['title']}</div>
+                        <div style="font-size:0.8rem; color:rgba(28,30,33,0.55); margin:0.25rem 0;">{a['detail']}</div>
                         <div style="display:flex; gap:0.75rem; margin-top:0.5rem; font-size:0.7rem;">
                             <span style="color:#FC8181;">Confidence: {a.get('confidence', 'Medium')}</span>
                             <span style="color:#FBbf24;">Impact: {a.get('impact', 'Medium')}</span>
@@ -1530,8 +1530,8 @@ def render_action_center(actions: list):
                 <div style="display:flex; align-items:start; gap:0.75rem;">
                     <div style="font-size:1.2rem;">{a['icon']}</div>
                     <div style="flex:1;">
-                        <div style="font-weight:700; color:#F5F3FF; font-size:0.9rem;">{a['title']}</div>
-                        <div style="font-size:0.8rem; color:rgba(232,230,240,0.55); margin:0.25rem 0;">{a['detail']}</div>
+                        <div style="font-weight:700; color:#1c1e21; font-size:0.9rem;">{a['title']}</div>
+                        <div style="font-size:0.8rem; color:rgba(28,30,33,0.55); margin:0.25rem 0;">{a['detail']}</div>
                         <div style="display:flex; gap:0.75rem; margin-top:0.5rem; font-size:0.7rem;">
                             <span style="color:#FC8181;">Confidence: {a.get('confidence', 'Medium')}</span>
                             <span style="color:#FBbf24;">Impact: {a.get('impact', 'Medium')}</span>
@@ -1556,8 +1556,8 @@ def render_action_center(actions: list):
                 <div style="display:flex; align-items:start; gap:0.75rem;">
                     <div style="font-size:1.2rem;">{a['icon']}</div>
                     <div style="flex:1;">
-                        <div style="font-weight:700; color:#F5F3FF; font-size:0.9rem;">{a['title']}</div>
-                        <div style="font-size:0.8rem; color:rgba(232,230,240,0.55); margin:0.25rem 0;">{a['detail']}</div>
+                        <div style="font-weight:700; color:#1c1e21; font-size:0.9rem;">{a['title']}</div>
+                        <div style="font-size:0.8rem; color:rgba(28,30,33,0.55); margin:0.25rem 0;">{a['detail']}</div>
                         <div style="display:flex; gap:0.75rem; margin-top:0.5rem; font-size:0.7rem;">
                             <span style="color:#FC8181;">Confidence: {a.get('confidence', 'Medium')}</span>
                             <span style="color:#FBbf24;">Impact: {a.get('impact', 'Medium')}</span>
@@ -1585,39 +1585,39 @@ def render_account_status_simple(score_data: dict):
         status_emoji = "✅"
         status_color = "#64DC96"
     elif score >= 55:
-        status = "Needs Optimization"
+        status = "Necesita Optimización"
         status_emoji = "⚠️"
         status_color = "#FBbf24"
     else:
-        status = "Requires Attention"
+        status = "Requiere Atención"
         status_emoji = "🔴"
         status_color = "#FC8181"
 
     st.markdown('<div class="section-label">Estado</div>', unsafe_allow_html=True)
-    st.markdown('<div class="section-title">📊 Account Status</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-title">📊 Estado de la Cuenta</div>', unsafe_allow_html=True)
 
     col1, col2, col3 = st.columns([1, 1, 2])
     with col1:
         st.markdown(f"""
         <div style="text-align:center;">
             <div style="font-size:2.5rem; font-weight:900; color:{color}; line-height:1;">{score}</div>
-            <div style="font-size:0.7rem; color:rgba(232,230,240,0.3); text-transform:uppercase;
-                 letter-spacing:0.1em; margin-top:0.2rem;">Score</div>
+            <div style="font-size:0.7rem; color:rgba(28,30,33,0.3); text-transform:uppercase;
+                 letter-spacing:0.1em; margin-top:0.2rem;">Puntuación</div>
         </div>
         """, unsafe_allow_html=True)
     with col2:
         st.markdown(f"""
         <div style="text-align:center;">
             <div style="font-size:1.8rem; font-weight:900; color:{color}; line-height:1;">{grade}</div>
-            <div style="font-size:0.7rem; color:rgba(232,230,240,0.3); text-transform:uppercase;
-                 letter-spacing:0.1em; margin-top:0.2rem;">Grade</div>
+            <div style="font-size:0.7rem; color:rgba(28,30,33,0.3); text-transform:uppercase;
+                 letter-spacing:0.1em; margin-top:0.2rem;">Calificación</div>
         </div>
         """, unsafe_allow_html=True)
     with col3:
         st.markdown(f"""
         <div style="text-align:center; padding-top:0.5rem;">
             <div style="font-size:1.1rem; font-weight:700; color:{status_color};">{status_emoji} {status}</div>
-            <div style="font-size:0.75rem; color:rgba(232,230,240,0.4); margin-top:0.25rem;">
+            <div style="font-size:0.75rem; color:rgba(28,30,33,0.4); margin-top:0.25rem;">
                 {f"{score}/100 - "}{'Excelente rendimiento' if score >= 75 else 'Hay margen de mejora' if score >= 55 else 'Requiere atención urgente'}
             </div>
         </div>
@@ -1635,44 +1635,44 @@ def render_top_insights(df: pd.DataFrame):
     if 'cpc' in df.columns:
         avg_cpc = df['cpc'].mean()
         if avg_cpc > 1.0:
-            insights.append(("💰", "CPC is 35% above average", f"Average CPC: ${avg_cpc:.2f}"))
+            insights.append(("💰", "CPC es 35% superior al promedio", f"CPC Promedio: ${avg_cpc:.2f}"))
         elif avg_cpc < 0.3:
-            insights.append(("✅", "CPC is excellent", f"Average CPC: ${avg_cpc:.2f}"))
+            insights.append(("✅", "CPC es excelente", f"CPC Promedio: ${avg_cpc:.2f}"))
 
     # CTR analysis
     if 'ctr' in df.columns:
         avg_ctr = df['ctr'].mean()
         if avg_ctr < 1.0:
-            insights.append(("⚠️", "CTR below benchmark", f"Average CTR: {avg_ctr:.1f}%"))
+            insights.append(("⚠️", "CTR por debajo del benchmark", f"CTR Promedio: {avg_ctr:.1f}%"))
         elif avg_ctr > 2.5:
-            insights.append(("🚀", "CTR above benchmark", f"Average CTR: {avg_ctr:.1f}%"))
+            insights.append(("🚀", "CTR por encima del benchmark", f"CTR Promedio: {avg_ctr:.1f}%"))
 
     # Frequency analysis
     if 'frequency' in df.columns:
         saturated = df[df['frequency'] > 4]
         if len(saturated) > 0:
-            insights.append(("🔄", f"{len(saturated)} campaigns saturated", "Frequency > 4x"))
+            insights.append(("🔄", f"{len(saturated)} campañas saturadas", "Frecuencia > 4x"))
 
     # ROAS analysis
     if 'roas' in df.columns:
         avg_roas = df['roas'].mean()
         if avg_roas > 0:
             if avg_roas < 1:
-                insights.append(("🔴", "ROAS below 1x", f"Average ROAS: {avg_roas:.1f}x"))
+                insights.append(("🔴", "ROAS inferior a 1x", f"ROAS Promedio: {avg_roas:.1f}x"))
             elif avg_roas >= 3:
-                insights.append(("✅", "Excellent ROAS", f"Average ROAS: {avg_roas:.1f}x"))
+                insights.append(("✅", "ROAS Excelente", f"ROAS Promedio: {avg_roas:.1f}x"))
 
     # Spend concentration
     if 'spend' in df.columns and len(df) > 1:
         top_3_pct = df.nlargest(3, 'spend')['spend'].sum() / df['spend'].sum() * 100
         if top_3_pct > 80:
-            insights.append(("🎯", "Budget highly concentrated", f"Top 3 campaigns: {top_3_pct:.0f}% of spend"))
+            insights.append(("🎯", "Presupuesto altamente concentrado", f"Top 3 campañas: {top_3_pct:.0f}% del gasto"))
 
     if not insights:
         return
 
     st.markdown('<div class="section-label">Insights</div>', unsafe_allow_html=True)
-    st.markdown('<div class="section-title">🔍 Top Insights</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-title">🔍 Insights Principales</div>', unsafe_allow_html=True)
 
     for emoji, title, detail in insights[:5]:  # Mostrar máximo 5
         st.markdown(f"""
@@ -1680,8 +1680,8 @@ def render_top_insights(df: pd.DataFrame):
              margin-bottom:0.5rem; display:flex; align-items:center; gap:0.75rem;">
             <div style="font-size:1.2rem;">{emoji}</div>
             <div style="flex:1;">
-                <div style="font-weight:700; color:#F5F3FF; font-size:0.85rem;">{title}</div>
-                <div style="font-size:0.75rem; color:rgba(232,230,240,0.5);">{detail}</div>
+                <div style="font-weight:700; color:#1c1e21; font-size:0.85rem;">{title}</div>
+                <div style="font-size:0.75rem; color:rgba(28,30,33,0.5);">{detail}</div>
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -1697,16 +1697,16 @@ def render_today_summary(user_id: int, actions: list, score_data: dict, last_upd
                 <div>
                     <div style="font-family:'Satoshi',sans-serif; font-size:0.9rem; font-weight:700;
                          color:#64DC96; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.25rem;">
-                        🔁 Today's Summary
+                        🔁 Resumen de Hoy
                     </div>
-                    <div style="font-size:1.1rem; font-weight:700; color:#F5F3FF;">✅ Everything looks good</div>
-                    <div style="font-size:0.8rem; color:rgba(232,230,240,0.4); margin-top:0.25rem;">
-                        No urgent actions needed today
+                    <div style="font-size:1.1rem; font-weight:700; color:#1c1e21;">✅ Todo se ve bien</div>
+                    <div style="font-size:0.8rem; color:rgba(28,30,33,0.4); margin-top:0.25rem;">
+                        No hay acciones urgentes hoy
                     </div>
                 </div>
                 <div style="text-align:right;">
-                    <div style="font-size:0.7rem; color:rgba(232,230,240,0.3);">Last update</div>
-                    <div style="font-size:0.8rem; color:#64DC96;">Just now</div>
+                    <div style="font-size:0.7rem; color:rgba(28,30,33,0.3);">Última actualización</div>
+                    <div style="font-size:0.8rem; color:#64DC96;">Justo ahora</div>
                 </div>
             </div>
         </div>
@@ -1733,17 +1733,17 @@ def render_today_summary(user_id: int, actions: list, score_data: dict, last_upd
 
     # Determinar estado general
     if kill_count > 0:
-        status = "⚠️ Needs Attention"
+        status = "⚠️ Necesita Atención"
         status_color = "#FBbf24"
     elif fix_count > 0:
-        status = "📊 Optimize"
+        status = "📊 Optimizar"
         status_color = "#60A5FA"
     else:
-        status = "✅ All Good"
+        status = "✅ Todo Bien"
         status_color = "#64DC96"
 
     # Formatear última actualización
-    update_text = last_update if last_update else "Just now"
+    update_text = last_update if last_update else "Justo ahora"
 
     st.markdown(f"""
     <div style="background:rgba(138,106,224,0.06); border:1px solid rgba(138,106,224,0.15);
@@ -1752,12 +1752,12 @@ def render_today_summary(user_id: int, actions: list, score_data: dict, last_upd
             <div>
                 <div style="font-family:'Satoshi',sans-serif; font-size:0.9rem; font-weight:700;
                      color:#A890F0; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.25rem;">
-                    🔁 Today's Summary
+                    🔁 Resumen de Hoy
                 </div>
                 <div style="font-size:1.1rem; font-weight:700; color:{status_color};">{status}</div>
             </div>
             <div style="text-align:right;">
-                <div style="font-size:0.7rem; color:rgba(232,230,240,0.3);">Last update</div>
+                <div style="font-size:0.7rem; color:rgba(28,30,33,0.3);">Última actualización</div>
                 <div style="font-size:0.8rem; color:#A890F0;">{update_text}</div>
             </div>
         </div>
@@ -1765,22 +1765,22 @@ def render_today_summary(user_id: int, actions: list, score_data: dict, last_upd
         <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1rem;">
             <div style="text-align:center;">
                 <div style="font-size:1.5rem; font-weight:800; color:#FC8181;">{kill_count}</div>
-                <div style="font-size:0.75rem; color:rgba(232,230,240,0.5);">to stop</div>
+                <div style="font-size:0.75rem; color:rgba(28,30,33,0.5);">para detener</div>
             </div>
             <div style="text-align:center;">
                 <div style="font-size:1.5rem; font-weight:800; color:#FBbf24;">{fix_count}</div>
-                <div style="font-size:0.75rem; color:rgba(232,230,240,0.5);">to fix</div>
+                <div style="font-size:0.75rem; color:rgba(28,30,33,0.5);">para corregir</div>
             </div>
             <div style="text-align:center;">
                 <div style="font-size:1.5rem; font-weight:800; color:#64DC96;">{scale_count}</div>
-                <div style="font-size:0.75rem; color:rgba(232,230,240,0.5);">to scale</div>
+                <div style="font-size:0.75rem; color:rgba(28,30,33,0.5);">para escalar</div>
             </div>
         </div>
 
-        <div style="margin-top:1rem; padding-top:1rem; border-top:1px solid rgba(255,255,255,0.08);">
-            <div style="font-size:0.8rem; color:rgba(232,230,240,0.5);">
-                Score today: <span style="color:#F5F3FF; font-weight:600;">{score_data['score']}/100</span>
-                • Total actions: <span style="color:#F5F3FF; font-weight:600;">{kill_count + fix_count + scale_count}</span>
+        <div style="margin-top:1rem; padding-top:1rem; border-top:1px solid rgba(0,0,0,0.08);">
+            <div style="font-size:0.8rem; color:rgba(28,30,33,0.5);">
+                Puntuación de hoy: <span style="color:#1c1e21; font-weight:600;">{score_data['score']}/100</span>
+                • Acciones totales: <span style="color:#1c1e21; font-weight:600;">{kill_count + fix_count + scale_count}</span>
             </div>
         </div>
     </div>
@@ -1799,16 +1799,16 @@ def render_progress_history(user_id: int):
         st.markdown("""
         <div style="background:rgba(138,106,224,0.05); border:1px solid rgba(138,106,224,0.1);
              border-radius:12px; padding:1.5rem; text-align:center;">
-            <div style="font-size:1rem; font-weight:700; color:#A890F0; margin-bottom:0.5rem;">🚀 Start Your Journey</div>
-            <div style="font-size:0.8rem; color:rgba(232,230,240,0.4);">
-                Complete your first action to start tracking progress
+            <div style="font-size:1rem; font-weight:700; color:#A890F0; margin-bottom:0.5rem;">🚀 Comienza tu Camino</div>
+            <div style="font-size:0.8rem; color:rgba(28,30,33,0.4);">
+                Completa tu primera acción para empezar a medir tu progreso
             </div>
         </div>
         """, unsafe_allow_html=True)
         return
 
     st.markdown('<div class="section-label">Progreso</div>', unsafe_allow_html=True)
-    st.markdown('<div class="section-title">📈 Your Progress</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-title">📈 Tu Progreso</div>', unsafe_allow_html=True)
 
     # Tarjetas de resumen
     col1, col2, col3 = st.columns(3)
@@ -1817,8 +1817,8 @@ def render_progress_history(user_id: int):
         <div style="background:rgba(100,220,150,0.07); border:1px solid rgba(100,220,150,0.15);
              border-radius:12px; padding:1rem; text-align:center;">
             <div style="font-size:1.5rem; font-weight:800; color:#64DC96;">{total_completed}</div>
-            <div style="font-size:0.7rem; color:rgba(232,230,240,0.5); text-transform:uppercase; letter-spacing:0.1em;">
-                Actions Completed
+            <div style="font-size:0.7rem; color:rgba(28,30,33,0.5); text-transform:uppercase; letter-spacing:0.1em;">
+                Acciones Completadas
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -1837,8 +1837,8 @@ def render_progress_history(user_id: int):
         <div style="background:rgba(138,106,224,0.07); border:1px solid rgba(138,106,224,0.15);
              border-radius:12px; padding:1rem; text-align:center;">
             <div style="font-size:1.5rem; font-weight:800; color:{improvement_color};">{improvement_text}</div>
-            <div style="font-size:0.7rem; color:rgba(232,230,240,0.5); text-transform:uppercase; letter-spacing:0.1em;">
-                Score Change (7d)
+            <div style="font-size:0.7rem; color:rgba(28,30,33,0.5); text-transform:uppercase; letter-spacing:0.1em;">
+                Cambio en Puntuación (7d)
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -1849,27 +1849,27 @@ def render_progress_history(user_id: int):
         <div style="background:rgba(96,165,250,0.07); border:1px solid rgba(96,165,250,0.15);
              border-radius:12px; padding:1rem; text-align:center;">
             <div style="font-size:1.5rem; font-weight:800; color:#60A5FA;">{recent_completed}</div>
-            <div style="font-size:0.7rem; color:rgba(232,230,240,0.5); text-transform:uppercase; letter-spacing:0.1em;">
-                This Week
+            <div style="font-size:0.7rem; color:rgba(28,30,33,0.5); text-transform:uppercase; letter-spacing:0.1em;">
+                Esta Semana
             </div>
         </div>
         """, unsafe_allow_html=True)
 
     # Mostrar últimas acciones completadas
     if completed_actions:
-        st.markdown('<div style="margin-top:1.5rem; font-size:0.8rem; color:rgba(232,230,240,0.4);">Recently completed:</div>', unsafe_allow_html=True)
+        st.markdown('<div style="margin-top:1.5rem; font-size:0.8rem; color:rgba(28,30,33,0.4);">Completadas recientemente:</div>', unsafe_allow_html=True)
         for action in completed_actions[:3]:  # Mostrar solo las 3 más recientes
             action_type = action['action_type']
             type_color = '#FC8181' if action_type == 'kill' else '#FBbf24' if action_type == 'fix' else '#64DC96'
             type_emoji = '❌' if action_type == 'kill' else '⚠️' if action_type == 'fix' else '✅'
 
             st.markdown(f"""
-            <div style="background:rgba(255,255,255,0.03); border-left:2px solid {type_color};
+            <div style="background:rgba(0,0,0,0.03); border-left:2px solid {type_color};
                  border-radius:0 8px 8px 0; padding:0.75rem 1rem; margin-bottom:0.5rem;">
                 <div style="display:flex; align-items:center; gap:0.5rem;">
                     <span style="color:{type_color};">{type_emoji}</span>
-                    <span style="font-size:0.8rem; color:#F5F3FF;">{action['campaign_name'][:30]}</span>
-                    <span style="font-size:0.7rem; color:rgba(232,230,240,0.4); margin-left:auto;">
+                    <span style="font-size:0.8rem; color:#1c1e21;">{action['campaign_name'][:30]}</span>
+                    <span style="font-size:0.7rem; color:rgba(28,30,33,0.4); margin-left:auto;">
                         {datetime.fromisoformat(action['completed_at']).strftime('%b %d') if 'completed_at' in action else ''}
                     </span>
                 </div>
@@ -2189,7 +2189,7 @@ def client_dashboard():
             # ===== 4. DETALLED ANALYSIS (colapsable) =====
             st.markdown('<div class="section-label">Detalle</div>', unsafe_allow_html=True)
             st.markdown('<div class="section-title">📊 Análisis Detallado</div>', unsafe_allow_html=True)
-            st.markdown('<div style="font-size:0.8rem;color:rgba(232,230,240,0.4);margin-bottom:1rem;">Métricas avanzadas y visualizaciones para análisis profundo.</div>', unsafe_allow_html=True)
+            st.markdown('<div style="font-size:0.8rem;color:rgba(28,30,33,0.4);margin-bottom:1rem;">Métricas avanzadas y visualizaciones para análisis profundo.</div>', unsafe_allow_html=True)
 
             # KPI Grid (8 métricas) - dentro de expander
             with st.expander("📈 KPIs Principales", expanded=False):
@@ -2273,7 +2273,7 @@ def client_dashboard():
                         st.markdown(f"""
                         <div class="roi-box">
                             <div class="roi-box-title">Estimación de ROI Potencial</div>
-                            <div class="roi-row">Tasa de conversión estimada: <strong style="color:#F5F3FF;">{roi_estimate['conversion_rate_used']:.1f}%</strong></div>
+                            <div class="roi-row">Tasa de conversión estimada: <strong style="color:#1c1e21;">{roi_estimate['conversion_rate_used']:.1f}%</strong></div>
                             <div class="roi-row">▸ ~{roi_estimate['estimated_conversions']:,} conversiones proyectadas</div>
                             <div class="roi-row">▸ Ingreso estimado: <strong style="color:#065F46;">${roi_estimate['estimated_revenue']:,.2f}</strong></div>
                             <div class="roi-row">▸ ROAS estimado: <strong style="color:#065F46;">{roi_estimate['estimated_roas']:.1f}x</strong></div>
@@ -2288,8 +2288,8 @@ def client_dashboard():
                     </div>
                     """, unsafe_allow_html=True)
 
-                    st.markdown('<div style="margin-top:1rem; border-top:1px solid rgba(255,255,255,0.06); padding-top:1rem;"></div>', unsafe_allow_html=True)
-                    st.markdown('<div style="font-size:0.8rem; font-weight:700; color:#F5F3FF; margin-bottom:0.5rem;">Próximos pasos recomendados:</div>', unsafe_allow_html=True)
+                    st.markdown('<div style="margin-top:1rem; border-top:1px solid rgba(0,0,0,0.04); padding-top:1rem;"></div>', unsafe_allow_html=True)
+                    st.markdown('<div style="font-size:0.8rem; font-weight:700; color:#1c1e21; margin-bottom:0.5rem;">Próximos pasos recomendados:</div>', unsafe_allow_html=True)
                     for step in star['next_steps']:
                         st.markdown(f"<div style='font-size:0.85rem; color:#1c1e21; padding-left:1rem; margin-bottom:0.25rem;'>{step}</div>", unsafe_allow_html=True)
 
