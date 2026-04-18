@@ -281,6 +281,19 @@ CSS = f"""
         background-color: #ECFDF5;
         color: #065F46;
     }}
+
+/* Fix all input text colors */
+div[data-testid="stTextInput"] input, 
+div[data-baseweb="input"] input, 
+.stTextInput input,
+input[type="text"],
+input[type="password"],
+input[type="number"],
+input[type="email"] {
+    color: #1c1e21 !important;
+    -webkit-text-fill-color: #1c1e21 !important;
+    background-color: #FFFFFF !important;
+}
 </style>
 """
 

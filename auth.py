@@ -91,7 +91,7 @@ h1,h2,h3 { color: #1c1e21 !important; font-family: 'Segoe UI', 'Roboto', sans-se
     background: #FFFFFF !important;
     border: 1px solid #ccd0d5 !important;
     border-radius: 6px !important;
-    color: white !important;
+    color: #1c1e21 !important;
     font-family: 'Roboto', sans-serif !important;
     font-size: 1rem !important;
     padding: 0.8rem 1rem !important;
@@ -146,6 +146,19 @@ h1,h2,h3 { color: #1c1e21 !important; font-family: 'Segoe UI', 'Roboto', sans-se
 /* Fix white texts */
 label p, [data-testid="stWidgetLabel"] p, [data-testid="stCaptionContainer"] {
     color: #1c1e21 !important;
+}
+
+/* Fix all input text colors */
+div[data-testid="stTextInput"] input, 
+div[data-baseweb="input"] input, 
+.stTextInput input,
+input[type="text"],
+input[type="password"],
+input[type="number"],
+input[type="email"] {
+    color: #1c1e21 !important;
+    -webkit-text-fill-color: #1c1e21 !important;
+    background-color: #FFFFFF !important;
 }
 </style>
 """
