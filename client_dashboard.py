@@ -1879,6 +1879,9 @@ def client_dashboard():
         if user and user.get('plan'):
             st.session_state['plan'] = user['plan']
 
+    # Obtener user_id de la sesión para usarlo en toda la función
+    user_id = st.session_state.get('user_id')
+
     plan = st.session_state.get('plan', 'basic')
     date_range = None
 
@@ -1973,7 +1976,6 @@ def client_dashboard():
     st.markdown('<hr class="divider">', unsafe_allow_html=True)
 
     # ========== CONEXIÓN FACEBOOK (MULTI-CUENTA) ==========
-    user_id = st.session_state.get('user_id')
     fb_accounts = get_fb_accounts(user_id) if user_id else []
 
     # Sincronizar cuenta activa al iniciar sesión
