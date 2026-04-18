@@ -107,7 +107,7 @@ body, .stApp {
     overflow-y: auto !important;  /* ← AGREGAR ESTA LÍNEA */
     height: auto !important;       /* ← AGREGAR ESTA LÍNEA */
 }
-h1,h2,h3,h4 { font-family: 'Segoe UI', 'Roboto', sans-serif; font-weight: 700; }
+h1,h2,h3,h4 { color: #1c1e21 !important; font-family: 'Segoe UI', 'Roboto', sans-serif; font-weight: 700; }
 
 /* ---- HEADER BAR ---- */
 .dash-header {
@@ -609,7 +609,9 @@ h1,h2,h3,h4 { font-family: 'Segoe UI', 'Roboto', sans-serif; font-weight: 700; }
     padding: 0.6rem 1.5rem !important;
     transition: background-color 0.2s !important;
 }
-.stButton > button:hover { background: #166FE5 !important; }
+.stButton > button:hover { background: #166FE5 !important; 
+    color: white !important;
+    border-color: transparent !important;}
 .stExpander { background: #FFFFFF !important; border: 1px solid #dddfe2 !important; border-radius: 8px !important; }
 div[data-testid="stExpander"] > div:first-child { border-radius: 8px !important; }
 .stDateInput input, .stTextInput input, .stSelectbox select {
@@ -640,6 +642,11 @@ section.main > div {
 
 .main > div {
     overflow-y: visible !important;
+}
+
+/* Fix white texts */
+label p, [data-testid="stWidgetLabel"] p, [data-testid="stCaptionContainer"] {
+    color: #1c1e21 !important;
 }
 </style>
 """

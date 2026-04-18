@@ -10,7 +10,7 @@ AUTH_CSS = """
 
 *, *::before, *::after { box-sizing: border-box; }
 body, .stApp { background: #F0F2F5 !important; color: #1c1e21; font-family: 'Roboto', sans-serif; }
-h1,h2,h3 { font-family: 'Segoe UI', 'Roboto', sans-serif; font-weight: 700; }
+h1,h2,h3 { color: #1c1e21 !important; font-family: 'Segoe UI', 'Roboto', sans-serif; font-weight: 700; }
 
 /* ---- CENTRADO ---- */
 .block-container { max-width: 420px !important; margin: 0 auto !important; padding-top: 4rem !important; }
@@ -91,7 +91,7 @@ h1,h2,h3 { font-family: 'Segoe UI', 'Roboto', sans-serif; font-weight: 700; }
     background: #FFFFFF !important;
     border: 1px solid #ccd0d5 !important;
     border-radius: 6px !important;
-    color: #1c1e21 !important;
+    color: white !important;
     font-family: 'Roboto', sans-serif !important;
     font-size: 1rem !important;
     padding: 0.8rem 1rem !important;
@@ -105,7 +105,7 @@ h1,h2,h3 { font-family: 'Segoe UI', 'Roboto', sans-serif; font-weight: 700; }
 .stTextInput input::placeholder { color: #8a8d91 !important; }
 
 /* ---- SUBMIT BUTTON ---- */
-.stFormSubmitButton > button {
+.stFormSubmitButton > button, .stButton > button, [data-testid='stFormSubmitButton'] > button, [data-testid='stBaseButton-primary'] {
     background: #1877F2 !important;
     color: white !important;
     border: none !important;
@@ -118,9 +118,11 @@ h1,h2,h3 { font-family: 'Segoe UI', 'Roboto', sans-serif; font-weight: 700; }
     margin-top: 0.5rem !important;
     transition: background-color 0.2s !important;
 }
-.stFormSubmitButton > button:hover {
+.stFormSubmitButton > button:hover, .stButton > button:hover, [data-testid='stFormSubmitButton'] > button:hover, [data-testid='stBaseButton-primary']:hover {
     background: #166FE5 !important;
-}
+
+    color: white !important;
+    border-color: transparent !important;}
 
 /* ---- MESSAGES ---- */
 .stAlert {
@@ -140,6 +142,11 @@ h1,h2,h3 { font-family: 'Segoe UI', 'Roboto', sans-serif; font-weight: 700; }
     margin-top: 2rem;
     padding-bottom: 2rem;
 }
+
+/* Fix white texts */
+label p, [data-testid="stWidgetLabel"] p, [data-testid="stCaptionContainer"] {
+    color: #1c1e21 !important;
+}
 </style>
 """
 
@@ -151,7 +158,7 @@ def login_page():
     st.markdown(AUTH_CSS, unsafe_allow_html=True)
 
     # ---- CARD WRAPPER ----
-    st.markdown('<div class="auth-card">', unsafe_allow_html=True)
+    
 
     # ---- LOGO ----
     st.markdown("""
@@ -239,7 +246,7 @@ def login_page():
                 else:
                     st.error("Credenciales de administrador incorrectas")
 
-    st.markdown('</div>', unsafe_allow_html=True)
+    
 
     # ---- FOOTER ----
     st.markdown("""
@@ -254,7 +261,7 @@ def register_page():
     st.markdown(AUTH_CSS, unsafe_allow_html=True)
 
     # ---- CARD WRAPPER ----
-    st.markdown('<div class="auth-card">', unsafe_allow_html=True)
+    
 
     # ---- LOGO ----
     st.markdown("""
@@ -288,7 +295,7 @@ def register_page():
             else:
                 st.error("❌ El email ya está registrado o hubo un error al crear la cuenta.")
 
-    st.markdown('</div>', unsafe_allow_html=True)
+    
 
     # ---- FOOTER ----
     st.markdown("""

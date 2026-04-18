@@ -21,7 +21,7 @@ body, .stApp {
     color: #1c1e21; 
     font-family: 'Roboto', sans-serif;
 }
-h1,h2,h3,h4 { font-family: 'Segoe UI', 'Roboto', sans-serif; font-weight: 700; }
+h1,h2,h3,h4 { color: #1c1e21 !important; font-family: 'Segoe UI', 'Roboto', sans-serif; font-weight: 700; }
 
 /* ---- Ocultar Streamlit UI ---- */
 #MainMenu, footer { visibility: hidden; }
@@ -155,7 +155,9 @@ h1 {
 }
 .stButton > button:hover {
     background: #d8dbdf !important;
-}
+
+    color: white !important;
+    border-color: transparent !important;}
 
 /* Primary action buttons (logout, form submit) */
 [data-testid="stFormSubmitButton"] > button,
@@ -218,6 +220,11 @@ hr {
     border: none;
     border-top: 1px solid #dddfe2 !important;
     margin: 1.5rem 0 !important;
+}
+
+/* Fix white texts */
+label p, [data-testid="stWidgetLabel"] p, [data-testid="stCaptionContainer"] {
+    color: #1c1e21 !important;
 }
 </style>
 """

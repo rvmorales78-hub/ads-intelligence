@@ -33,6 +33,11 @@ st.markdown("""
         max-width: 1280px !important; 
         margin: 0 auto !important; 
     }
+
+/* Fix white texts */
+label p, [data-testid="stWidgetLabel"] p, [data-testid="stCaptionContainer"] {
+    color: #1c1e21 !important;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -568,7 +573,9 @@ h1, h2, h3, h4 { font-family: 'Segoe UI', 'Roboto', sans-serif; font-weight: 700
 }
 .stButton > button:hover {
     background: #166FE5 !important;
-}
+
+    color: white !important;
+    border-color: transparent !important;}
 .btn-secondary > button {
     background: #E4E6EB !important;
     color: #1c1e21 !important;
