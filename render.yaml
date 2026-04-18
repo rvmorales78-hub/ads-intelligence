@@ -13,7 +13,7 @@ services:
       pip install --upgrade pip
       pip install -r requirements.txt
     # Comando para iniciar la aplicación. Streamlit usará automáticamente el puerto que Render le asigne.
-    startCommand: "streamlit run landing.py --server.address 0.0.0.0"
+    startCommand: "streamlit run landing.py --server.port $PORT --server.address 0.0.0.0"
     healthCheckPath: /healthz # Ruta de chequeo de salud de Streamlit
     envVars:
       - key: PYTHON_VERSION
@@ -48,7 +48,7 @@ services:
       pip install --upgrade pip
       pip install -r requirements.txt
     # Usa gunicorn para correr la app Flask en producción
-    startCommand: "gunicorn webhook_server:app"
+    startCommand: "gunicorn webhook_server:app --bind 0.0.0.0:$PORT --worker-tmp-dir /dev/shm"
     envVars:
       - key: PYTHON_VERSION
         value: 3.11
