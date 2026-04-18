@@ -12,8 +12,8 @@ services:
     buildCommand: |
       pip install --upgrade pip
       pip install -r requirements.txt
-    # Comando para iniciar la aplicación. ¡Esta es la corrección clave!
-    startCommand: "streamlit run landing.py --server.port 8501 --server.address 0.0.0.0"
+    # Comando para iniciar la aplicación. Streamlit usará automáticamente el puerto que Render le asigne.
+    startCommand: "streamlit run landing.py --server.address 0.0.0.0"
     healthCheckPath: /healthz # Ruta de chequeo de salud de Streamlit
     envVars:
       - key: PYTHON_VERSION
