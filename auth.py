@@ -6,14 +6,14 @@ import hashlib
 
 AUTH_CSS = """
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Outfit:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
 *, *::before, *::after { box-sizing: border-box; }
-body, .stApp { background: #080810 !important; color: #E8E6F0; font-family: 'Outfit', sans-serif; }
-h1,h2,h3 { font-family: 'Syne', sans-serif; }
+body, .stApp { background: #F0F2F5 !important; color: #1c1e21; font-family: 'Roboto', sans-serif; }
+h1,h2,h3 { font-family: 'Segoe UI', 'Roboto', sans-serif; font-weight: 700; }
 
 /* ---- CENTRADO ---- */
-.block-container { max-width: 480px !important; margin: 0 auto !important; padding-top: 4rem !important; }
+.block-container { max-width: 420px !important; margin: 0 auto !important; padding-top: 4rem !important; }
 
 /* ---- LOGO ---- */
 .auth-logo {
@@ -21,141 +21,122 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
     align-items: center;
     justify-content: center;
     gap: 0.6rem;
-    font-family: 'Syne', sans-serif;
-    font-size: 1.15rem;
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 1.5rem;
     font-weight: 800;
-    color: #F5F3FF;
+    color: #1877F2;
     margin-bottom: 2.5rem;
     text-align: center;
 }
 .auth-logo-mark {
-    width: 36px; height: 36px;
-    background: linear-gradient(135deg, #C9A84C, #8A6AE0);
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.1rem;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    object-fit: contain;
 }
 
 /* ---- CARD ---- */
 .auth-card {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.07);
-    border-radius: 24px;
-    padding: 2.25rem 2rem;
+    background: #FFFFFF;
+    border: 1px solid #dddfe2;
+    border-radius: 8px;
+    padding: 1.5rem;
     margin-bottom: 1rem;
-    position: relative;
-    overflow: hidden;
-}
-.auth-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(201,168,76,0.35), transparent);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1);
 }
 .auth-card-title {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Segoe UI', sans-serif;
     font-size: 1.3rem;
-    font-weight: 800;
-    letter-spacing: -0.025em;
-    color: #F5F3FF;
+    font-weight: 600;
+    text-align: center;
+    color: #1c1e21;
     margin-bottom: 0.3rem;
 }
 .auth-card-sub {
-    font-size: 0.82rem;
-    color: rgba(232,230,240,0.35);
-    margin-bottom: 1.75rem;
+    font-size: 0.9rem;
+    color: #606770;
+    margin-bottom: 1.5rem;
+    text-align: center;
 }
-.auth-divider { border: none; border-top: 1px solid rgba(255,255,255,0.06); margin: 1.5rem 0; }
+.auth-divider { border: none; border-top: 1px solid #dddfe2; margin: 1.5rem 0; }
 
 /* ---- TABS ---- */
 .stTabs [data-baseweb="tab-list"] {
-    background: rgba(255,255,255,0.03) !important;
-    border: 1px solid rgba(255,255,255,0.07) !important;
-    border-radius: 12px !important;
-    padding: 4px !important;
-    gap: 4px !important;
+    justify-content: center;
+    border-bottom: 1px solid #dddfe2 !important;
     margin-bottom: 1.5rem;
+    gap: 1rem !important;
 }
 .stTabs [data-baseweb="tab"] {
     background: transparent !important;
-    border-radius: 8px !important;
-    color: rgba(232,230,240,0.4) !important;
-    font-family: 'Outfit', sans-serif !important;
-    font-size: 0.85rem !important;
+    color: #606770 !important;
+    font-family: 'Roboto', sans-serif !important;
+    font-size: 1rem !important;
     font-weight: 500 !important;
-    padding: 0.5rem 1.25rem !important;
+    padding: 0.75rem 0.5rem !important;
     border: none !important;
     transition: all 0.2s !important;
 }
 .stTabs [aria-selected="true"] {
-    background: rgba(138,106,224,0.18) !important;
-    color: #A890F0 !important;
-    border: 1px solid rgba(138,106,224,0.3) !important;
+    color: #1877F2 !important;
 }
-.stTabs [data-baseweb="tab-highlight"] { display: none !important; }
+.stTabs [data-baseweb="tab-highlight"] { background-color: #1877F2 !important; height: 3px !important; }
 .stTabs [data-baseweb="tab-border"]    { display: none !important; }
 
 /* ---- INPUTS ---- */
 .stTextInput label {
-    font-size: 0.75rem !important;
-    font-weight: 600 !important;
-    letter-spacing: 0.08em !important;
-    text-transform: uppercase !important;
-    color: rgba(232,230,240,0.4) !important;
-    margin-bottom: 0.3rem !important;
+    display: none !important;
 }
 .stTextInput input {
-    background: rgba(255,255,255,0.04) !important;
-    border: 1px solid rgba(255,255,255,0.09) !important;
-    border-radius: 10px !important;
-    color: #F5F3FF !important;
-    font-family: 'Outfit', sans-serif !important;
-    font-size: 0.9rem !important;
-    padding: 0.65rem 1rem !important;
+    background: #FFFFFF !important;
+    border: 1px solid #ccd0d5 !important;
+    border-radius: 6px !important;
+    color: #1c1e21 !important;
+    font-family: 'Roboto', sans-serif !important;
+    font-size: 1rem !important;
+    padding: 0.8rem 1rem !important;
     transition: border-color 0.2s !important;
+    margin-bottom: 0.5rem; /* Space between inputs */
 }
 .stTextInput input:focus {
-    border-color: rgba(138,106,224,0.5) !important;
-    box-shadow: 0 0 0 3px rgba(138,106,224,0.08) !important;
+    border-color: #1877F2 !important;
+    box-shadow: 0 0 0 2px #e7f3ff !important;
 }
-.stTextInput input::placeholder { color: rgba(232,230,240,0.2) !important; }
+.stTextInput input::placeholder { color: #8a8d91 !important; }
 
 /* ---- SUBMIT BUTTON ---- */
 .stFormSubmitButton > button {
-    background: linear-gradient(135deg, #8A6AE0 0%, #6A4AC0 100%) !important;
+    background: #1877F2 !important;
     color: white !important;
     border: none !important;
-    border-radius: 12px !important;
-    font-family: 'Outfit', sans-serif !important;
-    font-weight: 600 !important;
-    font-size: 0.9rem !important;
+    border-radius: 6px !important;
+    font-family: 'Roboto', sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 1.1rem !important;
     padding: 0.7rem 2rem !important;
     width: 100% !important;
     margin-top: 0.5rem !important;
-    letter-spacing: 0.02em !important;
-    transition: opacity 0.2s, transform 0.15s !important;
+    transition: background-color 0.2s !important;
 }
 .stFormSubmitButton > button:hover {
-    opacity: 0.88 !important;
-    transform: translateY(-1px) !important;
+    background: #166FE5 !important;
 }
 
 /* ---- MESSAGES ---- */
 .stAlert {
-    background: rgba(252,129,129,0.07) !important;
-    border: 1px solid rgba(252,129,129,0.2) !important;
-    border-radius: 12px !important;
-    color: #FC8181 !important;
+    background: #fae0e0 !important;
+    border: 1px solid #dd3c10 !important;
+    border-radius: 6px !important;
+    color: #dd3c10 !important;
     font-size: 0.85rem !important;
 }
-[data-baseweb="notification"] { border-radius: 12px !important; }
+[data-baseweb="notification"] { border-radius: 6px !important; }
 
 /* ---- FOOTER ---- */
 .auth-footer {
     text-align: center;
     font-size: 0.75rem;
-    color: rgba(232,230,240,0.2);
+    color: #8a8d91;
     margin-top: 2rem;
     padding-bottom: 2rem;
 }
@@ -172,7 +153,7 @@ def login_page():
     # ---- LOGO ----
     st.markdown("""
     <div class="auth-logo">
-        <div class="auth-logo-mark">◈</div>
+        <img src="https://impulsolocal.com.mx/wp-content/uploads/2026/04/Logo-1.png" class="auth-logo-mark" alt="Logo">
         Ads Intelligence
     </div>
     """, unsafe_allow_html=True)
@@ -259,7 +240,7 @@ def login_page():
     # ---- FOOTER ----
     st.markdown("""
     <div class="auth-footer">
-        © 2024 Ads Intelligence · Todos los derechos reservados
+        © 2026 Ads Intelligence · Todos los derechos reservados
     </div>
     """, unsafe_allow_html=True)
 
@@ -271,7 +252,7 @@ def register_page():
     # ---- LOGO ----
     st.markdown("""
     <div class="auth-logo">
-        <div class="auth-logo-mark">◈</div>
+        <img src="https://impulsolocal.com.mx/wp-content/uploads/2026/04/Logo-1.png" class="auth-logo-mark" alt="Logo">
         Ads Intelligence
     </div>
     """, unsafe_allow_html=True)
@@ -308,7 +289,7 @@ def register_page():
     # ---- FOOTER ----
     st.markdown("""
     <div class="auth-footer">
-        © 2024 Ads Intelligence · Todos los derechos reservados
+        © 2026 Ads Intelligence · Todos los derechos reservados
     </div>
     """, unsafe_allow_html=True)
 

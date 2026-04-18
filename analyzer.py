@@ -1,4 +1,4 @@
-﻿"""Análisis de KPIs y recomendaciones inteligentes por tipo de campaña."""
+﻿﻿"""Análisis de KPIs y recomendaciones inteligentes por tipo de campaña."""
 
 import os
 import numpy as np
@@ -596,8 +596,8 @@ def get_priority_actions(df: pd.DataFrame) -> list:
         if num_campaigns >= 4:
             actions.append({
                 'priority': 2.5, 'urgency': 'OPORTUNIDAD',
-                'color': '#60A5FA', 'bg': 'rgba(96,165,250,0.07)',
-                'border': 'rgba(96,165,250,0.25)', 'icon': '🧩',
+                'color': '#1877F2', 'bg': '#e7f3ff',
+                'border': '#bde4ff', 'icon': '🧩',
                 'title': 'Estructura Fragmentada',
                 'detail': f'Detectamos {num_campaigns} campañas activas. Demasiadas campañas dividen el presupuesto y limitan el aprendizaje de Meta.',
                 'action': 'Consolida campañas con el mismo objetivo (1 o 2 máximo) usando Presupuesto Advantage+ (CBO).',
@@ -619,8 +619,8 @@ def get_priority_actions(df: pd.DataFrame) -> list:
             time_context = 'Audience fatigue detected'
             actions.append({
                 'priority': 1, 'urgency': 'CRÍTICO',
-                'color': '#FC8181', 'bg': 'rgba(252,129,129,0.07)',
-                'border': 'rgba(252,129,129,0.3)', 'icon': '🔴',
+                'color': '#dd3c10', 'bg': '#fae0e0',
+                'border': '#f5c0c0', 'icon': '🔴',
                 'title': f'Creatividad agotada — {name}',
                 'detail': f'Frecuencia {freq:.1f}x · La audiencia ha visto este anuncio demasiadas veces. CTR y conversión caen.',
                 'action': 'Crear 3 variaciones nuevas de imagen/video esta semana. Rotar creatividades.',
@@ -634,8 +634,8 @@ def get_priority_actions(df: pd.DataFrame) -> list:
             time_context = 'Losing money daily'
             actions.append({
                 'priority': 2, 'urgency': 'URGENTE',
-                'color': '#FC8181', 'bg': 'rgba(252,129,129,0.07)',
-                'border': 'rgba(252,129,129,0.25)', 'icon': '🔴',
+                'color': '#dd3c10', 'bg': '#fae0e0',
+                'border': '#f5c0c0', 'icon': '🔴',
                 'title': f'Pérdida activa — {name}',
                 'detail': f'ROAS {roas:.2f}x · ${spend:.0f} gastados sin retorno positivo.',
                 'action': 'Pausar inmediatamente. Revisar segmentación y oferta antes de reactivar.',
@@ -649,8 +649,8 @@ def get_priority_actions(df: pd.DataFrame) -> list:
             time_context = 'Performance declining'
             actions.append({
                 'priority': 3, 'urgency': 'ATENCIÓN',
-                'color': '#FBbf24', 'bg': 'rgba(251,191,36,0.07)',
-                'border': 'rgba(251,191,36,0.25)', 'icon': '🟡',
+                'color': '#92400E', 'bg': '#FFFBEB',
+                'border': '#FDE68A', 'icon': '🟡',
                 'title': f'Frecuencia elevada — {name}',
                 'detail': f'Frecuencia {freq:.1f}x · Señales tempranas de saturación de audiencia.',
                 'action': 'Renovar creatividad o ampliar audiencia lookalike antes de que el rendimiento caiga.',
@@ -664,8 +664,8 @@ def get_priority_actions(df: pd.DataFrame) -> list:
             time_context = 'Low engagement'
             actions.append({
                 'priority': 4, 'urgency': 'ATENCIÓN',
-                'color': '#FBbf24', 'bg': 'rgba(251,191,36,0.07)',
-                'border': 'rgba(251,191,36,0.25)', 'icon': '🟡',
+                'color': '#92400E', 'bg': '#FFFBEB',
+                'border': '#FDE68A', 'icon': '🟡',
                 'title': f'CTR crítico — {name}',
                 'detail': f'CTR {ctr:.2f}% · Creatividad sin tracción. ${spend:.0f} invertidos sin impacto.',
                 'action': 'A/B test: nuevo visual + copy. Probar formato carrusel vs imagen única vs video.',
@@ -679,8 +679,8 @@ def get_priority_actions(df: pd.DataFrame) -> list:
             time_context = 'High potential'
             actions.append({
                 'priority': 5, 'urgency': 'OPORTUNIDAD',
-                'color': '#64DC96', 'bg': 'rgba(100,220,150,0.06)',
-                'border': 'rgba(100,220,150,0.25)', 'icon': '🟢',
+                'color': '#065F46', 'bg': '#ECFDF5',
+                'border': '#A7F3D0', 'icon': '🟢',
                 'title': f'Escalar presupuesto — {name}',
                 'detail': f'{"ROAS " + str(round(roas,1)) + "x" if roas > 0 else "CTR " + str(round(ctr,1)) + "%"} · Por encima del benchmark.',
                 'action': 'Aumentar presupuesto +20-30%. Duplicar campaña para audiencias lookalike.',

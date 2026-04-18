@@ -65,6 +65,8 @@ services:
         sync: false
       - key: STRIPE_ENTERPRISE_PRICE_ID
         sync: false
+      - key: ENCRYPTION_KEY # Añadido por consistencia y seguridad futura
+        sync: false
 
 # Define la base de datos PostgreSQL que usarán ambos servicios
 databases:

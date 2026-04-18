@@ -97,17 +97,17 @@ def decrypt_text(encrypted: str) -> str:
 # ========== CSS PREMIUM (compartido con app.py) ==========
 DASHBOARD_CSS = """
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Satoshi:wght@300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
 *, *::before, *::after { box-sizing: border-box; }
 body, .stApp { 
-    background: #080810 !important; 
-    color: #E8E6F0; 
-    font-family: 'Satoshi', sans-serif;
+    background: #F0F2F5 !important; 
+    color: #1c1e21; 
+    font-family: 'Roboto', sans-serif;
     overflow-y: auto !important;  /* ← AGREGAR ESTA LÍNEA */
     height: auto !important;       /* ← AGREGAR ESTA LÍNEA */
 }
-h1,h2,h3,h4 { font-family: 'Satoshi', sans-serif; }
+h1,h2,h3,h4 { font-family: 'Segoe UI', 'Roboto', sans-serif; font-weight: 700; }
 
 /* ---- HEADER BAR ---- */
 .dash-header {
@@ -115,36 +115,36 @@ h1,h2,h3,h4 { font-family: 'Satoshi', sans-serif; }
     grid-template-columns: 1fr auto;
     align-items: center;
     padding: 1.5rem 0 1rem;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid #dddfe2;
     margin-bottom: 2rem;
     gap: 1rem;
 }
 .dash-logo {
-    font-family: 'Satoshi', sans-serif;
+    font-family: 'Segoe UI', sans-serif;
     font-size: 1.1rem;
     font-weight: 800;
-    color: #F5F3FF;
+    color: #1877F2;
     display: flex;
     align-items: center;
     gap: 0.5rem;
 }
 .dash-logo .logo-mark {
-    width: 28px; height: 28px;
-    background: linear-gradient(135deg, #C9A84C, #8A6AE0);
-    border-radius: 7px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 0.85rem;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    object-fit: contain;
+    vertical-align: middle;
 }
 .dash-company {
-    font-family: 'Satoshi', sans-serif;
+    font-family: 'Segoe UI', sans-serif;
     font-size: 1.6rem;
     font-weight: 700;
     letter-spacing: -0.025em;
-    color: #F5F3FF;
+    color: #1c1e21;
 }
 .dash-sub {
     font-size: 0.85rem;
-    color: rgba(232,230,240,0.4);
+    color: #606770;
     margin-top: 0.2rem;
 }
 
@@ -160,9 +160,9 @@ h1,h2,h3,h4 { font-family: 'Satoshi', sans-serif; }
     letter-spacing: 0.08em;
     text-transform: uppercase;
 }
-.plan-basic  { background: rgba(136,135,128,0.15); border: 1px solid rgba(136,135,128,0.3); color: #B4B2A9; }
-.plan-pro    { background: rgba(138,106,224,0.15); border: 1px solid rgba(138,106,224,0.35); color: #A890F0; }
-.plan-enterprise { background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.35); color: #C9A84C; }
+.plan-basic      { background: #E4E6EB; border: 1px solid #ccd0d5; color: #1c1e21; }
+.plan-pro        { background: #e7f3ff; border: 1px solid #1877F2; color: #1877F2; }
+.plan-enterprise { background: #1877F2; border: 1px solid #166FE5; color: white; }
 
 /* ---- METRIC CARDS ---- */
 .metric-grid {
@@ -172,45 +172,45 @@ h1,h2,h3,h4 { font-family: 'Satoshi', sans-serif; }
     margin-bottom: 2rem;
 }
 .metric-card {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.07);
-    border-radius: 16px;
+    background: #FFFFFF;
+    border: 1px solid #dddfe2;
+    border-radius: 8px;
     padding: 1.25rem 1.5rem;
     position: relative;
     overflow: hidden;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
 }
 .metric-card::after {
     content: '';
     position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 2px;
-    border-radius: 0 0 16px 16px;
+    top: 0; left: 0; right: 0;
+    height: 3px;
 }
-.metric-card.green::after  { background: linear-gradient(90deg, transparent, #64DC96, transparent); }
-.metric-card.gold::after   { background: linear-gradient(90deg, transparent, #C9A84C, transparent); }
-.metric-card.purple::after { background: linear-gradient(90deg, transparent, #8A6AE0, transparent); }
-.metric-card.blue::after   { background: linear-gradient(90deg, transparent, #60A5FA, transparent); }
+.metric-card.green::after  { background: #31A24C; }
+.metric-card.gold::after   { background: #F7B928; }
+.metric-card.purple::after { background: #8A6AE0; }
+.metric-card.blue::after   { background: #1877F2; }
 .metric-label {
     font-size: 0.7rem;
     font-weight: 500;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: rgba(232,230,240,0.35);
+    color: #606770;
     margin-bottom: 0.5rem;
 }
 .metric-value {
-    font-family: 'Satoshi', sans-serif;
+    font-family: 'Segoe UI', 'Roboto', sans-serif;
     font-size: 1.75rem;
     font-weight: 700;
     letter-spacing: -0.03em;
     line-height: 1;
 }
-.metric-value.green  { color: #64DC96; }
-.metric-value.gold   { color: #C9A84C; }
-.metric-value.purple { color: #A890F0; }
-.metric-value.blue   { color: #60A5FA; }
-.metric-value.red    { color: #FC8181; }
-.metric-value.white  { color: #F5F3FF; }
+.metric-value.green  { color: #31A24C; }
+.metric-value.gold   { color: #92400E; }
+.metric-value.purple { color: #8A6AE0; }
+.metric-value.blue   { color: #1877F2; }
+.metric-value.red    { color: #dd3c10; }
+.metric-value.white  { color: #1c1e21; }
 
 /* ---- SECTION HEADERS ---- */
 .section-label {
@@ -218,41 +218,41 @@ h1,h2,h3,h4 { font-family: 'Satoshi', sans-serif; }
     font-weight: 600;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: #8A6AE0;
+    color: #1877F2;
     margin-bottom: 0.4rem;
 }
 .section-title {
-    font-family: 'Satoshi', sans-serif;
+    font-family: 'Segoe UI', 'Roboto', sans-serif;
     font-size: 1.3rem;
     font-weight: 700;
     letter-spacing: -0.02em;
-    color: #F5F3FF;
+    color: #1c1e21;
     margin-bottom: 1.25rem;
 }
-.divider { border: none; border-top: 1px solid rgba(255,255,255,0.06); margin: 2rem 0; }
+.divider { border: none; border-top: 1px solid #dddfe2; margin: 2rem 0; }
 
 /* ---- FILTER STRIP ---- */
 .filter-strip {
-    background: rgba(255,255,255,0.02);
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 16px;
+    background: #FFFFFF;
+    border: 1px solid #dddfe2;
+    border-radius: 8px;
     padding: 1.25rem 1.5rem;
     margin-bottom: 1.5rem;
 }
 
 /* ---- EXPANDER / CARD ---- */
 .panel {
-    background: rgba(255,255,255,0.02);
-    border: 1px solid rgba(255,255,255,0.07);
-    border-radius: 16px;
+    background: #FFFFFF;
+    border: 1px solid #dddfe2;
+    border-radius: 8px;
     padding: 1.5rem;
     margin-bottom: 1rem;
 }
 .panel-title {
-    font-family: 'Satoshi', sans-serif;
+    font-family: 'Segoe UI', 'Roboto', sans-serif;
     font-size: 0.95rem;
     font-weight: 700;
-    color: #F5F3FF;
+    color: #1c1e21;
     margin-bottom: 0.75rem;
 }
 
@@ -264,44 +264,44 @@ h1,h2,h3,h4 { font-family: 'Satoshi', sans-serif; }
     margin: 1rem 0;
 }
 .health-card {
-    border-radius: 14px;
+    border-radius: 8px;
     padding: 1rem 1.25rem;
     text-align: center;
 }
-.health-card.optimal  { background: rgba(100,220,150,0.08); border: 1px solid rgba(100,220,150,0.2); }
-.health-card.warning  { background: rgba(251,191,36,0.08);  border: 1px solid rgba(251,191,36,0.2); }
-.health-card.critical { background: rgba(252,129,129,0.08); border: 1px solid rgba(252,129,129,0.2); }
+.health-card.optimal  { background: #ECFDF5; border: 1px solid #A7F3D0; }
+.health-card.warning  { background: #FFFBEB; border: 1px solid #FDE68A; }
+.health-card.critical { background: #fae0e0; border: 1px solid #f5c0c0; }
 .health-dot { font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase; font-weight: 600; margin-bottom: 0.4rem; }
-.health-dot.optimal  { color: #64DC96; }
-.health-dot.warning  { color: #FBbf24; }
-.health-dot.critical { color: #FC8181; }
+.health-dot.optimal  { color: #065F46; }
+.health-dot.warning  { color: #92400E; }
+.health-dot.critical { color: #dd3c10; }
 .health-pct {
-    font-family: 'Satoshi', sans-serif;
+    font-family: 'Segoe UI', 'Roboto', sans-serif;
     font-size: 1.75rem;
     font-weight: 800;
     line-height: 1;
 }
-.health-pct.optimal  { color: #64DC96; }
-.health-pct.warning  { color: #FBbf24; }
-.health-pct.critical { color: #FC8181; }
-.health-amount { font-size: 0.78rem; color: rgba(232,230,240,0.4); margin-top: 0.25rem; }
+.health-pct.optimal  { color: #065F46; }
+.health-pct.warning  { color: #92400E; }
+.health-pct.critical { color: #dd3c10; }
+.health-amount { font-size: 0.78rem; color: #606770; margin-top: 0.25rem; }
 .health-note {
     font-size: 0.65rem;
-    color: rgba(232,230,240,0.3);
+    color: #8a8d91;
     margin-top: 0.25rem;
 }
 
 /* ---- STAR CAMPAIGN ---- */
 .star-card {
-    border-radius: 20px;
+    border-radius: 8px;
     padding: 1.75rem;
     margin: 1rem 0;
     position: relative;
     overflow: hidden;
 }
-.star-card.elite    { background: rgba(100,220,150,0.08); border: 1px solid rgba(100,220,150,0.25); }
-.star-card.solid    { background: rgba(96,165,250,0.08);  border: 1px solid rgba(96,165,250,0.25); }
-.star-card.improve  { background: rgba(251,191,36,0.08);  border: 1px solid rgba(251,191,36,0.25); }
+.star-card.elite    { background: #ECFDF5; border: 1px solid #A7F3D0; }
+.star-card.solid    { background: #e7f3ff; border: 1px solid #bde4ff; }
+.star-card.improve  { background: #FFFBEB; border: 1px solid #FDE68A; }
 .star-badge {
     font-size: 0.65rem;
     font-weight: 700;
@@ -309,94 +309,94 @@ h1,h2,h3,h4 { font-family: 'Satoshi', sans-serif; }
     text-transform: uppercase;
     margin-bottom: 0.5rem;
 }
-.star-badge.elite   { color: #64DC96; }
-.star-badge.solid   { color: #60A5FA; }
-.star-badge.improve { color: #FBbf24; }
+.star-badge.elite   { color: #065F46; }
+.star-badge.solid   { color: #1877F2; }
+.star-badge.improve { color: #92400E; }
 .star-name {
-    font-family: 'Satoshi', sans-serif;
+    font-family: 'Segoe UI', 'Roboto', sans-serif;
     font-size: 1.5rem;
     font-weight: 800;
     letter-spacing: -0.025em;
-    color: #F5F3FF;
+    color: #1c1e21;
     margin-bottom: 0.3rem;
 }
-.star-obj { font-size: 0.82rem; color: rgba(232,230,240,0.45); }
+.star-obj { font-size: 0.82rem; color: #606770; }
 
 /* ---- ROI BOX ---- */
 .roi-box {
-    background: rgba(100,220,150,0.06);
-    border: 1px solid rgba(100,220,150,0.15);
-    border-radius: 14px;
+    background: #ECFDF5;
+    border: 1px solid #A7F3D0;
+    border-radius: 8px;
     padding: 1.25rem;
     margin-top: 1rem;
 }
-.roi-box-title { font-family: 'Satoshi', sans-serif; font-size: 0.85rem; font-weight: 700; color: #64DC96; margin-bottom: 0.6rem; }
-.roi-row { font-size: 0.85rem; color: rgba(232,230,240,0.65); padding: 0.2rem 0; }
-.roi-note { font-size: 0.72rem; color: rgba(232,230,240,0.3); margin-top: 0.5rem; }
+.roi-box-title { font-family: 'Segoe UI', 'Roboto', sans-serif; font-size: 0.85rem; font-weight: 700; color: #065F46; margin-bottom: 0.6rem; }
+.roi-row { font-size: 0.85rem; color: #1c1e21; padding: 0.2rem 0; }
+.roi-note { font-size: 0.72rem; color: #606770; margin-top: 0.5rem; }
 
 /* ---- RECOMMENDATION BOX ---- */
 .rec-box {
-    background: rgba(138,106,224,0.06);
-    border: 1px solid rgba(138,106,224,0.18);
-    border-radius: 14px;
+    background: #e7f3ff;
+    border: 1px solid #bde4ff;
+    border-radius: 8px;
     padding: 1.25rem;
     margin-top: 0.75rem;
 }
-.rec-title { font-family: 'Satoshi', sans-serif; font-size: 0.9rem; font-weight: 700; color: #A890F0; margin-bottom: 0.4rem; }
-.rec-text  { font-size: 0.85rem; color: rgba(232,230,240,0.6); }
+.rec-title { font-family: 'Segoe UI', 'Roboto', sans-serif; font-size: 0.9rem; font-weight: 700; color: #1877F2; margin-bottom: 0.4rem; }
+.rec-text  { font-size: 0.85rem; color: #1c1e21; }
 
 /* ---- ALERT BOX ---- */
 .alert-box {
-    background: rgba(252,129,129,0.06);
-    border: 1px solid rgba(252,129,129,0.2);
-    border-left: 3px solid #FC8181;
-    border-radius: 0 14px 14px 0;
+    background: #fae0e0;
+    border: 1px solid #f5c0c0;
+    border-left: 3px solid #dd3c10;
+    border-radius: 0 8px 8px 0;
     padding: 1rem 1.25rem;
     margin-bottom: 0.5rem;
 }
-.alert-title { font-family: 'Satoshi', sans-serif; font-size: 0.82rem; font-weight: 700; color: #FC8181; margin-bottom: 0.25rem; }
-.alert-body  { font-size: 0.82rem; color: rgba(232,230,240,0.55); }
+.alert-title { font-family: 'Segoe UI', 'Roboto', sans-serif; font-size: 0.82rem; font-weight: 700; color: #dd3c10; margin-bottom: 0.25rem; }
+.alert-body  { font-size: 0.82rem; color: #1c1e21; }
 
 /* ---- CAMPAIGN ROW ---- */
 .camp-card {
-    border-radius: 14px;
+    border-radius: 8px;
     padding: 1.25rem;
     margin-bottom: 0.75rem;
     border-left: 3px solid;
 }
-.camp-card.high   { background: rgba(252,129,129,0.05); border-color: #FC8181; }
-.camp-card.medium { background: rgba(251,191,36,0.05);  border-color: #FBbf24; }
-.camp-card.low    { background: rgba(100,220,150,0.05); border-color: #64DC96; }
-.camp-name { font-family: 'Satoshi', sans-serif; font-size: 0.95rem; font-weight: 700; color: #F5F3FF; margin-bottom: 0.75rem; }
+.camp-card.high   { background: #fae0e0; border-color: #dd3c10; }
+.camp-card.medium { background: #FFFBEB; border-color: #F7B928; }
+.camp-card.low    { background: #ECFDF5; border-color: #31A24C; }
+.camp-name { font-family: 'Segoe UI', 'Roboto', sans-serif; font-size: 0.95rem; font-weight: 700; color: #1c1e21; margin-bottom: 0.75rem; }
 .camp-table { width: 100%; font-size: 0.8rem; border-collapse: collapse; }
-.camp-table td { padding: 0.3rem 0.5rem 0.3rem 0; color: rgba(232,230,240,0.55); vertical-align: top; }
-.camp-table td strong { color: rgba(232,230,240,0.8); display: block; font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.15rem; }
+.camp-table td { padding: 0.3rem 0.5rem 0.3rem 0; color: #606770; vertical-align: top; }
+.camp-table td strong { color: #1c1e21; display: block; font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.15rem; }
 
 /* ---- PLAN SIDEBAR ---- */
 .plan-panel {
-    border-radius: 16px;
+    border-radius: 8px;
     padding: 1.25rem;
     margin-top: 1rem;
 }
-.plan-panel.basic      { background: rgba(136,135,128,0.07); border: 1px solid rgba(136,135,128,0.15); }
-.plan-panel.pro        { background: rgba(138,106,224,0.07); border: 1px solid rgba(138,106,224,0.2); }
-.plan-panel.enterprise { background: rgba(201,168,76,0.07);  border: 1px solid rgba(201,168,76,0.2); }
+.plan-panel.basic      { background: #E4E6EB; border: 1px solid #ccd0d5; }
+.plan-panel.pro        { background: #e7f3ff; border: 1px solid #bde4ff; }
+.plan-panel.enterprise { background: #e7f3ff; border: 1px solid #bde4ff; }
 .plan-name {
-    font-family: 'Satoshi', sans-serif;
+    font-family: 'Segoe UI', 'Roboto', sans-serif;
     font-size: 0.95rem;
     font-weight: 700;
-    color: #F5F3FF;
+    color: #1c1e21;
     margin-bottom: 0.75rem;
 }
-.plan-item { font-size: 0.8rem; color: rgba(232,230,240,0.55); padding: 0.22rem 0; }
-.plan-item.ok  { color: rgba(100,220,150,0.85); }
-.plan-item.off { color: rgba(232,230,240,0.25); }
+.plan-item { font-size: 0.8rem; color: #606770; padding: 0.22rem 0; }
+.plan-item.ok  { color: #065F46; }
+.plan-item.off { color: #8a8d91; }
 
 /* ---- SCORE BANNER ---- */
 .score-banner {
-    background: linear-gradient(135deg, rgba(255,255,255,0.025) 0%, rgba(255,255,255,0.01) 100%);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 20px;
+    background: #FFFFFF;
+    border: 1px solid #dddfe2;
+    border-radius: 8px;
     padding: 1.75rem 2rem;
     margin-bottom: 1.5rem;
     display: grid;
@@ -408,7 +408,7 @@ h1,h2,h3,h4 { font-family: 'Satoshi', sans-serif; }
     font-size: 3.5rem;
     font-weight: 900;
     line-height: 1;
-    font-family: 'Satoshi', sans-serif;
+    font-family: 'Segoe UI', 'Roboto', sans-serif;
     text-align: center;
 }
 .score-grade {
@@ -419,22 +419,22 @@ h1,h2,h3,h4 { font-family: 'Satoshi', sans-serif; }
 }
 .score-label {
     font-size: 0.62rem;
-    color: rgba(232,230,240,0.3);
+    color: #8a8d91;
     text-transform: uppercase;
     letter-spacing: 0.12em;
     text-align: center;
     margin-top: 0.3rem;
 }
-.score-sep { background: rgba(255,255,255,0.07); height: 100%; }
+.score-sep { background: #dddfe2; height: 100%; }
 .score-bar-label {
     display: flex;
     justify-content: space-between;
     font-size: 0.68rem;
-    color: rgba(232,230,240,0.4);
+    color: #606770;
     margin-bottom: 0.2rem;
 }
 .score-bar-track {
-    background: rgba(255,255,255,0.06);
+    background: #E4E6EB;
     border-radius: 4px;
     height: 4px;
     margin-bottom: 0.6rem;
@@ -449,9 +449,9 @@ h1,h2,h3,h4 { font-family: 'Satoshi', sans-serif; }
     margin-bottom: 0.75rem;
 }
 .kpi-card {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.07);
-    border-radius: 14px;
+    background: #FFFFFF;
+    border: 1px solid #dddfe2;
+    border-radius: 8px;
     padding: 1.1rem 1.25rem;
     position: relative;
     overflow: hidden;
@@ -459,55 +459,54 @@ h1,h2,h3,h4 { font-family: 'Satoshi', sans-serif; }
 .kpi-card::after {
     content: '';
     position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 2px;
-    border-radius: 0 0 14px 14px;
+    top: 0; left: 0; right: 0;
+    height: 3px;
 }
-.kpi-card.kpi-gold::after   { background: linear-gradient(90deg,transparent,#C9A84C,transparent); }
-.kpi-card.kpi-blue::after   { background: linear-gradient(90deg,transparent,#60A5FA,transparent); }
-.kpi-card.kpi-purple::after { background: linear-gradient(90deg,transparent,#8A6AE0,transparent); }
-.kpi-card.kpi-green::after  { background: linear-gradient(90deg,transparent,#64DC96,transparent); }
-.kpi-card.kpi-red::after    { background: linear-gradient(90deg,transparent,#FC8181,transparent); }
-.kpi-card.kpi-amber::after  { background: linear-gradient(90deg,transparent,#FBbf24,transparent); }
+.kpi-card.kpi-gold::after   { background: #F7B928; }
+.kpi-card.kpi-blue::after   { background: #1877F2; }
+.kpi-card.kpi-purple::after { background: #8A6AE0; }
+.kpi-card.kpi-green::after  { background: #31A24C; }
+.kpi-card.kpi-red::after    { background: #dd3c10; }
+.kpi-card.kpi-amber::after  { background: #F7B928; }
 .kpi-tag {
     font-size: 0.63rem;
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: rgba(232,230,240,0.35);
+    color: #606770;
     margin-bottom: 0.4rem;
 }
 .kpi-val {
-    font-family: 'Satoshi', sans-serif;
+    font-family: 'Segoe UI', 'Roboto', sans-serif;
     font-size: 1.55rem;
     font-weight: 800;
     letter-spacing: -0.025em;
     line-height: 1;
 }
-.kpi-val.kpi-gold   { color: #C9A84C; }
-.kpi-val.kpi-blue   { color: #60A5FA; }
+.kpi-val.kpi-gold   { color: #92400E; }
+.kpi-val.kpi-blue   { color: #1877F2; }
 .kpi-val.kpi-purple { color: #A890F0; }
-.kpi-val.kpi-green  { color: #64DC96; }
-.kpi-val.kpi-red    { color: #FC8181; }
-.kpi-val.kpi-amber  { color: #FBbf24; }
-.kpi-val.kpi-white  { color: #F5F3FF; }
-.kpi-sub { font-size: 0.67rem; color: rgba(232,230,240,0.3); margin-top: 0.35rem; }
+.kpi-val.kpi-green  { color: #31A24C; }
+.kpi-val.kpi-red    { color: #dd3c10; }
+.kpi-val.kpi-amber  { color: #92400E; }
+.kpi-val.kpi-white  { color: #1c1e21; }
+.kpi-sub { font-size: 0.67rem; color: #8a8d91; margin-top: 0.35rem; }
 
 /* ---- CHART SECTION ---- */
 .chart-section {
-    background: rgba(255,255,255,0.02);
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 16px;
+    background: #FFFFFF;
+    border: 1px solid #dddfe2;
+    border-radius: 8px;
     padding: 1.25rem 1.5rem;
 }
 .chart-title {
-    font-family: 'Satoshi', sans-serif;
+    font-family: 'Segoe UI', 'Roboto', sans-serif;
     font-size: 0.95rem;
     font-weight: 700;
-    color: #F5F3FF;
+    color: #1c1e21;
     margin-bottom: 0.25rem;
 }
-.chart-subtitle { font-size: 0.72rem; color: rgba(232,230,240,0.35); margin-bottom: 0.75rem; }
+.chart-subtitle { font-size: 0.72rem; color: #606770; margin-bottom: 0.75rem; }
 
 /* ---- PRIORITY QUEUE ---- */
 .pq-item {
@@ -528,9 +527,9 @@ h1,h2,h3,h4 { font-family: 'Satoshi', sans-serif; }
     text-align: center;
 }
 .pq-icon { font-size: 1.15rem; line-height: 1; text-align: center; }
-.pq-title { font-size: 0.875rem; font-weight: 700; color: #F5F3FF; margin-bottom: 0.2rem; }
-.pq-detail { font-size: 0.76rem; color: rgba(232,230,240,0.5); margin-bottom: 0.3rem; }
-.pq-action { font-size: 0.76rem; color: rgba(232,230,240,0.75); }
+.pq-title { font-size: 0.875rem; font-weight: 700; color: #1c1e21; margin-bottom: 0.2rem; }
+.pq-detail { font-size: 0.76rem; color: #606770; margin-bottom: 0.3rem; }
+.pq-action { font-size: 0.76rem; color: #1c1e21; }
 .pq-badge {
     font-size: 0.6rem;
     font-weight: 800;
@@ -544,7 +543,7 @@ h1,h2,h3,h4 { font-family: 'Satoshi', sans-serif; }
 
 /* ---- FREQUENCY MAP ---- */
 .freq-row {
-    border-radius: 10px;
+    border-radius: 6px;
     padding: 0.85rem 1rem;
     margin-bottom: 0.5rem;
     display: grid;
@@ -552,7 +551,7 @@ h1,h2,h3,h4 { font-family: 'Satoshi', sans-serif; }
     gap: 1rem;
     align-items: center;
 }
-.freq-name { font-size: 0.84rem; font-weight: 600; color: #F5F3FF; }
+.freq-name { font-size: 0.84rem; font-weight: 600; color: #1c1e21; }
 .freq-badge {
     font-size: 0.6rem;
     font-weight: 700;
@@ -563,13 +562,13 @@ h1,h2,h3,h4 { font-family: 'Satoshi', sans-serif; }
     border: 1px solid;
     margin-left: 0.6rem;
 }
-.freq-bar-track { background: rgba(255,255,255,0.06); border-radius: 4px; height: 4px; margin-top: 0.5rem; }
+.freq-bar-track { background: #E4E6EB; border-radius: 4px; height: 4px; margin-top: 0.5rem; }
 .freq-val { font-size: 1.3rem; font-weight: 800; line-height: 1; }
-.freq-sub { font-size: 0.67rem; color: rgba(232,230,240,0.35); margin-top: 0.15rem; }
+.freq-sub { font-size: 0.67rem; color: #606770; margin-top: 0.15rem; }
 
 /* ---- CAMP CARD V2 ---- */
 .camp-v2 {
-    border-radius: 14px;
+    border-radius: 8px;
     padding: 1.1rem 1.25rem;
     margin-bottom: 0.6rem;
 }
@@ -580,49 +579,49 @@ h1,h2,h3,h4 { font-family: 'Satoshi', sans-serif; }
     margin-bottom: 0.75rem;
 }
 .camp-v2-metric { }
-.camp-v2-lbl { font-size: 0.63rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(232,230,240,0.3); margin-bottom: 0.2rem; }
-.camp-v2-val { font-size: 1.05rem; font-weight: 700; color: #F5F3FF; }
-.camp-v2-sub { font-size: 0.67rem; color: rgba(232,230,240,0.35); margin-top: 0.1rem; }
+.camp-v2-lbl { font-size: 0.63rem; text-transform: uppercase; letter-spacing: 0.1em; color: #606770; margin-bottom: 0.2rem; }
+.camp-v2-val { font-size: 1.05rem; font-weight: 700; color: #1c1e21; }
+.camp-v2-sub { font-size: 0.67rem; color: #8a8d91; margin-top: 0.1rem; }
 
 /* ---- BENCHMARK TABLE ---- */
 .bench-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; margin-top: 0.5rem; }
 .bench-table th {
     font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em;
-    color: rgba(232,230,240,0.3); font-weight: 600;
+    color: #606770; font-weight: 600;
     padding: 0.4rem 0.75rem; text-align: left;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid #dddfe2;
 }
-.bench-table td { padding: 0.5rem 0.75rem; color: rgba(232,230,240,0.65); border-bottom: 1px solid rgba(255,255,255,0.04); }
+.bench-table td { padding: 0.5rem 0.75rem; color: #1c1e21; border-bottom: 1px solid #F0F2F5; }
 .bench-table tr:last-child td { border-bottom: none; }
-.bench-ok   { color: #64DC96 !important; font-weight: 600; }
-.bench-warn { color: #FBbf24 !important; font-weight: 600; }
-.bench-bad  { color: #FC8181 !important; font-weight: 600; }
+.bench-ok   { color: #31A24C !important; font-weight: 600; }
+.bench-warn { color: #92400E !important; font-weight: 600; }
+.bench-bad  { color: #dd3c10 !important; font-weight: 600; }
 
 /* ---- STREAMLIT OVERRIDES ---- */
 .stButton > button {
-    background: linear-gradient(135deg, #8A6AE0 0%, #6A4AC0 100%) !important;
+    background: #1877F2 !important;
     color: white !important;
     border: none !important;
-    border-radius: 10px !important;
-    font-family: 'Satoshi', sans-serif !important;
+    border-radius: 6px !important;
+    font-family: 'Roboto', sans-serif !important;
     font-weight: 600 !important;
     font-size: 0.875rem !important;
     padding: 0.6rem 1.5rem !important;
-    transition: opacity 0.2s !important;
+    transition: background-color 0.2s !important;
 }
-.stButton > button:hover { opacity: 0.85 !important; }
-.stExpander { background: rgba(255,255,255,0.02) !important; border: 1px solid rgba(255,255,255,0.07) !important; border-radius: 14px !important; }
-div[data-testid="stExpander"] > div:first-child { border-radius: 14px !important; }
+.stButton > button:hover { background: #166FE5 !important; }
+.stExpander { background: #FFFFFF !important; border: 1px solid #dddfe2 !important; border-radius: 8px !important; }
+div[data-testid="stExpander"] > div:first-child { border-radius: 8px !important; }
 .stDateInput input, .stTextInput input, .stSelectbox select {
-    background: rgba(255,255,255,0.04) !important;
-    border: 1px solid rgba(255,255,255,0.1) !important;
-    color: #E8E6F0 !important;
-    border-radius: 10px !important;
+    background: #FFFFFF !important;
+    border: 1px solid #ccd0d5 !important;
+    color: #1c1e21 !important;
+    border-radius: 6px !important;
 }
-.stRadio label { color: rgba(232,230,240,0.7) !important; }
-.stMetric label { color: rgba(232,230,240,0.45) !important; font-size: 0.75rem !important; }
-.stMetric [data-testid="metric-container"] > div:nth-child(2) { color: #F5F3FF !important; }
-div[data-testid="stSidebar"] { background: #0D0D18 !important; border-right: 1px solid rgba(255,255,255,0.06) !important; }
+.stRadio label { color: #1c1e21 !important; }
+.stMetric label { color: #606770 !important; font-size: 0.75rem !important; }
+.stMetric [data-testid="metric-container"] > div:nth-child(2) { color: #1c1e21 !important; }
+div[data-testid="stSidebar"] { background: #FFFFFF !important; border-right: 1px solid #dddfe2 !important; }
 
 section.main > div {
     max-width: 1280px;
@@ -1909,7 +1908,7 @@ def client_dashboard():
     with col_info:
         st.markdown(f"""
         <div style="padding: 1.5rem 0 0.5rem;">
-            <div class="dash-logo"><div class="logo-mark">◈</div> Ads Intelligence</div>
+            <div class="dash-logo"><img src="https://impulsolocal.com.mx/wp-content/uploads/2026/04/Logo-1.png" class="logo-mark" alt="Logo"> Ads Intelligence</div>
             <div class="dash-company" style="margin-top:0.5rem;">{company}</div>
             <div style="display:flex; align-items:center; gap:0.75rem; margin-top:0.4rem;">
                 <div class="dash-sub">{email}</div>
@@ -1926,14 +1925,14 @@ def client_dashboard():
     # Banner y botones de Upgrade para usuarios del plan gratuito
     if plan == 'basic':
         st.markdown("""
-        <div style="background:rgba(138,106,224,0.07); border:1px solid rgba(138,106,224,0.18);
+        <div style="background: #e7f3ff; border: 1px solid #bde4ff;
              border-radius:12px; padding:1rem 1.5rem; margin-bottom:1rem; display:flex; 
              justify-content:space-between; align-items:center;">
             <div>
-                <div style="color:#A890F0; font-weight:700; font-size:0.95rem; margin-bottom:0.25rem;">
+                <div style="color:#1877F2; font-weight:700; font-size:0.95rem; margin-bottom:0.25rem;">
                     🚀 Desbloquea todo el potencial de Ads Intelligence
                 </div>
-                <div style="color:rgba(232,230,240,0.7); font-size:0.85rem;">
+                <div style="color:#1c1e21; font-size:0.85rem;">
                     Actualiza a PRO para analizar hasta 20 campañas y recibir alertas de la IA.
                 </div>
             </div>
@@ -1942,14 +1941,14 @@ def client_dashboard():
         
         col1, col2 = st.columns(2)
         with col1:
-            if st.button("⭐ Mejorar a PRO ($79/mes)", use_container_width=True, key="upgrade_pro"):
+            if st.button("⭐ Actualizar a PRO ($79/mes)", use_container_width=True, key="upgrade_pro"):
                 price_id = os.getenv('STRIPE_PRO_PRICE_ID')
                 if price_id and user_id:
                     checkout_url = create_stripe_checkout_session(price_id, user_id)
                     if checkout_url:
                         st.markdown(f'<meta http-equiv="refresh" content="0; url={checkout_url}">', unsafe_allow_html=True)
         with col2:
-            if st.button("♛ Mejorar a ENTERPRISE ($199/mes)", use_container_width=True, key="upgrade_enterprise"):
+            if st.button("♛ Actualizar a ENTERPRISE ($199/mes)", use_container_width=True, key="upgrade_enterprise"):
                 price_id = os.getenv('STRIPE_ENTERPRISE_PRICE_ID')
                 if price_id and user_id:
                     checkout_url = create_stripe_checkout_session(price_id, user_id)
@@ -1960,8 +1959,8 @@ def client_dashboard():
 
     # Plan info en sidebar
     with st.sidebar:
-        st.markdown(DASHBOARD_CSS, unsafe_allow_html=True)
-        st.markdown('<div class="dash-logo" style="padding:1rem 0 0.5rem;"><div class="logo-mark">◈</div> Ads Intelligence</div>', unsafe_allow_html=True)
+        # El CSS ya está inyectado arriba
+        st.markdown('<div class="dash-logo" style="padding:1rem 0 0.5rem;"><img src="https://impulsolocal.com.mx/wp-content/uploads/2026/04/Logo-1.png" class="logo-mark" alt="Logo"> Ads Intelligence</div>', unsafe_allow_html=True)
         render_plan_info(plan)
 
     # ========== FILTROS ==========
@@ -2035,9 +2034,9 @@ def client_dashboard():
             col_status, col_del = st.columns([4, 1])
             with col_status:
                 st.markdown("""
-                <div style="background:rgba(100,220,150,0.06); border:1px solid rgba(100,220,150,0.2);
+                <div style="background:#ECFDF5; border:1px solid #A7F3D0;
                      border-radius:10px; padding:0.55rem 1rem; font-size:0.8rem;
-                     color:rgba(100,220,150,0.85);">
+                     color:#065F46;">
                     ● Cuenta conectada
                 </div>
                 """, unsafe_allow_html=True)
@@ -2101,11 +2100,11 @@ def client_dashboard():
 
     if not st.session_state.get('fb_configured', False):
         st.markdown("""
-        <div style="background:rgba(138,106,224,0.06); border:1px solid rgba(138,106,224,0.18);
-             border-radius:16px; padding:2rem; text-align:center;">
-            <div style="font-family:'Syne',sans-serif; font-size:1.1rem; font-weight:700;
-                 color:#A890F0; margin-bottom:0.5rem;">Conecta tu cuenta de Facebook Ads</div>
-            <div style="font-size:0.85rem; color:rgba(232,230,240,0.4);">
+        <div style="background: #e7f3ff; border: 1px solid #bde4ff;
+             border-radius:8px; padding:2rem; text-align:center;">
+            <div style="font-family:'Segoe UI', 'Roboto', sans-serif; font-size:1.1rem; font-weight:700;
+                 color:#1877F2; margin-bottom:0.5rem;">Conecta tu cuenta de Facebook Ads</div>
+            <div style="font-size:0.85rem; color:#1c1e21;">
                 Configura tus credenciales arriba para comenzar el análisis.
             </div>
         </div>
@@ -2276,15 +2275,15 @@ def client_dashboard():
                             <div class="roi-box-title">Estimación de ROI Potencial</div>
                             <div class="roi-row">Tasa de conversión estimada: <strong style="color:#F5F3FF;">{roi_estimate['conversion_rate_used']:.1f}%</strong></div>
                             <div class="roi-row">▸ ~{roi_estimate['estimated_conversions']:,} conversiones proyectadas</div>
-                            <div class="roi-row">▸ Ingreso estimado: <strong style="color:#64DC96;">${roi_estimate['estimated_revenue']:,.2f}</strong></div>
-                            <div class="roi-row">▸ ROAS estimado: <strong style="color:#64DC96;">{roi_estimate['estimated_roas']:.1f}x</strong></div>
+                            <div class="roi-row">▸ Ingreso estimado: <strong style="color:#065F46;">${roi_estimate['estimated_revenue']:,.2f}</strong></div>
+                            <div class="roi-row">▸ ROAS estimado: <strong style="color:#065F46;">{roi_estimate['estimated_roas']:.1f}x</strong></div>
                             <div class="roi-note">Estimación basada en promedios del mercado. Los resultados reales pueden variar.</div>
                         </div>
                         """, unsafe_allow_html=True)
 
                     st.markdown(f"""
                     <div class="rec-box">
-                        <div class="rec-title">{star['recommendation']}</div>
+                        <div class="rec-title" style="color:{'#065F46' if card_cls=='elite' else '#1877F2' if card_cls=='solid' else '#92400E'};">{star['recommendation']}</div>
                         <div class="rec-text">📈 {star['projection']}</div>
                     </div>
                     """, unsafe_allow_html=True)
@@ -2292,7 +2291,7 @@ def client_dashboard():
                     st.markdown('<div style="margin-top:1rem; border-top:1px solid rgba(255,255,255,0.06); padding-top:1rem;"></div>', unsafe_allow_html=True)
                     st.markdown('<div style="font-size:0.8rem; font-weight:700; color:#F5F3FF; margin-bottom:0.5rem;">Próximos pasos recomendados:</div>', unsafe_allow_html=True)
                     for step in star['next_steps']:
-                        st.markdown(f"<div style='font-size:0.85rem; color:rgba(232,230,240,0.6); padding-left:1rem; margin-bottom:0.25rem;'>{step}</div>", unsafe_allow_html=True)
+                        st.markdown(f"<div style='font-size:0.85rem; color:#1c1e21; padding-left:1rem; margin-bottom:0.25rem;'>{step}</div>", unsafe_allow_html=True)
 
                 st.markdown('<div style="margin:1rem 0;"></div>', unsafe_allow_html=True)
 
@@ -2330,9 +2329,9 @@ def client_dashboard():
 
     except Exception as e:
         st.markdown(f"""
-        <div style="background:rgba(252,129,129,0.07); border:1px solid rgba(252,129,129,0.2);
-             border-radius:14px; padding:1.25rem; font-size:0.875rem; color:#FC8181;">
+        <div style="background: #fae0e0; border: 1px solid #f5c0c0;
+             border-radius:8px; padding:1.25rem; font-size:0.875rem; color:#dd3c10;">
             <strong>Error al cargar datos</strong><br>
-            <span style="color:rgba(232,230,240,0.4);">{e}</span>
+            <span style="color:#1c1e21;">{e}</span>
         </div>
         """, unsafe_allow_html=True)

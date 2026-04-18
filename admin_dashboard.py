@@ -11,286 +11,214 @@ from database import (
 from auth import require_admin, logout
 
 
-CUSTOM_CSS = """
+ADMIN_DASHBOARD_CSS = """
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
-/* ── Base & Reset ───────────────────────────── */
-html, body, [class*="css"] {
-    font-family: 'DM Sans', sans-serif;
+*, *::before, *::after { box-sizing: border-box; }
+body, .stApp { 
+    background: #F0F2F5 !important; 
+    color: #1c1e21; 
+    font-family: 'Roboto', sans-serif;
+}
+h1,h2,h3,h4 { font-family: 'Segoe UI', 'Roboto', sans-serif; font-weight: 700; }
+
+/* ---- Ocultar Streamlit UI ---- */
+#MainMenu, footer { visibility: hidden; }
+.stApp > header { display: none; }
+.block-container { padding: 1.5rem 2rem 3rem !important; max-width: 1280px !important; }
+
+/* ---- Header ---- */
+h1 {
+    font-family: 'Segoe UI', sans-serif !important;
+    font-size: 1.8rem !important;
+    font-weight: 700 !important;
+    color: #1c1e21 !important;
+    letter-spacing: -0.025em;
+    margin-bottom: 0 !important;
+}
+/* caption below title */
+[data-testid="stCaptionContainer"] p {
+    color: #606770 !important;
+    font-size: 0.9rem !important;
+    margin-top: 0.2rem;
 }
 
-.stApp {
-    background: #080c14;
-    color: #c9d1e0;
-}
-
-/* ── Hide default Streamlit chrome ──────────── */
-#MainMenu, footer, header { visibility: hidden; }
-.block-container {
-    padding: 2.5rem 3rem 4rem;
-    max-width: 1100px;
-}
-
-/* ── Sidebar ─────────────────────────────────── */
+/* ---- Sidebar ---- */
 [data-testid="stSidebar"] {
-    background: #0d1220 !important;
-    border-right: 1px solid #1e2a3a;
+    background: #FFFFFF !important;
+    border-right: 1px solid #dddfe2 !important;
 }
 [data-testid="stSidebar"] .stMarkdown p {
-    color: #7a8fa8;
+    color: #1c1e21;
     font-size: 0.85rem;
 }
 [data-testid="stSidebar"] strong {
-    color: #e0e8f5;
+    color: #1c1e21;
     font-weight: 600;
 }
-
-/* ── Title ───────────────────────────────────── */
-h1 {
-    font-family: 'Syne', sans-serif !important;
-    font-size: 2rem !important;
-    font-weight: 800 !important;
-    color: #e8eef8 !important;
-    letter-spacing: -0.03em;
-    line-height: 1.15 !important;
-    margin-bottom: 0 !important;
+.sidebar-logo {
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #1877F2;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 0 1.5rem;
+    border-bottom: 1px solid #dddfe2;
+    margin-bottom: 1rem;
+}
+.sidebar-logo .logo-mark {
+    width: 28px;
+    height: 28px;
 }
 
-/* caption below title */
-[data-testid="stCaptionContainer"] p {
-    color: #4a5f7a !important;
-    font-size: 0.82rem !important;
-    margin-top: 0.2rem;
-    letter-spacing: 0.02em;
-}
-
-/* ── Subheadings ─────────────────────────────── */
-h2, h3 {
-    font-family: 'Syne', sans-serif !important;
-    color: #c4d0e8 !important;
-    font-weight: 700 !important;
-    letter-spacing: -0.02em;
-}
-h4 {
-    font-family: 'DM Sans', sans-serif !important;
-    color: #7a94b8 !important;
-    font-weight: 500 !important;
-    font-size: 0.78rem !important;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: 0.6rem !important;
-}
-
-/* ── Tabs ────────────────────────────────────── */
-[data-testid="stTabs"] [role="tablist"] {
-    background: #0d1220;
-    border: 1px solid #1a2535;
-    border-radius: 12px;
-    padding: 4px;
-    gap: 2px;
+/* ---- Tabs ---- */
+.stTabs [data-baseweb="tab-list"] {
+    border-bottom: 1px solid #dddfe2 !important;
     margin-bottom: 1.5rem;
+    gap: 1rem !important;
 }
-[data-testid="stTabs"] [role="tab"] {
-    border-radius: 9px !important;
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 500;
-    font-size: 0.85rem;
-    color: #4a5f7a !important;
-    padding: 0.5rem 1.1rem !important;
+.stTabs [data-baseweb="tab"] {
+    background: transparent !important;
+    color: #606770 !important;
+    font-family: 'Roboto', sans-serif !important;
+    font-size: 1rem !important;
+    font-weight: 500 !important;
+    padding: 0.75rem 0.5rem !important;
     border: none !important;
-    transition: all 0.2s ease;
 }
-[data-testid="stTabs"] [role="tab"][aria-selected="true"] {
-    background: #162035 !important;
-    color: #7eb8f5 !important;
-    box-shadow: 0 0 0 1px #2a3f5a;
+.stTabs [aria-selected="true"] {
+    color: #1877F2 !important;
 }
-[data-testid="stTabs"] [role="tab"]:hover:not([aria-selected="true"]) {
-    color: #8aa3c0 !important;
-    background: #111927 !important;
-}
-/* hide the default bottom indicator line */
-[data-testid="stTabs"] [role="tablist"]::after,
-[data-testid="stTabs"] [role="tab"]::after { display: none !important; }
+.stTabs [data-baseweb="tab-highlight"] { background-color: #1877F2 !important; height: 3px !important; }
 
-/* ── Expander (User Cards) ───────────────────── */
+/* ---- Expander (User Cards) ---- */
 [data-testid="stExpander"] {
-    background: #0d1220 !important;
-    border: 1px solid #1a2535 !important;
-    border-radius: 14px !important;
+    background: #FFFFFF !important;
+    border: 1px solid #dddfe2 !important;
+    border-radius: 8px !important;
     margin-bottom: 0.75rem !important;
     overflow: hidden;
-    transition: border-color 0.2s ease;
-}
-[data-testid="stExpander"]:hover {
-    border-color: #2a3f5a !important;
 }
 [data-testid="stExpander"] summary {
     padding: 1rem 1.25rem !important;
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-weight: 500;
-    font-size: 0.9rem;
-    color: #a8bcd8 !important;
-}
-[data-testid="stExpander"] summary:hover {
-    background: #111927 !important;
+    font-size: 0.95rem;
+    color: #1c1e21 !important;
 }
 [data-testid="stExpander"] [data-testid="stExpanderDetails"] {
     padding: 0 1.25rem 1.25rem !important;
+    background: #FFFFFF;
 }
-
-/* ── Write / p text inside cards ─────────────── */
 [data-testid="stExpander"] p {
-    color: #6a82a0;
-    font-size: 0.86rem;
-    margin: 0.25rem 0;
+    color: #606770;
+    font-size: 0.9rem;
 }
 [data-testid="stExpander"] strong {
-    color: #99b3d0;
+    color: #1c1e21;
 }
 
-/* ── Divider ─────────────────────────────────── */
-hr {
-    border: none;
-    border-top: 1px solid #1a2535 !important;
-    margin: 1rem 0 !important;
-}
-
-/* ── Metrics ─────────────────────────────────── */
+/* ---- Metrics ---- */
 [data-testid="stMetric"] {
-    background: #0d1220;
-    border: 1px solid #1a2535;
-    border-radius: 14px;
+    background: #FFFFFF;
+    border: 1px solid #dddfe2;
+    border-radius: 8px;
     padding: 1.2rem 1.5rem !important;
-    transition: border-color 0.2s;
 }
-[data-testid="stMetric"]:hover { border-color: #2a4060; }
 [data-testid="stMetricLabel"] p {
-    color: #4a6080 !important;
+    color: #606770 !important;
     font-size: 0.75rem !important;
     font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
 }
 [data-testid="stMetricValue"] {
-    font-family: 'Syne', sans-serif;
-    font-size: 2.4rem !important;
-    font-weight: 800 !important;
-    color: #7eb8f5 !important;
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 2.2rem !important;
+    font-weight: 700 !important;
+    color: #1877F2 !important;
 }
 
-/* ── Buttons ─────────────────────────────────── */
+/* ---- Buttons ---- */
 .stButton > button {
-    font-family: 'DM Sans', sans-serif !important;
-    font-weight: 500 !important;
-    font-size: 0.83rem !important;
-    border-radius: 9px !important;
-    border: 1px solid #1e2f45 !important;
-    background: #111927 !important;
-    color: #7a9ab8 !important;
-    padding: 0.45rem 1rem !important;
-    transition: all 0.2s ease !important;
-    box-shadow: none !important;
+    background: #E4E6EB !important;
+    color: #1c1e21 !important;
+    border: none !important;
+    border-radius: 6px !important;
+    font-family: 'Roboto', sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 0.875rem !important;
+    padding: 0.6rem 1.2rem !important;
+    transition: background-color 0.2s !important;
 }
 .stButton > button:hover {
-    background: #162035 !important;
-    border-color: #2a4060 !important;
-    color: #a8c8f0 !important;
-    transform: translateY(-1px);
-}
-/* Danger-style delete buttons */
-button[kind="secondary"]:has(div:contains("🗑️")),
-.stButton > button:has(div:contains("Eliminar")) {
-    border-color: #3a1a1a !important;
-    color: #c06060 !important;
-}
-.stButton > button:has(div:contains("Eliminar")):hover {
-    background: #1e0f0f !important;
-    border-color: #5a2020 !important;
-    color: #e08080 !important;
+    background: #d8dbdf !important;
 }
 
-/* ── Form submit buttons ─────────────────────── */
-[data-testid="stFormSubmitButton"] > button {
-    background: #132540 !important;
-    border-color: #1e3d62 !important;
-    color: #7eb8f5 !important;
-    font-weight: 600 !important;
+/* Primary action buttons (logout, form submit) */
+[data-testid="stFormSubmitButton"] > button,
+.stButton > button:has(div:contains("Cerrar sesión")) {
+    background: #1877F2 !important;
+    color: white !important;
 }
-[data-testid="stFormSubmitButton"] > button:hover {
-    background: #1a3254 !important;
-    border-color: #2a5080 !important;
-    color: #a8d0f8 !important;
+[data-testid="stFormSubmitButton"] > button:hover,
+.stButton > button:has(div:contains("Cerrar sesión")):hover {
+    background: #166FE5 !important;
 }
 
-/* ── Inputs ──────────────────────────────────── */
+/* Danger button (delete) */
+.stButton > button:has(div:contains("🗑️")) {
+    background: #fae0e0 !important;
+    color: #dd3c10 !important;
+}
+.stButton > button:has(div:contains("🗑️")):hover {
+    background: #f5c0c0 !important;
+}
+
+/* ---- Inputs y Forms ---- */
 [data-testid="stTextInput"] input,
 [data-testid="stSelectbox"] > div > div {
-    background: #0a1020 !important;
-    border: 1px solid #1a2840 !important;
-    border-radius: 9px !important;
-    color: #a8bcd8 !important;
-    font-family: 'DM Sans', sans-serif !important;
-    font-size: 0.87rem !important;
+    background: #FFFFFF !important;
+    border: 1px solid #ccd0d5 !important;
+    border-radius: 6px !important;
+    color: #1c1e21 !important;
 }
-[data-testid="stTextInput"] input:focus {
-    border-color: #2a5080 !important;
-    box-shadow: 0 0 0 2px rgba(46, 100, 160, 0.2) !important;
+[data-testid="stTextInput"] input:focus,
+[data-testid="stSelectbox"] > div > div:focus-within {
+    border-color: #1877F2 !important;
+    box-shadow: 0 0 0 2px #e7f3ff !important;
 }
 [data-testid="stTextInput"] label,
 [data-testid="stSelectbox"] label {
-    color: #4a6080 !important;
-    font-size: 0.78rem !important;
+    color: #606770 !important;
+    font-size: 0.8rem !important;
     font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
 }
 
-/* ── Selectbox dropdown ──────────────────────── */
-[data-testid="stSelectbox"] svg { color: #4a6080 !important; }
-
-/* ── Alerts / Info ───────────────────────────── */
-[data-testid="stAlert"] {
-    border-radius: 10px !important;
-    font-size: 0.85rem;
-    font-family: 'DM Sans', sans-serif;
-}
-
-/* ── Success / Error messages ────────────────── */
+/* ---- Alerts ---- */
 .stSuccess {
-    background: #0a1e14 !important;
-    border-color: #1a4030 !important;
-    color: #5ab888 !important;
-    border-radius: 10px !important;
+    background: #ECFDF5 !important;
+    border-color: #A7F3D0 !important;
+    color: #065F46 !important;
 }
 .stError {
-    background: #1a0a0a !important;
-    border-color: #4a1818 !important;
-    color: #e07070 !important;
-    border-radius: 10px !important;
+    background: #fae0e0 !important;
+    border-color: #f5c0c0 !important;
+    color: #dd3c10 !important;
+}
+.stInfo {
+    background: #e7f3ff !important;
+    border-color: #bde4ff !important;
+    color: #1877F2 !important;
 }
 
-/* ── Log captions ────────────────────────────── */
-[data-testid="stCaptionContainer"] {
-    background: #0d1220;
-    border: 1px solid #161f2e;
-    border-radius: 8px;
-    padding: 0.5rem 0.9rem !important;
-    margin-bottom: 0.35rem !important;
-    font-family: 'DM Sans', sans-serif !important;
-    color: #4a6080 !important;
-    font-size: 0.78rem !important;
+hr {
+    border: none;
+    border-top: 1px solid #dddfe2 !important;
+    margin: 1.5rem 0 !important;
 }
-
-/* ── Scrollbar ───────────────────────────────── */
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: #080c14; }
-::-webkit-scrollbar-thumb { background: #1e2f45; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #2a4060; }
-
-/* ── Column gaps ─────────────────────────────── */
-[data-testid="column"] { gap: 0.75rem; }
 </style>
 """
 
@@ -299,22 +227,32 @@ def admin_dashboard():
     require_admin()
 
     # Inject custom styles
-    st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
+    st.markdown(ADMIN_DASHBOARD_CSS, unsafe_allow_html=True)
 
     # ── Header ────────────────────────────────────────────────────────────────
     col1, col2 = st.columns([4, 1])
     with col1:
-        st.title("👑 Panel de Administración")
+        st.title("Panel de Administración")
         st.caption("Gestión de usuarios y configuración del sistema")
     with col2:
-        if st.button("🚪 Cerrar sesión", use_container_width=True):
+        st.markdown('<div style="padding-top: 1rem;">', unsafe_allow_html=True)
+        if st.button("Cerrar sesión", use_container_width=True):
             logout()
+        st.markdown('</div>', unsafe_allow_html=True)
+
+    st.markdown("<hr>", unsafe_allow_html=True)
 
     # ── Sidebar ───────────────────────────────────────────────────────────────
     with st.sidebar:
+        st.markdown("""
+        <div class="sidebar-logo">
+            <img src="https://impulsolocal.com.mx/wp-content/uploads/2026/04/Logo-1.png" class="logo-mark" alt="Logo">
+            Ads Intelligence
+        </div>
+        """, unsafe_allow_html=True)
         st.markdown(f"**Admin:** {st.session_state.get('admin_email', '')}")
         st.markdown("---")
-        if st.button("🚪 Cerrar sesión", use_container_width=True, key="sidebar_logout"):
+        if st.button("Cerrar sesión", use_container_width=True, key="sidebar_logout"):
             logout()
 
     # ── Tabs ──────────────────────────────────────────────────────────────────
@@ -391,8 +329,11 @@ def admin_dashboard():
         st.subheader("Estadísticas del Sistema")
 
         users = get_all_users()
-        st.metric("Total Usuarios", len(users))
-        st.metric("Usuarios Activos", sum(1 for u in users if u['is_active']))
+        col1, col2 = st.columns(2)
+        with col1:
+            st.metric("Total Usuarios", len(users))
+        with col2:
+            st.metric("Usuarios Activos", sum(1 for u in users if u['is_active']))
 
         st.markdown("---")
         st.subheader("📋 Últimos Accesos")
