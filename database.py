@@ -85,14 +85,24 @@ def hash_password(password: str) -> str:
     """Hashea una contraseña de forma segura con bcrypt usando passlib."""
     if not PASSLIB_AVAILABLE or not pwd_context:
         return hashlib.sha256(password.encode()).hexdigest()
-    return pwd_context.hash(password)
+    # TRUNCATE: bcrypt tiene un límite de 72 bytes para la contraseña.
+    # Truncamos para evitar un ValueError, como recomienda la propia librería.
+    password_bytes = password.encode('utf-8')
+    if len(password_bytes) > 72:
+        password_bytes = password_bytes[:72]
+    return pwd_context.hash(password_bytes.decode('utf-8', 'ignore'))
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     """Verifica una contraseña plana contra su hash seguro."""
-    if not PASSLIB_AVAILABLE or not pwd_context or not hashed_password.startswith('$2b$'):
+    # Añadimos `hashed_password and` para evitar errores si el hash es None
+    if not PASSLIB_AVAILABLE or not pwd_context or not (hashed_password and hashed_password.startswith('$2b$')):
         # Fallback para contraseñas antiguas hasheadas con SHA256
         return hashed_password == hashlib.sha256(plain_password.encode()).hexdigest()
-    return pwd_context.verify(plain_password, hashed_password)
+    # TRUNCATE: La misma lógica de truncado debe aplicarse durante la verificación.
+    password_bytes = plain_password.encode('utf-8')
+    if len(password_bytes) > 72:
+        password_bytes = password_bytes[:72]
+    return pwd_context.verify(password_bytes.decode('utf-8', 'ignore'), hashed_password)
 
 # ========== INICIALIZACIÓN ==========
 
