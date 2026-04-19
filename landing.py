@@ -51,6 +51,19 @@ input[type="email"] {
     -webkit-text-fill-color: #0F172A !important;
     background-color: #FFFFFF !important;
 }
+
+/* ---- ALERTS OVERRIDES ---- */
+div[data-testid="stAlert"] {
+    background-color: #FFFFFF !important;
+    border-radius: 8px !important;
+    border: 1px solid #E2E8F0 !important;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05) !important;
+}
+div[data-testid="stAlert"] p { color: #0F172A !important; }
+div[data-testid="stNotification"] { background-color: #FFFFFF !important; }
+
+/* Let Streamlit's native icon colors work, but force the background to white. */
+
 </style>
 """, unsafe_allow_html=True)
 
@@ -724,7 +737,7 @@ with c2:
         st.session_state.page = 'register' # Este botón ahora va al registro
         st.rerun()
 st.markdown("""
-<div style="display:flex; justify-content:center; gap:3rem; padding: 3rem 0 1rem; border-top: 1px solid #F8FAFC; margin-top: 2rem;">
+<div class="hero-stats">
     <div class="stat-item">
         <div class="stat-number">+340%</div>
         <div class="stat-label">ROI promedio</div>

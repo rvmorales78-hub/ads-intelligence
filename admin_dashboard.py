@@ -239,6 +239,19 @@ input[type="email"] {
     -webkit-text-fill-color: #0F172A !important;
     background-color: #FFFFFF !important;
 }
+
+/* ---- ALERTS OVERRIDES ---- */
+div[data-testid="stAlert"] {
+    background-color: #FFFFFF !important;
+    border-radius: 8px !important;
+    border: 1px solid #E2E8F0 !important;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05) !important;
+}
+div[data-testid="stAlert"] p { color: #0F172A !important; }
+div[data-testid="stNotification"] { background-color: #FFFFFF !important; }
+
+/* Let Streamlit's native icon colors work, but force the background to white. */
+
 </style>
 """
 
@@ -312,16 +325,6 @@ def admin_dashboard():
                             update_user_plan(user['id'], new_plan)
                             st.success(f"Plan actualizado a {new_plan}")
                             st.rerun()
-
-                    st.markdown('---')
-                    st.markdown('#### Configurar credenciales Facebook')
-                    with st.form(f"save_credentials_form_{user['id']}"):
-                        fb_app_id = st.text_input("App ID", key=f"app_{user['id']}")
-                        fb_token = st.text_input("Access Token", type="password", key=f"token_{user['id']}")
-                        fb_account = st.text_input("Account ID (act_...)", key=f"acc_{user['id']}")
-                        if st.form_submit_button("💾 Guardar credenciales"):
-                            update_user_credentials(user['id'], fb_app_id, fb_token, fb_account)
-                            st.success("Credenciales guardadas")
         else:
             st.info("No hay usuarios registrados")
 
