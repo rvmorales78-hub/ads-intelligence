@@ -73,7 +73,9 @@ query_params = st.query_params
 if "page" in query_params:
     # The new st.query_params API gets the first value of a parameter directly.
     page_to_go = query_params["page"]
-    if page_to_go in ['login', 'register', 'demo', 'landing', 'strategy']:
+    if page_to_go in ['login', 'register', 'demo', 'landing', 'strategy', 'forgot_password', 'reset_password']:
+        if page_to_go == 'reset_password' and "token" in query_params:
+            st.session_state.reset_token = query_params["token"]
         st.session_state.page = page_to_go
         st.query_params.clear() # Use the corresponding setter to clear params
 
@@ -87,6 +89,16 @@ if st.session_state.page == 'login':
 
 if st.session_state.page == 'register': # Nueva página de registro
     register_page()
+    st.stop()
+
+if st.session_state.page == 'forgot_password':
+    from auth import forgot_password_page
+    forgot_password_page()
+    st.stop()
+
+if st.session_state.page == 'reset_password':
+    from auth import reset_password_page
+    reset_password_page()
     st.stop()
 
 
