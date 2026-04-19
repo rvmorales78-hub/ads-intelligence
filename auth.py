@@ -436,7 +436,6 @@ def reset_password_page():
                         }, 2000);
                     </script>
                     """, unsafe_allow_html=True)
-                    st.info("Serás redirigido al login en 2 segundos...")
                 else:
                     st.error("❌ El enlace es inválido o ha expirado.")
 
