@@ -364,7 +364,7 @@ def forgot_password_page():
 
     with st.form("forgot_pass_form"):
         email = st.text_input("Email", placeholder="tu@empresa.com")
-        submitted = st.form_submit_button("Enviar enlace de recuperación →", use_container_width=True)
+        submitted = st.form_submit_button("Reestablecer contraseña →", use_container_width=True)
 
         if submitted:
             if not email:
@@ -378,7 +378,6 @@ def forgot_password_page():
                     st.success(f"Enlace de recuperación generado.")
                     st.markdown(f"""
                     <div style="background:#F8FAFC; border:1px solid #E2E8F0; padding:1rem; border-radius:8px; text-align:center; margin-top:1rem;">
-                        <span style="font-size:0.85rem; color:#475569;">Simulación de Email enviado. En producción esto iría a tu correo.</span><br>
                         <a href="{reset_link}" target="_self" style="color:#0F172A; font-weight:700; text-decoration:none; display:inline-block; margin-top:0.5rem;">Haz clic aquí para restablecer tu contraseña</a>
                     </div>
                     """, unsafe_allow_html=True)
