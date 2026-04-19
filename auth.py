@@ -359,7 +359,6 @@ def forgot_password_page():
 
     st.markdown("""
     <div class="auth-card-title">Recuperar Contraseña</div>
-    <div class="auth-card-sub">Ingresa tu email y te enviaremos un enlace.</div>
     """, unsafe_allow_html=True)
 
     with st.form("forgot_pass_form"):
@@ -375,7 +374,6 @@ def forgot_password_page():
                     # In a real app we would send an email here.
                     # For this prototype we will show a success message with the link to click.
                     reset_link = f"/?page=reset_password&token={token}"
-                    st.success(f"Enlace de recuperación generado.")
                     st.markdown(f"""
                     <div style="background:#F8FAFC; border:1px solid #E2E8F0; padding:1rem; border-radius:8px; text-align:center; margin-top:1rem;">
                         <a href="{reset_link}" target="_self" style="color:#0F172A; font-weight:700; text-decoration:none; display:inline-block; margin-top:0.5rem;">Haz clic aquí para restablecer tu contraseña</a>
