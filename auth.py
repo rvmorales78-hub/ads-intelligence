@@ -9,8 +9,8 @@ AUTH_CSS = """
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
 *, *::before, *::after { box-sizing: border-box; }
-body, .stApp { background: #F0F2F5 !important; color: #1c1e21; font-family: 'Roboto', sans-serif; }
-h1,h2,h3 { color: #1c1e21 !important; font-family: 'Segoe UI', 'Roboto', sans-serif; font-weight: 700; }
+body, .stApp { background: #F1F5F9 !important; color: #0F172A; font-family: 'Roboto', sans-serif; }
+h1,h2,h3 { color: #0F172A !important; font-family: 'Segoe UI', 'Roboto', sans-serif; font-weight: 700; }
 
 /* ---- CENTRADO ---- */
 .block-container { max-width: 420px !important; margin: 0 auto !important; padding-top: 4rem !important; }
@@ -24,7 +24,7 @@ h1,h2,h3 { color: #1c1e21 !important; font-family: 'Segoe UI', 'Roboto', sans-se
     font-family: 'Segoe UI', sans-serif;
     font-size: 1.5rem;
     font-weight: 800;
-    color: #1877F2;
+    color: #0F172A;
     margin-bottom: 2.5rem;
     text-align: center;
 }
@@ -38,7 +38,7 @@ h1,h2,h3 { color: #1c1e21 !important; font-family: 'Segoe UI', 'Roboto', sans-se
 /* ---- CARD ---- */
 .auth-card {
     background: #FFFFFF;
-    border: 1px solid #dddfe2;
+    border: 1px solid #E2E8F0;
     border-radius: 8px;
     padding: 1.5rem;
     margin-bottom: 1rem;
@@ -49,27 +49,27 @@ h1,h2,h3 { color: #1c1e21 !important; font-family: 'Segoe UI', 'Roboto', sans-se
     font-size: 1.3rem;
     font-weight: 600;
     text-align: center;
-    color: #1c1e21;
+    color: #0F172A;
     margin-bottom: 0.3rem;
 }
 .auth-card-sub {
     font-size: 0.9rem;
-    color: #606770;
+    color: #475569;
     margin-bottom: 1.5rem;
     text-align: center;
 }
-.auth-divider { border: none; border-top: 1px solid #dddfe2; margin: 1.5rem 0; }
+.auth-divider { border: none; border-top: 1px solid #E2E8F0; margin: 1.5rem 0; }
 
 /* ---- TABS ---- */
 .stTabs [data-baseweb="tab-list"] {
     justify-content: center;
-    border-bottom: 1px solid #dddfe2 !important;
+    border-bottom: 1px solid #E2E8F0 !important;
     margin-bottom: 1.5rem;
     gap: 1rem !important;
 }
 .stTabs [data-baseweb="tab"] {
     background: transparent !important;
-    color: #606770 !important;
+    color: #475569 !important;
     font-family: 'Roboto', sans-serif !important;
     font-size: 1rem !important;
     font-weight: 500 !important;
@@ -78,9 +78,9 @@ h1,h2,h3 { color: #1c1e21 !important; font-family: 'Segoe UI', 'Roboto', sans-se
     transition: all 0.2s !important;
 }
 .stTabs [aria-selected="true"] {
-    color: #1877F2 !important;
+    color: #0F172A !important;
 }
-.stTabs [data-baseweb="tab-highlight"] { background-color: #1877F2 !important; height: 3px !important; }
+.stTabs [data-baseweb="tab-highlight"] { background-color: #0F172A !important; height: 3px !important; }
 .stTabs [data-baseweb="tab-border"]    { display: none !important; }
 
 /* ---- INPUTS ---- */
@@ -89,9 +89,9 @@ h1,h2,h3 { color: #1c1e21 !important; font-family: 'Segoe UI', 'Roboto', sans-se
 }
 .stTextInput input {
     background: #FFFFFF !important;
-    border: 1px solid #ccd0d5 !important;
+    border: 1px solid #CBD5E1 !important;
     border-radius: 6px !important;
-    color: #1c1e21 !important;
+    color: #0F172A !important;
     font-family: 'Roboto', sans-serif !important;
     font-size: 1rem !important;
     padding: 0.8rem 1rem !important;
@@ -99,14 +99,14 @@ h1,h2,h3 { color: #1c1e21 !important; font-family: 'Segoe UI', 'Roboto', sans-se
     margin-bottom: 0.5rem; /* Space between inputs */
 }
 .stTextInput input:focus {
-    border-color: #1877F2 !important;
-    box-shadow: 0 0 0 2px #e7f3ff !important;
+    border-color: #0F172A !important;
+    box-shadow: 0 0 0 2px #F8FAFC !important;
 }
-.stTextInput input::placeholder { color: #8a8d91 !important; }
+.stTextInput input::placeholder { color: #64748B !important; }
 
 /* ---- SUBMIT BUTTON ---- */
 .stFormSubmitButton > button, .stButton > button, [data-testid='stFormSubmitButton'] > button, [data-testid='stBaseButton-primary'] {
-    background: #1877F2 !important;
+    background: #0F172A !important;
     color: white !important;
     border: none !important;
     border-radius: 6px !important;
@@ -119,17 +119,17 @@ h1,h2,h3 { color: #1c1e21 !important; font-family: 'Segoe UI', 'Roboto', sans-se
     transition: background-color 0.2s !important;
 }
 .stFormSubmitButton > button:hover, .stButton > button:hover, [data-testid='stFormSubmitButton'] > button:hover, [data-testid='stBaseButton-primary']:hover {
-    background: #166FE5 !important;
+    background: #1E293B !important;
 
     color: white !important;
     border-color: transparent !important;}
 
 /* ---- MESSAGES ---- */
 .stAlert {
-    background: #fae0e0 !important;
-    border: 1px solid #dd3c10 !important;
+    background: #FFFFFF !important;
+    border: 1px solid #DC2626 !important;
     border-radius: 6px !important;
-    color: #dd3c10 !important;
+    color: #DC2626 !important;
     font-size: 0.85rem !important;
 }
 [data-baseweb="notification"] { border-radius: 6px !important; }
@@ -138,14 +138,14 @@ h1,h2,h3 { color: #1c1e21 !important; font-family: 'Segoe UI', 'Roboto', sans-se
 .auth-footer {
     text-align: center;
     font-size: 0.75rem;
-    color: #8a8d91;
+    color: #64748B;
     margin-top: 2rem;
     padding-bottom: 2rem;
 }
 
 /* Fix white texts */
 label p, [data-testid="stWidgetLabel"] p, [data-testid="stCaptionContainer"] {
-    color: #1c1e21 !important;
+    color: #0F172A !important;
 }
 
 /* Fix all input text colors */
@@ -156,8 +156,8 @@ input[type="text"],
 input[type="password"],
 input[type="number"],
 input[type="email"] {
-    color: #1c1e21 !important;
-    -webkit-text-fill-color: #1c1e21 !important;
+    color: #0F172A !important;
+    -webkit-text-fill-color: #0F172A !important;
     background-color: #FFFFFF !important;
 }
 </style>
@@ -318,7 +318,7 @@ def register_page():
     """, unsafe_allow_html=True)
 
     st.markdown("""
-    <div style="text-align:center; margin-top:1.5rem; font-size:0.85rem; color:rgba(28,30,33,0.5);">
+    <div style="text-align:center; margin-top:1.5rem; font-size:0.85rem; color:#64748B;">
         ¿Ya tienes una cuenta?
     </div>
     """, unsafe_allow_html=True)
@@ -362,10 +362,10 @@ def require_admin():
         return False
     if st.session_state.get('user_type') != 'admin':
         st.markdown("""
-        <div style="background:rgba(252,129,129,0.07); border:1px solid rgba(252,129,129,0.2);
-             border-radius:14px; padding:1.25rem; font-size:0.875rem; color:#FC8181; text-align:center;">
+        <div style="background:#FFFFFF; border:1px solid #E2E8F0;
+             border-radius:14px; padding:1.25rem; font-size:0.875rem; color:#DC2626; text-align:center;">
             <strong>Acceso denegado</strong><br>
-            <span style="color:rgba(28,30,33,0.4); font-size:0.8rem;">Se requieren privilegios de administrador.</span>
+            <span style="color:#94A3B8; font-size:0.8rem;">Se requieren privilegios de administrador.</span>
         </div>
         """, unsafe_allow_html=True)
         st.stop()

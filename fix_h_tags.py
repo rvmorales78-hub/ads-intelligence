@@ -7,8 +7,8 @@ for f in files:
         content = file.read()
     
     if "h1,h2,h3" in content:
-        content = content.replace("h1,h2,h3 { color: #1c1e21 !important; font-family", "h1,h2,h3 { color: #1c1e21 !important; font-family")
-        content = content.replace("h1,h2,h3,h4 { color: #1c1e21 !important; font-family", "h1,h2,h3,h4 { color: #1c1e21 !important; font-family")
+        content = content.replace("h1,h2,h3 { color: #0F172A !important; font-family", "h1,h2,h3 { color: #0F172A !important; font-family")
+        content = content.replace("h1,h2,h3,h4 { color: #0F172A !important; font-family", "h1,h2,h3,h4 { color: #0F172A !important; font-family")
         
         with open(f, 'w', encoding='utf-8') as file:
             file.write(content)

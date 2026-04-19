@@ -9,8 +9,8 @@ input[type="text"],
 input[type="password"],
 input[type="number"],
 input[type="email"] {
-    color: #1c1e21 !important;
-    -webkit-text-fill-color: #1c1e21 !important;
+    color: #0F172A !important;
+    -webkit-text-fill-color: #0F172A !important;
     background-color: #FFFFFF !important;
 }
 """

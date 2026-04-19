@@ -17,11 +17,11 @@ ADMIN_DASHBOARD_CSS = """
 
 *, *::before, *::after { box-sizing: border-box; }
 body, .stApp { 
-    background: #F0F2F5 !important; 
-    color: #1c1e21; 
+    background: #F1F5F9 !important; 
+    color: #0F172A; 
     font-family: 'Roboto', sans-serif;
 }
-h1,h2,h3,h4 { color: #1c1e21 !important; font-family: 'Segoe UI', 'Roboto', sans-serif; font-weight: 700; }
+h1,h2,h3,h4 { color: #0F172A !important; font-family: 'Segoe UI', 'Roboto', sans-serif; font-weight: 700; }
 
 /* ---- Ocultar Streamlit UI ---- */
 #MainMenu, footer { visibility: hidden; }
@@ -33,13 +33,13 @@ h1 {
     font-family: 'Segoe UI', sans-serif !important;
     font-size: 1.8rem !important;
     font-weight: 700 !important;
-    color: #1c1e21 !important;
+    color: #0F172A !important;
     letter-spacing: -0.025em;
     margin-bottom: 0 !important;
 }
 /* caption below title */
 [data-testid="stCaptionContainer"] p {
-    color: #606770 !important;
+    color: #475569 !important;
     font-size: 0.9rem !important;
     margin-top: 0.2rem;
 }
@@ -47,26 +47,26 @@ h1 {
 /* ---- Sidebar ---- */
 [data-testid="stSidebar"] {
     background: #FFFFFF !important;
-    border-right: 1px solid #dddfe2 !important;
+    border-right: 1px solid #E2E8F0 !important;
 }
 [data-testid="stSidebar"] .stMarkdown p {
-    color: #1c1e21;
+    color: #0F172A;
     font-size: 0.85rem;
 }
 [data-testid="stSidebar"] strong {
-    color: #1c1e21;
+    color: #0F172A;
     font-weight: 600;
 }
 .sidebar-logo {
     font-family: 'Segoe UI', sans-serif;
     font-size: 1.1rem;
     font-weight: 800;
-    color: #1877F2;
+    color: #0F172A;
     display: flex;
     align-items: center;
     gap: 0.5rem;
     padding: 1rem 0 1.5rem;
-    border-bottom: 1px solid #dddfe2;
+    border-bottom: 1px solid #E2E8F0;
     margin-bottom: 1rem;
 }
 .sidebar-logo .logo-mark {
@@ -76,13 +76,13 @@ h1 {
 
 /* ---- Tabs ---- */
 .stTabs [data-baseweb="tab-list"] {
-    border-bottom: 1px solid #dddfe2 !important;
+    border-bottom: 1px solid #E2E8F0 !important;
     margin-bottom: 1.5rem;
     gap: 1rem !important;
 }
 .stTabs [data-baseweb="tab"] {
     background: transparent !important;
-    color: #606770 !important;
+    color: #475569 !important;
     font-family: 'Roboto', sans-serif !important;
     font-size: 1rem !important;
     font-weight: 500 !important;
@@ -90,14 +90,14 @@ h1 {
     border: none !important;
 }
 .stTabs [aria-selected="true"] {
-    color: #1877F2 !important;
+    color: #0F172A !important;
 }
-.stTabs [data-baseweb="tab-highlight"] { background-color: #1877F2 !important; height: 3px !important; }
+.stTabs [data-baseweb="tab-highlight"] { background-color: #0F172A !important; height: 3px !important; }
 
 /* ---- Expander (User Cards) ---- */
 [data-testid="stExpander"] {
     background: #FFFFFF !important;
-    border: 1px solid #dddfe2 !important;
+    border: 1px solid #E2E8F0 !important;
     border-radius: 8px !important;
     margin-bottom: 0.75rem !important;
     overflow: hidden;
@@ -107,29 +107,29 @@ h1 {
     font-family: 'Roboto', sans-serif;
     font-weight: 500;
     font-size: 0.95rem;
-    color: #1c1e21 !important;
+    color: #0F172A !important;
 }
 [data-testid="stExpander"] [data-testid="stExpanderDetails"] {
     padding: 0 1.25rem 1.25rem !important;
     background: #FFFFFF;
 }
 [data-testid="stExpander"] p {
-    color: #606770;
+    color: #475569;
     font-size: 0.9rem;
 }
 [data-testid="stExpander"] strong {
-    color: #1c1e21;
+    color: #0F172A;
 }
 
 /* ---- Metrics ---- */
 [data-testid="stMetric"] {
     background: #FFFFFF;
-    border: 1px solid #dddfe2;
+    border: 1px solid #E2E8F0;
     border-radius: 8px;
     padding: 1.2rem 1.5rem !important;
 }
 [data-testid="stMetricLabel"] p {
-    color: #606770 !important;
+    color: #475569 !important;
     font-size: 0.75rem !important;
     font-weight: 500;
     text-transform: uppercase;
@@ -138,13 +138,13 @@ h1 {
     font-family: 'Segoe UI', sans-serif;
     font-size: 2.2rem !important;
     font-weight: 700 !important;
-    color: #1877F2 !important;
+    color: #0F172A !important;
 }
 
 /* ---- Buttons ---- */
 .stButton > button {
     background: #E4E6EB !important;
-    color: #1c1e21 !important;
+    color: #0F172A !important;
     border: none !important;
     border-radius: 6px !important;
     font-family: 'Roboto', sans-serif !important;
@@ -162,69 +162,69 @@ h1 {
 /* Primary action buttons (logout, form submit) */
 [data-testid="stFormSubmitButton"] > button,
 .stButton > button:has(div:contains("Cerrar sesión")) {
-    background: #1877F2 !important;
+    background: #0F172A !important;
     color: white !important;
 }
 [data-testid="stFormSubmitButton"] > button:hover,
 .stButton > button:has(div:contains("Cerrar sesión")):hover {
-    background: #166FE5 !important;
+    background: #1E293B !important;
 }
 
 /* Danger button (delete) */
 .stButton > button:has(div:contains("🗑️")) {
-    background: #fae0e0 !important;
-    color: #dd3c10 !important;
+    background: #FFFFFF !important;
+    color: #DC2626 !important;
 }
 .stButton > button:has(div:contains("🗑️")):hover {
-    background: #f5c0c0 !important;
+    background: #E2E8F0 !important;
 }
 
 /* ---- Inputs y Forms ---- */
 [data-testid="stTextInput"] input,
 [data-testid="stSelectbox"] > div > div {
     background: #FFFFFF !important;
-    border: 1px solid #ccd0d5 !important;
+    border: 1px solid #CBD5E1 !important;
     border-radius: 6px !important;
-    color: #1c1e21 !important;
+    color: #0F172A !important;
 }
 [data-testid="stTextInput"] input:focus,
 [data-testid="stSelectbox"] > div > div:focus-within {
-    border-color: #1877F2 !important;
-    box-shadow: 0 0 0 2px #e7f3ff !important;
+    border-color: #0F172A !important;
+    box-shadow: 0 0 0 2px #F8FAFC !important;
 }
 [data-testid="stTextInput"] label,
 [data-testid="stSelectbox"] label {
-    color: #606770 !important;
+    color: #475569 !important;
     font-size: 0.8rem !important;
     font-weight: 500;
 }
 
 /* ---- Alerts ---- */
 .stSuccess {
-    background: #ECFDF5 !important;
-    border-color: #A7F3D0 !important;
-    color: #065F46 !important;
+    background: #FFFFFF !important;
+    border-color: #E2E8F0 !important;
+    color: #064E3B !important;
 }
 .stError {
-    background: #fae0e0 !important;
-    border-color: #f5c0c0 !important;
-    color: #dd3c10 !important;
+    background: #FFFFFF !important;
+    border-color: #E2E8F0 !important;
+    color: #DC2626 !important;
 }
 .stInfo {
-    background: #e7f3ff !important;
-    border-color: #bde4ff !important;
-    color: #1877F2 !important;
+    background: #F8FAFC !important;
+    border-color: #E2E8F0 !important;
+    color: #0F172A !important;
 }
 
 hr {
     border: none;
-    border-top: 1px solid #dddfe2 !important;
+    border-top: 1px solid #E2E8F0 !important;
     margin: 1.5rem 0 !important;
 }
 
 /* Fix white texts */
 label p, [data-testid="stWidgetLabel"] p, [data-testid="stCaptionContainer"] {
-    color: #1c1e21 !important;
+    color: #0F172A !important;
 }
 
 /* Fix all input text colors */
@@ -235,8 +235,8 @@ input[type="text"],
 input[type="password"],
 input[type="number"],
 input[type="email"] {
-    color: #1c1e21 !important;
-    -webkit-text-fill-color: #1c1e21 !important;
+    color: #0F172A !important;
+    -webkit-text-fill-color: #0F172A !important;
     background-color: #FFFFFF !important;
 }
 </style>

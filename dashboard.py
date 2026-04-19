@@ -166,7 +166,7 @@ CSS = f"""
         padding: 1.25rem;
         text-align: center;
         border-top: 3px solid {COLORS['primary']};
-        box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        box-shadow: 0 1px 2px #F8FAFC;
     }}
     
     .metric-label {{
@@ -268,8 +268,8 @@ CSS = f"""
     }}
     
     .stWarning {{
-        background-color: #FFFBEB;
-        color: #92400E;
+        background-color: #FFFFFF;
+        color: #B45309;
     }}
     
     .stError {{
@@ -278,8 +278,8 @@ CSS = f"""
     }}
     
     .stSuccess {{
-        background-color: #ECFDF5;
-        color: #065F46;
+        background-color: #FFFFFF;
+        color: #064E3B;
     }}
 
 /* Fix all input text colors */
@@ -290,8 +290,8 @@ input[type="text"],
 input[type="password"],
 input[type="number"],
 input[type="email"] {
-    color: #1c1e21 !important;
-    -webkit-text-fill-color: #1c1e21 !important;
+    color: #0F172A !important;
+    -webkit-text-fill-color: #0F172A !important;
     background-color: #FFFFFF !important;
 }
 </style>

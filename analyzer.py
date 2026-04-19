@@ -514,7 +514,7 @@ def generate_insights(df: pd.DataFrame) -> dict:
 def calculate_account_health_score(df: pd.DataFrame) -> dict:
     """Calcula un score 0-100 del health de la cuenta de ads."""
     if df.empty:
-        return {'score': 0, 'grade': 'F', 'color': '#FC8181', 'breakdown': {
+        return {'score': 0, 'grade': 'F', 'color': '#DC2626', 'breakdown': {
             'performance': 0, 'performance_max': 35,
             'cpc_efficiency': 0, 'cpc_max': 25,
             'audience': 0, 'audience_max': 20,
@@ -559,19 +559,19 @@ def calculate_account_health_score(df: pd.DataFrame) -> dict:
     total = perf_score + cpc_score + freq_score + conc_score
 
     if total >= 85:
-        grade, color = 'A+', '#64DC96'
+        grade, color = 'A+', '#059669'
     elif total >= 75:
-        grade, color = 'A', '#64DC96'
+        grade, color = 'A', '#059669'
     elif total >= 65:
         grade, color = 'B+', '#86EFAC'
     elif total >= 55:
-        grade, color = 'B', '#FBbf24'
+        grade, color = 'B', '#D97706'
     elif total >= 40:
-        grade, color = 'C', '#FBbf24'
+        grade, color = 'C', '#D97706'
     elif total >= 25:
-        grade, color = 'D', '#FC8181'
+        grade, color = 'D', '#DC2626'
     else:
-        grade, color = 'F', '#FC8181'
+        grade, color = 'F', '#DC2626'
 
     return {
         'score': total,
@@ -596,8 +596,8 @@ def get_priority_actions(df: pd.DataFrame) -> list:
         if num_campaigns >= 4:
             actions.append({
                 'priority': 2.5, 'urgency': 'OPORTUNIDAD',
-                'color': '#1877F2', 'bg': '#e7f3ff',
-                'border': '#bde4ff', 'icon': '🧩',
+                'color': '#0F172A', 'bg': '#F8FAFC',
+                'border': '#E2E8F0', 'icon': '🧩',
                 'title': 'Estructura Fragmentada',
                 'detail': f'Detectamos {num_campaigns} campañas activas. Demasiadas campañas dividen el presupuesto y limitan el aprendizaje de Meta.',
                 'action': 'Consolida campañas con el mismo objetivo (1 o 2 máximo) usando Presupuesto Advantage+ (CBO).',
@@ -619,8 +619,8 @@ def get_priority_actions(df: pd.DataFrame) -> list:
             time_context = 'Audience fatigue detected'
             actions.append({
                 'priority': 1, 'urgency': 'CRÍTICO',
-                'color': '#dd3c10', 'bg': '#fae0e0',
-                'border': '#f5c0c0', 'icon': '🔴',
+                'color': '#DC2626', 'bg': '#FFFFFF',
+                'border': '#E2E8F0', 'icon': '🔴',
                 'title': f'Creatividad agotada — {name}',
                 'detail': f'Frecuencia {freq:.1f}x · La audiencia ha visto este anuncio demasiadas veces. CTR y conversión caen.',
                 'action': 'Crear 3 variaciones nuevas de imagen/video esta semana. Rotar creatividades.',
@@ -634,8 +634,8 @@ def get_priority_actions(df: pd.DataFrame) -> list:
             time_context = 'Losing money daily'
             actions.append({
                 'priority': 2, 'urgency': 'URGENTE',
-                'color': '#dd3c10', 'bg': '#fae0e0',
-                'border': '#f5c0c0', 'icon': '🔴',
+                'color': '#DC2626', 'bg': '#FFFFFF',
+                'border': '#E2E8F0', 'icon': '🔴',
                 'title': f'Pérdida activa — {name}',
                 'detail': f'ROAS {roas:.2f}x · ${spend:.0f} gastados sin retorno positivo.',
                 'action': 'Pausar inmediatamente. Revisar segmentación y oferta antes de reactivar.',
@@ -649,8 +649,8 @@ def get_priority_actions(df: pd.DataFrame) -> list:
             time_context = 'Performance declining'
             actions.append({
                 'priority': 3, 'urgency': 'ATENCIÓN',
-                'color': '#92400E', 'bg': '#FFFBEB',
-                'border': '#FDE68A', 'icon': '🟡',
+                'color': '#B45309', 'bg': '#FFFFFF',
+                'border': '#E2E8F0', 'icon': '🟡',
                 'title': f'Frecuencia elevada — {name}',
                 'detail': f'Frecuencia {freq:.1f}x · Señales tempranas de saturación de audiencia.',
                 'action': 'Renovar creatividad o ampliar audiencia lookalike antes de que el rendimiento caiga.',
@@ -664,8 +664,8 @@ def get_priority_actions(df: pd.DataFrame) -> list:
             time_context = 'Low engagement'
             actions.append({
                 'priority': 4, 'urgency': 'ATENCIÓN',
-                'color': '#92400E', 'bg': '#FFFBEB',
-                'border': '#FDE68A', 'icon': '🟡',
+                'color': '#B45309', 'bg': '#FFFFFF',
+                'border': '#E2E8F0', 'icon': '🟡',
                 'title': f'CTR crítico — {name}',
                 'detail': f'CTR {ctr:.2f}% · Creatividad sin tracción. ${spend:.0f} invertidos sin impacto.',
                 'action': 'A/B test: nuevo visual + copy. Probar formato carrusel vs imagen única vs video.',
@@ -679,8 +679,8 @@ def get_priority_actions(df: pd.DataFrame) -> list:
             time_context = 'High potential'
             actions.append({
                 'priority': 5, 'urgency': 'OPORTUNIDAD',
-                'color': '#065F46', 'bg': '#ECFDF5',
-                'border': '#A7F3D0', 'icon': '🟢',
+                'color': '#064E3B', 'bg': '#FFFFFF',
+                'border': '#E2E8F0', 'icon': '🟢',
                 'title': f'Escalar presupuesto — {name}',
                 'detail': f'{"ROAS " + str(round(roas,1)) + "x" if roas > 0 else "CTR " + str(round(ctr,1)) + "%"} · Por encima del benchmark.',
                 'action': 'Aumentar presupuesto +20-30%. Duplicar campaña para audiencias lookalike.',

@@ -3,7 +3,7 @@ import glob
 css_to_add = """
 /* Fix white texts */
 label p, [data-testid="stWidgetLabel"] p, [data-testid="stCaptionContainer"] {
-    color: #1c1e21 !important;
+    color: #0F172A !important;
 }
 """
 
@@ -22,8 +22,8 @@ input[type="text"],
 input[type="password"],
 input[type="number"],
 input[type="email"] {
-    color: #1c1e21 !important;
-    -webkit-text-fill-color: #1c1e21 !important;
+    color: #0F172A !important;
+    -webkit-text-fill-color: #0F172A !important;
     background-color: #FFFFFF !important;
 }
 </style>" in content:

@@ -36,7 +36,7 @@ st.markdown("""
 
 /* Fix white texts */
 label p, [data-testid="stWidgetLabel"] p, [data-testid="stCaptionContainer"] {
-    color: #1c1e21 !important;
+    color: #0F172A !important;
 }
 
 /* Fix all input text colors */
@@ -47,8 +47,8 @@ input[type="text"],
 input[type="password"],
 input[type="number"],
 input[type="email"] {
-    color: #1c1e21 !important;
-    -webkit-text-fill-color: #1c1e21 !important;
+    color: #0F172A !important;
+    -webkit-text-fill-color: #0F172A !important;
     background-color: #FFFFFF !important;
 }
 </style>
@@ -81,11 +81,11 @@ if st.session_state.page == 'demo':
     st.markdown("""
     <div style='padding: 4rem 0; color: #E8E6F0;'>
         <h1 style='font-size: 2.5rem; margin-bottom: 1rem;'>Demo de Ads Intelligence</h1>
-        <p style='max-width: 680px; color: rgba(28,30,33,0.75); margin-bottom: 1.5rem;'>Aquí puedes mostrar un video de demo, capturas de pantalla o un dashboard de ejemplo para que los usuarios vean la experiencia antes de registrarse.</p>
-        <div style='background: rgba(0,0,0,0.04); border: 1px solid rgba(0,0,0,0.1); border-radius: 20px; padding: 2rem;'>
-            <p style='color: rgba(28,30,33,0.8);'>Demo no disponible aún. Esta sección se puede extender con un video incrustado o un walkthrough interactivo.</p>
+        <p style='max-width: 680px; color: #334155; margin-bottom: 1.5rem;'>Aquí puedes mostrar un video de demo, capturas de pantalla o un dashboard de ejemplo para que los usuarios vean la experiencia antes de registrarse.</p>
+        <div style='background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 20px; padding: 2rem;'>
+            <p style='color: #1E293B;'>Demo no disponible aún. Esta sección se puede extender con un video incrustado o un walkthrough interactivo.</p>
         </div>
-        <button style='margin-top: 2rem; background: #8A6AE0; color: white; border: none; padding: 0.85rem 1.5rem; border-radius: 999px; cursor: pointer;' onclick="window.location.href='?';">Volver al landing</button>
+        <button style='margin-top: 2rem; background: #4F46E5; color: white; border: none; padding: 0.85rem 1.5rem; border-radius: 999px; cursor: pointer;' onclick="window.location.href='?';">Volver al landing</button>
     </div>
     """, unsafe_allow_html=True)
     st.stop()
@@ -98,14 +98,14 @@ if st.session_state.page == 'strategy':
         .stApp > header { display: none; }
         .stApp { background: #FFFFFF; color: #E8E6F0; font-family: 'Satoshi', sans-serif; }
         .block-container { max-width: 900px !important; padding-top: 3rem !important; padding-bottom: 4rem !important; }
-        .strategy-box { background: rgba(0,0,0,0.02); border: 1px solid rgba(0,0,0,0.04); border-radius: 20px; padding: 3rem; margin-top: 1rem; }
-        .strategy-box h1 { color: #1c1e21; font-size: 2.2rem; margin-bottom: 1rem; line-height: 1.2; }
-        .strategy-box h2 { color: #A890F0; margin-top: 2.5rem; font-size: 1.6rem; border-bottom: 1px solid rgba(0,0,0,0.04); padding-bottom: 0.5rem; }
-        .strategy-box h3 { color: #C9A84C; margin-top: 1.5rem; font-size: 1.2rem; }
-        .strategy-box p, .strategy-box li { color: rgba(28,30,33,0.7); line-height: 1.6; margin-bottom: 0.8rem; font-size: 0.95rem; }
-        .strategy-box hr { border-color: rgba(0,0,0,0.1); margin: 2rem 0; }
-        .back-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: rgba(0,0,0,0.05); border-radius: 8px; color: #1c1e21; text-decoration: none; font-size: 0.9rem; transition: background 0.2s; }
-        .back-btn:hover { background: rgba(0,0,0,0.1); }
+        .strategy-box { background: #F8FAFC; border: 1px solid #F8FAFC; border-radius: 20px; padding: 3rem; margin-top: 1rem; }
+        .strategy-box h1 { color: #0F172A; font-size: 2.2rem; margin-bottom: 1rem; line-height: 1.2; }
+        .strategy-box h2 { color: #6366F1; margin-top: 2.5rem; font-size: 1.6rem; border-bottom: 1px solid #F8FAFC; padding-bottom: 0.5rem; }
+        .strategy-box h3 { color: #0F172A; margin-top: 1.5rem; font-size: 1.2rem; }
+        .strategy-box p, .strategy-box li { color: #334155; line-height: 1.6; margin-bottom: 0.8rem; font-size: 0.95rem; }
+        .strategy-box hr { border-color: #E2E8F0; margin: 2rem 0; }
+        .back-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: #F8FAFC; border-radius: 8px; color: #0F172A; text-decoration: none; font-size: 0.9rem; transition: background 0.2s; }
+        .back-btn:hover { background: #E2E8F0; }
     </style>
     <a href='?' class='back-btn'>← Volver al Inicio</a>
     <div class='strategy-box'>
@@ -141,13 +141,13 @@ st.markdown("""
 
 body, .stApp {
     background: #FFFFFF !important;
-    color: #1c1e21;
+    color: #0F172A;
     font-family: 'Roboto', sans-serif;
 }
 
 /* ---- BOTÓN DE ACCIÓN PERSONALIZADO EN NAV ---- */
 .nav-action-button {
-    background: #1877F2;
+    background: #0F172A;
     color: white !important;
     border: none;
     border-radius: 6px;
@@ -160,7 +160,7 @@ body, .stApp {
     display: inline-block;
 }
 .nav-action-button:hover {
-    background: #166FE5;
+    background: #1E293B;
 }
 
 /* ---- GLOBALS ---- */
@@ -186,13 +186,13 @@ h1, h2, h3, h4 { font-family: 'Segoe UI', 'Roboto', sans-serif; font-weight: 700
     gap: 2.5rem;
 }
 .nav-links a {
-    color: #606770;
+    color: #475569;
     text-decoration: none;
     font-size: 0.9rem;
     font-weight: 500;
     transition: color 0.2s;
 }
-.nav-links a:hover { color: #1877F2; }
+.nav-links a:hover { color: #0F172A; }
 
 /* ---- HEADER ---- */
 .main-header {
@@ -200,7 +200,7 @@ h1, h2, h3, h4 { font-family: 'Segoe UI', 'Roboto', sans-serif; font-weight: 700
     align-items: center;
     justify-content: space-between;
     padding: 0.75rem 1.5rem;
-    border-bottom: 1px solid #dddfe2;
+    border-bottom: 1px solid #E2E8F0;
     position: sticky;
     top: 0;
     background: #FFFFFF;
@@ -214,7 +214,7 @@ h1, h2, h3, h4 { font-family: 'Segoe UI', 'Roboto', sans-serif; font-weight: 700
     gap: 0.6rem;
     font-size: 1.2rem;
     font-weight: 700;
-    color: #1877F2;
+    color: #0F172A;
     text-decoration: none;
 }
 .nav-logo .logo-mark {
@@ -241,7 +241,7 @@ h1, h2, h3, h4 { font-family: 'Segoe UI', 'Roboto', sans-serif; font-weight: 700
     transition: transform 0.3s ease;
 }
 .mobile-nav-panel a {
-    color: #1c1e21;
+    color: #0F172A;
     text-decoration: none;
     font-size: 1.5rem;
     font-weight: 500;
@@ -256,7 +256,7 @@ h1, h2, h3, h4 { font-family: 'Segoe UI', 'Roboto', sans-serif; font-weight: 700
     position: relative;
     padding: 5rem 0 5rem;
     text-align: center;
-    background-color: #F0F2F5;
+    background-color: #F1F5F9;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -266,12 +266,12 @@ h1, h2, h3, h4 { font-family: 'Segoe UI', 'Roboto', sans-serif; font-weight: 700
     align-items: center;
     gap: 0.4rem;
     padding: 0.4rem 1rem;
-    background: #e7f3ff;
-    border: 1px solid #1877F2;
+    background: #F8FAFC;
+    border: 1px solid #0F172A;
     border-radius: 40px;
     font-size: 0.8rem;
     font-weight: 500;
-    color: #1877F2;
+    color: #0F172A;
     margin-bottom: 2rem;
 }
 .hero-title {
@@ -279,15 +279,15 @@ h1, h2, h3, h4 { font-family: 'Segoe UI', 'Roboto', sans-serif; font-weight: 700
     font-weight: 800;
     line-height: 1.1;
     letter-spacing: -0.02em;
-    color: #1c1e21;
+    color: #0F172A;
     margin-bottom: 1.5rem;
 }
-.hero-title .gold { color: #1877F2; }
-.hero-title .dim { color: #606770; }
+.hero-title .gold { color: #0F172A; }
+.hero-title .dim { color: #475569; }
 .hero-sub {
     font-size: 1.1rem;
     font-weight: 400;
-    color: #606770;
+    color: #475569;
     max-width: 520px;
     margin: 0 auto 2.5rem;
     line-height: 1.6;
@@ -298,17 +298,17 @@ h1, h2, h3, h4 { font-family: 'Segoe UI', 'Roboto', sans-serif; font-weight: 700
     gap: 3rem;
     margin-top: 3rem;
     padding-top: 2.5rem;
-    border-top: 1px solid #dddfe2;
+    border-top: 1px solid #E2E8F0;
 }
 .stat-item { text-align: center; }
 .stat-number {
     font-size: 1.75rem;
     font-weight: 700;
-    color: #1c1e21;
+    color: #0F172A;
 }
 .stat-label {
     font-size: 0.75rem;
-    color: #606770;
+    color: #475569;
     letter-spacing: 0.06em;
     text-transform: uppercase;
     margin-top: 0.2rem;
@@ -321,19 +321,19 @@ h1, h2, h3, h4 { font-family: 'Segoe UI', 'Roboto', sans-serif; font-weight: 700
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: #1877F2;
+    color: #0F172A;
     margin-bottom: 0.75rem;
 }
 .section-title {
     font-size: clamp(1.8rem, 3vw, 2.4rem);
     font-weight: 700;
-    color: #1c1e21;
+    color: #0F172A;
     line-height: 1.2;
     margin-bottom: 1rem;
 }
 .section-sub {
     font-size: 1rem;
-    color: #606770;
+    color: #475569;
     max-width: 500px;
     margin: 0 auto;
     line-height: 1.6;
@@ -348,7 +348,7 @@ h1, h2, h3, h4 { font-family: 'Segoe UI', 'Roboto', sans-serif; font-weight: 700
 }
 .divider {
     border: none;
-    border-top: 1px solid #F0F2F5;
+    border-top: 1px solid #F1F5F9;
     margin: 4rem 0;
 }
 
@@ -360,7 +360,7 @@ h1, h2, h3, h4 { font-family: 'Segoe UI', 'Roboto', sans-serif; font-weight: 700
 }
 .feat-card {
     background: #FFFFFF;
-    border: 1px solid #dddfe2;
+    border: 1px solid #E2E8F0;
     border-radius: 8px;
     padding: 2rem;
     transition: box-shadow 0.2s;
@@ -368,25 +368,25 @@ h1, h2, h3, h4 { font-family: 'Segoe UI', 'Roboto', sans-serif; font-weight: 700
     flex-direction: column;
     align-items: center;
 }
-.feat-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+.feat-card:hover { box-shadow: 0 4px 12px #E2E8F0; }
 .feat-icon {
     width: 44px; height: 44px;
-    background: #e7f3ff;
+    background: #F8FAFC;
     border-radius: 12px;
     display: flex; align-items: center; justify-content: center;
     font-size: 1.3rem;
-    color: #1877F2;
+    color: #0F172A;
     margin-bottom: 1.25rem;
 }
 .feat-card h3 {
     font-size: 1.1rem;
     font-weight: 700;
-    color: #1c1e21;
+    color: #0F172A;
     margin-bottom: 0.5rem;
 }
 .feat-card p {
     font-size: 0.9rem;
-    color: #606770;
+    color: #475569;
     line-height: 1.6;
 }
 
@@ -399,7 +399,7 @@ h1, h2, h3, h4 { font-family: 'Segoe UI', 'Roboto', sans-serif; font-weight: 700
 }
 .price-card {
     background: #FFFFFF;
-    border: 1px solid #dddfe2;
+    border: 1px solid #E2E8F0;
     border-radius: 8px;
     padding: 2rem;
     position: relative;
@@ -409,13 +409,13 @@ h1, h2, h3, h4 { font-family: 'Segoe UI', 'Roboto', sans-serif; font-weight: 700
 }
 .price-card.popular {
     border-width: 2px;
-    border-color: #1877F2;
+    border-color: #0F172A;
 }
 .popular-badge {
     position: absolute;
     top: -13px; left: 50%;
     transform: translateX(-50%);
-    background: #1877F2;
+    background: #0F172A;
     color: white;
     padding: 0.3rem 1rem;
     border-radius: 30px;
@@ -428,13 +428,13 @@ h1, h2, h3, h4 { font-family: 'Segoe UI', 'Roboto', sans-serif; font-weight: 700
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: #606770;
+    color: #475569;
     margin-bottom: 0.75rem;
 }
 .price-amount {
     font-size: 3rem;
     font-weight: 800;
-    color: #1c1e21;
+    color: #0F172A;
     line-height: 1;
     margin-bottom: 0.25rem;
 }
@@ -442,12 +442,12 @@ h1, h2, h3, h4 { font-family: 'Segoe UI', 'Roboto', sans-serif; font-weight: 700
 .price-amount .period {
     font-size: 0.875rem;
     font-weight: 400;
-    color: #606770;
+    color: #475569;
     margin-left: 0.2rem;
 }
 .price-desc {
     font-size: 0.85rem;
-    color: #606770;
+    color: #475569;
     margin-bottom: 1.75rem;
     line-height: 1.5;
 }
@@ -464,15 +464,15 @@ h1, h2, h3, h4 { font-family: 'Segoe UI', 'Roboto', sans-serif; font-weight: 700
     gap: 0.6rem;
     padding: 0.5rem 0;
     font-size: 0.9rem;
-    color: #1c1e21;
+    color: #0F172A;
 }
 .check {
     width: 18px; height: 18px;
-    background: #e7f3ff;
+    background: #F8FAFC;
     border-radius: 50%;
     display: inline-flex; align-items: center; justify-content: center;
     font-size: 0.7rem;
-    color: #1877F2;
+    color: #0F172A;
     flex-shrink: 0;
     margin-top: 2px;
 }
@@ -484,7 +484,7 @@ h1, h2, h3, h4 { font-family: 'Segoe UI', 'Roboto', sans-serif; font-weight: 700
     gap: 1.5rem;
 }
 .testi-card {
-    background: #F0F2F5;
+    background: #F1F5F9;
     border-radius: 8px;
     padding: 2rem;
     display: flex;
@@ -493,13 +493,13 @@ h1, h2, h3, h4 { font-family: 'Segoe UI', 'Roboto', sans-serif; font-weight: 700
 }
 .quote-mark {
     font-size: 3rem;
-    color: #1877F2;
+    color: #0F172A;
     line-height: 1;
     margin-bottom: 0.75rem;
 }
 .testi-text {
     font-size: 1rem;
-    color: #1c1e21;
+    color: #0F172A;
     line-height: 1.6;
     margin-bottom: 1.25rem;
     font-weight: 400;
@@ -516,21 +516,21 @@ h1, h2, h3, h4 { font-family: 'Segoe UI', 'Roboto', sans-serif; font-weight: 700
     font-size: 0.8rem;
     font-weight: 700;
 }
-.av-1 { background: #e7f3ff; color: #1877F2; }
-.av-2 { background: #e7f3ff; color: #1877F2; }
+.av-1 { background: #F8FAFC; color: #0F172A; }
+.av-2 { background: #F8FAFC; color: #0F172A; }
 .author-name {
     font-size: 0.9rem;
     font-weight: 700;
-    color: #1c1e21;
+    color: #0F172A;
 }
 .author-role {
     font-size: 0.75rem;
-    color: #606770;
+    color: #475569;
 }
 
 /* ---- CTA FINAL ---- */
 .cta-section {
-    background: #F0F2F5;
+    background: #F1F5F9;
     border-radius: 16px;
     padding: 4rem 2rem;
     text-align: center;
@@ -542,12 +542,12 @@ h1, h2, h3, h4 { font-family: 'Segoe UI', 'Roboto', sans-serif; font-weight: 700
 .cta-title {
     font-size: clamp(1.8rem, 3vw, 2.4rem);
     font-weight: 800;
-    color: #1c1e21;
+    color: #0F172A;
     margin-bottom: 0.75rem;
 }
 .cta-sub {
     font-size: 1rem;
-    color: #606770;
+    color: #475569;
     margin-bottom: 2rem;
     max-width: 500px;
     margin-left: auto;
@@ -555,26 +555,26 @@ h1, h2, h3, h4 { font-family: 'Segoe UI', 'Roboto', sans-serif; font-weight: 700
 }
 .trial-note {
     font-size: 0.8rem;
-    color: #606770;
+    color: #475569;
     margin-top: 0.75rem;
 }
 
 /* ---- FOOTER ---- */
 .footer-wrap {
     padding: 2.5rem 0;
-    border-top: 1px solid #dddfe2;
+    border-top: 1px solid #E2E8F0;
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-top: 2rem;
 }
-.footer-copy { font-size: 0.8rem; color: #606770; }
+.footer-copy { font-size: 0.8rem; color: #475569; }
 .footer-links { display: flex; gap: 1.5rem; }
-.footer-links a { font-size: 0.8rem; color: #606770; text-decoration: none; }
+.footer-links a { font-size: 0.8rem; color: #475569; text-decoration: none; }
 
 /* ---- BUTTON OVERRIDES ---- */
 .stButton > button {
-    background: #1877F2 !important;
+    background: #0F172A !important;
     color: white !important;
     border: none !important;
     border-radius: 6px !important;
@@ -585,13 +585,13 @@ h1, h2, h3, h4 { font-family: 'Segoe UI', 'Roboto', sans-serif; font-weight: 700
     transition: background-color 0.2s !important;
 }
 .stButton > button:hover {
-    background: #166FE5 !important;
+    background: #1E293B !important;
 
     color: white !important;
     border-color: transparent !important;}
 .btn-secondary > button {
     background: #E4E6EB !important;
-    color: #1c1e21 !important;
+    color: #0F172A !important;
     border: none !important;
 }
 .btn-secondary > button:hover {
@@ -630,7 +630,7 @@ h1, h2, h3, h4 { font-family: 'Segoe UI', 'Roboto', sans-serif; font-weight: 700
     .nav-toggle span {
         width: 24px;
         height: 2px;
-        background: #1c1e21;
+        background: #0F172A;
         border-radius: 10px;
         transition: all 0.3s ease;
         transform-origin: 1px;
@@ -724,7 +724,7 @@ with c2:
         st.session_state.page = 'register' # Este botón ahora va al registro
         st.rerun()
 st.markdown("""
-<div style="display:flex; justify-content:center; gap:3rem; padding: 3rem 0 1rem; border-top: 1px solid rgba(0,0,0,0.04); margin-top: 2rem;">
+<div style="display:flex; justify-content:center; gap:3rem; padding: 3rem 0 1rem; border-top: 1px solid #F8FAFC; margin-top: 2rem;">
     <div class="stat-item">
         <div class="stat-number">+340%</div>
         <div class="stat-label">ROI promedio</div>
@@ -809,7 +809,7 @@ st.markdown("""
             <li><span class="check">✓</span> Dashboard básico</li>
             <li><span class="check">✓</span> Alertas por email</li>
         </ul>
-        <div style="font-size: 0.7rem; color: rgba(28,30,33,0.4); margin-top: 1rem; line-height: 1.4;">
+        <div style="font-size: 0.7rem; color: #94A3B8; margin-top: 1rem; line-height: 1.4;">
             *Si tienes varias, analizaremos la de mayor inversión.
         </div>
     </div>
@@ -896,7 +896,7 @@ with c2:
 # ========== FOOTER ==========
 st.markdown("""
 <div class="footer-wrap">
-    <div class="nav-logo" style="font-size:0.9rem; color: #606770; align-items: center;">
+    <div class="nav-logo" style="font-size:0.9rem; color: #475569; align-items: center;">
         <img src="https://impulsolocal.com.mx/wp-content/uploads/2026/04/Logo-1.png" class="logo-mark" style="width:24px;height:24px;" alt="Logo">
         Ads Intelligence
     </div>

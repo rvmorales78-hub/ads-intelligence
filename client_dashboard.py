@@ -101,13 +101,13 @@ DASHBOARD_CSS = """
 
 *, *::before, *::after { box-sizing: border-box; }
 body, .stApp { 
-    background: #F0F2F5 !important; 
-    color: #1c1e21; 
+    background: #F1F5F9 !important; 
+    color: #0F172A; 
     font-family: 'Roboto', sans-serif;
     overflow-y: auto !important;  /* ← AGREGAR ESTA LÍNEA */
     height: auto !important;       /* ← AGREGAR ESTA LÍNEA */
 }
-h1,h2,h3,h4 { color: #1c1e21 !important; font-family: 'Segoe UI', 'Roboto', sans-serif; font-weight: 700; }
+h1,h2,h3,h4 { color: #0F172A !important; font-family: 'Segoe UI', 'Roboto', sans-serif; font-weight: 700; }
 
 /* ---- HEADER BAR ---- */
 .dash-header {
@@ -115,7 +115,7 @@ h1,h2,h3,h4 { color: #1c1e21 !important; font-family: 'Segoe UI', 'Roboto', sans
     grid-template-columns: 1fr auto;
     align-items: center;
     padding: 1.5rem 0 1rem;
-    border-bottom: 1px solid #dddfe2;
+    border-bottom: 1px solid #E2E8F0;
     margin-bottom: 2rem;
     gap: 1rem;
 }
@@ -123,7 +123,7 @@ h1,h2,h3,h4 { color: #1c1e21 !important; font-family: 'Segoe UI', 'Roboto', sans
     font-family: 'Segoe UI', sans-serif;
     font-size: 1.1rem;
     font-weight: 800;
-    color: #1877F2;
+    color: #0F172A;
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -140,11 +140,11 @@ h1,h2,h3,h4 { color: #1c1e21 !important; font-family: 'Segoe UI', 'Roboto', sans
     font-size: 1.6rem;
     font-weight: 700;
     letter-spacing: -0.025em;
-    color: #1c1e21;
+    color: #0F172A;
 }
 .dash-sub {
     font-size: 0.85rem;
-    color: #606770;
+    color: #475569;
     margin-top: 0.2rem;
 }
 
@@ -160,9 +160,9 @@ h1,h2,h3,h4 { color: #1c1e21 !important; font-family: 'Segoe UI', 'Roboto', sans
     letter-spacing: 0.08em;
     text-transform: uppercase;
 }
-.plan-basic      { background: #E4E6EB; border: 1px solid #ccd0d5; color: #1c1e21; }
-.plan-pro        { background: #e7f3ff; border: 1px solid #1877F2; color: #1877F2; }
-.plan-enterprise { background: #1877F2; border: 1px solid #166FE5; color: white; }
+.plan-basic      { background: #E4E6EB; border: 1px solid #CBD5E1; color: #0F172A; }
+.plan-pro        { background: #F8FAFC; border: 1px solid #0F172A; color: #0F172A; }
+.plan-enterprise { background: #0F172A; border: 1px solid #1E293B; color: white; }
 
 /* ---- METRIC CARDS ---- */
 .metric-grid {
@@ -173,12 +173,12 @@ h1,h2,h3,h4 { color: #1c1e21 !important; font-family: 'Segoe UI', 'Roboto', sans
 }
 .metric-card {
     background: #FFFFFF;
-    border: 1px solid #dddfe2;
+    border: 1px solid #E2E8F0;
     border-radius: 8px;
     padding: 1.25rem 1.5rem;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    box-shadow: 0 1px 2px #F8FAFC;
 }
 .metric-card::after {
     content: '';
@@ -186,16 +186,16 @@ h1,h2,h3,h4 { color: #1c1e21 !important; font-family: 'Segoe UI', 'Roboto', sans
     top: 0; left: 0; right: 0;
     height: 3px;
 }
-.metric-card.green::after  { background: #31A24C; }
-.metric-card.gold::after   { background: #F7B928; }
-.metric-card.purple::after { background: #8A6AE0; }
-.metric-card.blue::after   { background: #1877F2; }
+.metric-card.green::after  { background: #059669; }
+.metric-card.gold::after   { background: #D97706; }
+.metric-card.purple::after { background: #4F46E5; }
+.metric-card.blue::after   { background: #0F172A; }
 .metric-label {
     font-size: 0.7rem;
     font-weight: 500;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: #606770;
+    color: #475569;
     margin-bottom: 0.5rem;
 }
 .metric-value {
@@ -205,12 +205,12 @@ h1,h2,h3,h4 { color: #1c1e21 !important; font-family: 'Segoe UI', 'Roboto', sans
     letter-spacing: -0.03em;
     line-height: 1;
 }
-.metric-value.green  { color: #31A24C; }
-.metric-value.gold   { color: #92400E; }
-.metric-value.purple { color: #8A6AE0; }
-.metric-value.blue   { color: #1877F2; }
-.metric-value.red    { color: #dd3c10; }
-.metric-value.white  { color: #1c1e21; }
+.metric-value.green  { color: #059669; }
+.metric-value.gold   { color: #B45309; }
+.metric-value.purple { color: #4F46E5; }
+.metric-value.blue   { color: #0F172A; }
+.metric-value.red    { color: #DC2626; }
+.metric-value.white  { color: #0F172A; }
 
 /* ---- SECTION HEADERS ---- */
 .section-label {
@@ -218,7 +218,7 @@ h1,h2,h3,h4 { color: #1c1e21 !important; font-family: 'Segoe UI', 'Roboto', sans
     font-weight: 600;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: #1877F2;
+    color: #0F172A;
     margin-bottom: 0.4rem;
 }
 .section-title {
@@ -226,15 +226,15 @@ h1,h2,h3,h4 { color: #1c1e21 !important; font-family: 'Segoe UI', 'Roboto', sans
     font-size: 1.3rem;
     font-weight: 700;
     letter-spacing: -0.02em;
-    color: #1c1e21;
+    color: #0F172A;
     margin-bottom: 1.25rem;
 }
-.divider { border: none; border-top: 1px solid #dddfe2; margin: 2rem 0; }
+.divider { border: none; border-top: 1px solid #E2E8F0; margin: 2rem 0; }
 
 /* ---- FILTER STRIP ---- */
 .filter-strip {
     background: #FFFFFF;
-    border: 1px solid #dddfe2;
+    border: 1px solid #E2E8F0;
     border-radius: 8px;
     padding: 1.25rem 1.5rem;
     margin-bottom: 1.5rem;
@@ -243,7 +243,7 @@ h1,h2,h3,h4 { color: #1c1e21 !important; font-family: 'Segoe UI', 'Roboto', sans
 /* ---- EXPANDER / CARD ---- */
 .panel {
     background: #FFFFFF;
-    border: 1px solid #dddfe2;
+    border: 1px solid #E2E8F0;
     border-radius: 8px;
     padding: 1.5rem;
     margin-bottom: 1rem;
@@ -252,7 +252,7 @@ h1,h2,h3,h4 { color: #1c1e21 !important; font-family: 'Segoe UI', 'Roboto', sans
     font-family: 'Segoe UI', 'Roboto', sans-serif;
     font-size: 0.95rem;
     font-weight: 700;
-    color: #1c1e21;
+    color: #0F172A;
     margin-bottom: 0.75rem;
 }
 
@@ -268,26 +268,26 @@ h1,h2,h3,h4 { color: #1c1e21 !important; font-family: 'Segoe UI', 'Roboto', sans
     padding: 1rem 1.25rem;
     text-align: center;
 }
-.health-card.optimal  { background: #ECFDF5; border: 1px solid #A7F3D0; }
-.health-card.warning  { background: #FFFBEB; border: 1px solid #FDE68A; }
-.health-card.critical { background: #fae0e0; border: 1px solid #f5c0c0; }
+.health-card.optimal  { background: #FFFFFF; border: 1px solid #E2E8F0; }
+.health-card.warning  { background: #FFFFFF; border: 1px solid #E2E8F0; }
+.health-card.critical { background: #FFFFFF; border: 1px solid #E2E8F0; }
 .health-dot { font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase; font-weight: 600; margin-bottom: 0.4rem; }
-.health-dot.optimal  { color: #065F46; }
-.health-dot.warning  { color: #92400E; }
-.health-dot.critical { color: #dd3c10; }
+.health-dot.optimal  { color: #064E3B; }
+.health-dot.warning  { color: #B45309; }
+.health-dot.critical { color: #DC2626; }
 .health-pct {
     font-family: 'Segoe UI', 'Roboto', sans-serif;
     font-size: 1.75rem;
     font-weight: 800;
     line-height: 1;
 }
-.health-pct.optimal  { color: #065F46; }
-.health-pct.warning  { color: #92400E; }
-.health-pct.critical { color: #dd3c10; }
-.health-amount { font-size: 0.78rem; color: #606770; margin-top: 0.25rem; }
+.health-pct.optimal  { color: #064E3B; }
+.health-pct.warning  { color: #B45309; }
+.health-pct.critical { color: #DC2626; }
+.health-amount { font-size: 0.78rem; color: #475569; margin-top: 0.25rem; }
 .health-note {
     font-size: 0.65rem;
-    color: #8a8d91;
+    color: #64748B;
     margin-top: 0.25rem;
 }
 
@@ -299,9 +299,9 @@ h1,h2,h3,h4 { color: #1c1e21 !important; font-family: 'Segoe UI', 'Roboto', sans
     position: relative;
     overflow: hidden;
 }
-.star-card.elite    { background: #ECFDF5; border: 1px solid #A7F3D0; }
-.star-card.solid    { background: #e7f3ff; border: 1px solid #bde4ff; }
-.star-card.improve  { background: #FFFBEB; border: 1px solid #FDE68A; }
+.star-card.elite    { background: #FFFFFF; border: 1px solid #E2E8F0; }
+.star-card.solid    { background: #F8FAFC; border: 1px solid #E2E8F0; }
+.star-card.improve  { background: #FFFFFF; border: 1px solid #E2E8F0; }
 .star-badge {
     font-size: 0.65rem;
     font-weight: 700;
@@ -309,53 +309,54 @@ h1,h2,h3,h4 { color: #1c1e21 !important; font-family: 'Segoe UI', 'Roboto', sans
     text-transform: uppercase;
     margin-bottom: 0.5rem;
 }
-.star-badge.elite   { color: #065F46; }
-.star-badge.solid   { color: #1877F2; }
-.star-badge.improve { color: #92400E; }
+.star-badge.elite   { color: #064E3B; }
+.star-badge.solid   { color: #0F172A; }
+.star-badge.improve { color: #B45309; }
 .star-name {
     font-family: 'Segoe UI', 'Roboto', sans-serif;
     font-size: 1.5rem;
     font-weight: 800;
     letter-spacing: -0.025em;
-    color: #1c1e21;
+    color: #0F172A;
     margin-bottom: 0.3rem;
 }
-.star-obj { font-size: 0.82rem; color: #606770; }
+.star-obj { font-size: 0.82rem; color: #475569; }
 
 /* ---- ROI BOX ---- */
 .roi-box {
-    background: #ECFDF5;
-    border: 1px solid #A7F3D0;
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
     border-radius: 8px;
     padding: 1.25rem;
     margin-top: 1rem;
 }
-.roi-box-title { font-family: 'Segoe UI', 'Roboto', sans-serif; font-size: 0.85rem; font-weight: 700; color: #065F46; margin-bottom: 0.6rem; }
-.roi-row { font-size: 0.85rem; color: #1c1e21; padding: 0.2rem 0; }
-.roi-note { font-size: 0.72rem; color: #606770; margin-top: 0.5rem; }
+.roi-box-title { font-family: 'Segoe UI', 'Roboto', sans-serif; font-size: 0.85rem; font-weight: 700; color: #064E3B; margin-bottom: 0.6rem; }
+.roi-row { font-size: 0.85rem; color: #0F172A; padding: 0.2rem 0; }
+.roi-note { font-size: 0.72rem; color: #475569; margin-top: 0.5rem; }
 
 /* ---- RECOMMENDATION BOX ---- */
 .rec-box {
-    background: #e7f3ff;
-    border: 1px solid #bde4ff;
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
     border-radius: 8px;
     padding: 1.25rem;
     margin-top: 0.75rem;
 }
-.rec-title { font-family: 'Segoe UI', 'Roboto', sans-serif; font-size: 0.9rem; font-weight: 700; color: #1877F2; margin-bottom: 0.4rem; }
-.rec-text  { font-size: 0.85rem; color: #1c1e21; }
+.rec-title { font-family: 'Segoe UI', 'Roboto', sans-serif; font-size: 0.9rem; font-weight: 700; color: #0F172A; margin-bottom: 0.4rem; }
+.rec-text  { font-size: 0.85rem; color: #0F172A; }
 
 /* ---- ALERT BOX ---- */
 .alert-box {
-    background: #fae0e0;
-    border: 1px solid #f5c0c0;
-    border-left: 3px solid #dd3c10;
+    background: #FFFFFF;
+    box-shadow: 0 1px 2px #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-left: 3px solid #DC2626;
     border-radius: 0 8px 8px 0;
     padding: 1rem 1.25rem;
     margin-bottom: 0.5rem;
 }
-.alert-title { font-family: 'Segoe UI', 'Roboto', sans-serif; font-size: 0.82rem; font-weight: 700; color: #dd3c10; margin-bottom: 0.25rem; }
-.alert-body  { font-size: 0.82rem; color: #1c1e21; }
+.alert-title { font-family: 'Segoe UI', 'Roboto', sans-serif; font-size: 0.82rem; font-weight: 700; color: #DC2626; margin-bottom: 0.25rem; }
+.alert-body  { font-size: 0.82rem; color: #0F172A; }
 
 /* ---- CAMPAIGN ROW ---- */
 .camp-card {
@@ -364,13 +365,13 @@ h1,h2,h3,h4 { color: #1c1e21 !important; font-family: 'Segoe UI', 'Roboto', sans
     margin-bottom: 0.75rem;
     border-left: 3px solid;
 }
-.camp-card.high   { background: #fae0e0; border-color: #dd3c10; }
-.camp-card.medium { background: #FFFBEB; border-color: #F7B928; }
-.camp-card.low    { background: #ECFDF5; border-color: #31A24C; }
-.camp-name { font-family: 'Segoe UI', 'Roboto', sans-serif; font-size: 0.95rem; font-weight: 700; color: #1c1e21; margin-bottom: 0.75rem; }
+.camp-card.high   { background: #FFFFFF; border: 1px solid #E2E8F0; border-left: 4px solid #DC2626; }
+.camp-card.medium { background: #FFFFFF; border: 1px solid #E2E8F0; border-left: 4px solid #D97706; }
+.camp-card.low    { background: #FFFFFF; border: 1px solid #E2E8F0; border-left: 4px solid #059669; }
+.camp-name { font-family: 'Segoe UI', 'Roboto', sans-serif; font-size: 0.95rem; font-weight: 700; color: #0F172A; margin-bottom: 0.75rem; }
 .camp-table { width: 100%; font-size: 0.8rem; border-collapse: collapse; }
-.camp-table td { padding: 0.3rem 0.5rem 0.3rem 0; color: #606770; vertical-align: top; }
-.camp-table td strong { color: #1c1e21; display: block; font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.15rem; }
+.camp-table td { padding: 0.3rem 0.5rem 0.3rem 0; color: #475569; vertical-align: top; }
+.camp-table td strong { color: #0F172A; display: block; font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.15rem; }
 
 /* ---- PLAN SIDEBAR ---- */
 .plan-panel {
@@ -378,24 +379,24 @@ h1,h2,h3,h4 { color: #1c1e21 !important; font-family: 'Segoe UI', 'Roboto', sans
     padding: 1.25rem;
     margin-top: 1rem;
 }
-.plan-panel.basic      { background: #E4E6EB; border: 1px solid #ccd0d5; }
-.plan-panel.pro        { background: #e7f3ff; border: 1px solid #bde4ff; }
-.plan-panel.enterprise { background: #e7f3ff; border: 1px solid #bde4ff; }
+.plan-panel.basic      { background: #E4E6EB; border: 1px solid #CBD5E1; }
+.plan-panel.pro        { background: #F8FAFC; border: 1px solid #E2E8F0; }
+.plan-panel.enterprise { background: #F8FAFC; border: 1px solid #E2E8F0; }
 .plan-name {
     font-family: 'Segoe UI', 'Roboto', sans-serif;
     font-size: 0.95rem;
     font-weight: 700;
-    color: #1c1e21;
+    color: #0F172A;
     margin-bottom: 0.75rem;
 }
-.plan-item { font-size: 0.8rem; color: #606770; padding: 0.22rem 0; }
-.plan-item.ok  { color: #065F46; }
-.plan-item.off { color: #8a8d91; }
+.plan-item { font-size: 0.8rem; color: #475569; padding: 0.22rem 0; }
+.plan-item.ok  { color: #064E3B; }
+.plan-item.off { color: #64748B; }
 
 /* ---- SCORE BANNER ---- */
 .score-banner {
     background: #FFFFFF;
-    border: 1px solid #dddfe2;
+    border: 1px solid #E2E8F0;
     border-radius: 8px;
     padding: 1.75rem 2rem;
     margin-bottom: 1.5rem;
@@ -419,18 +420,18 @@ h1,h2,h3,h4 { color: #1c1e21 !important; font-family: 'Segoe UI', 'Roboto', sans
 }
 .score-label {
     font-size: 0.62rem;
-    color: #8a8d91;
+    color: #64748B;
     text-transform: uppercase;
     letter-spacing: 0.12em;
     text-align: center;
     margin-top: 0.3rem;
 }
-.score-sep { background: #dddfe2; height: 100%; }
+.score-sep { background: #E2E8F0; height: 100%; }
 .score-bar-label {
     display: flex;
     justify-content: space-between;
     font-size: 0.68rem;
-    color: #606770;
+    color: #475569;
     margin-bottom: 0.2rem;
 }
 .score-bar-track {
@@ -450,7 +451,7 @@ h1,h2,h3,h4 { color: #1c1e21 !important; font-family: 'Segoe UI', 'Roboto', sans
 }
 .kpi-card {
     background: #FFFFFF;
-    border: 1px solid #dddfe2;
+    border: 1px solid #E2E8F0;
     border-radius: 8px;
     padding: 1.1rem 1.25rem;
     position: relative;
@@ -462,18 +463,18 @@ h1,h2,h3,h4 { color: #1c1e21 !important; font-family: 'Segoe UI', 'Roboto', sans
     top: 0; left: 0; right: 0;
     height: 3px;
 }
-.kpi-card.kpi-gold::after   { background: #F7B928; }
-.kpi-card.kpi-blue::after   { background: #1877F2; }
-.kpi-card.kpi-purple::after { background: #8A6AE0; }
-.kpi-card.kpi-green::after  { background: #31A24C; }
-.kpi-card.kpi-red::after    { background: #dd3c10; }
-.kpi-card.kpi-amber::after  { background: #F7B928; }
+.kpi-card.kpi-gold::after   { background: #D97706; }
+.kpi-card.kpi-blue::after   { background: #0F172A; }
+.kpi-card.kpi-purple::after { background: #4F46E5; }
+.kpi-card.kpi-green::after  { background: #059669; }
+.kpi-card.kpi-red::after    { background: #DC2626; }
+.kpi-card.kpi-amber::after  { background: #D97706; }
 .kpi-tag {
     font-size: 0.63rem;
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: #606770;
+    color: #475569;
     margin-bottom: 0.4rem;
 }
 .kpi-val {
@@ -483,19 +484,19 @@ h1,h2,h3,h4 { color: #1c1e21 !important; font-family: 'Segoe UI', 'Roboto', sans
     letter-spacing: -0.025em;
     line-height: 1;
 }
-.kpi-val.kpi-gold   { color: #92400E; }
-.kpi-val.kpi-blue   { color: #1877F2; }
-.kpi-val.kpi-purple { color: #A890F0; }
-.kpi-val.kpi-green  { color: #31A24C; }
-.kpi-val.kpi-red    { color: #dd3c10; }
-.kpi-val.kpi-amber  { color: #92400E; }
-.kpi-val.kpi-white  { color: #1c1e21; }
-.kpi-sub { font-size: 0.67rem; color: #8a8d91; margin-top: 0.35rem; }
+.kpi-val.kpi-gold   { color: #B45309; }
+.kpi-val.kpi-blue   { color: #0F172A; }
+.kpi-val.kpi-purple { color: #6366F1; }
+.kpi-val.kpi-green  { color: #059669; }
+.kpi-val.kpi-red    { color: #DC2626; }
+.kpi-val.kpi-amber  { color: #B45309; }
+.kpi-val.kpi-white  { color: #0F172A; }
+.kpi-sub { font-size: 0.67rem; color: #64748B; margin-top: 0.35rem; }
 
 /* ---- CHART SECTION ---- */
 .chart-section {
     background: #FFFFFF;
-    border: 1px solid #dddfe2;
+    border: 1px solid #E2E8F0;
     border-radius: 8px;
     padding: 1.25rem 1.5rem;
 }
@@ -503,10 +504,10 @@ h1,h2,h3,h4 { color: #1c1e21 !important; font-family: 'Segoe UI', 'Roboto', sans
     font-family: 'Segoe UI', 'Roboto', sans-serif;
     font-size: 0.95rem;
     font-weight: 700;
-    color: #1c1e21;
+    color: #0F172A;
     margin-bottom: 0.25rem;
 }
-.chart-subtitle { font-size: 0.72rem; color: #606770; margin-bottom: 0.75rem; }
+.chart-subtitle { font-size: 0.72rem; color: #475569; margin-bottom: 0.75rem; }
 
 /* ---- PRIORITY QUEUE ---- */
 .pq-item {
@@ -527,9 +528,9 @@ h1,h2,h3,h4 { color: #1c1e21 !important; font-family: 'Segoe UI', 'Roboto', sans
     text-align: center;
 }
 .pq-icon { font-size: 1.15rem; line-height: 1; text-align: center; }
-.pq-title { font-size: 0.875rem; font-weight: 700; color: #1c1e21; margin-bottom: 0.2rem; }
-.pq-detail { font-size: 0.76rem; color: #606770; margin-bottom: 0.3rem; }
-.pq-action { font-size: 0.76rem; color: #1c1e21; }
+.pq-title { font-size: 0.875rem; font-weight: 700; color: #0F172A; margin-bottom: 0.2rem; }
+.pq-detail { font-size: 0.76rem; color: #475569; margin-bottom: 0.3rem; }
+.pq-action { font-size: 0.76rem; color: #0F172A; }
 .pq-badge {
     font-size: 0.6rem;
     font-weight: 800;
@@ -551,7 +552,7 @@ h1,h2,h3,h4 { color: #1c1e21 !important; font-family: 'Segoe UI', 'Roboto', sans
     gap: 1rem;
     align-items: center;
 }
-.freq-name { font-size: 0.84rem; font-weight: 600; color: #1c1e21; }
+.freq-name { font-size: 0.84rem; font-weight: 600; color: #0F172A; }
 .freq-badge {
     font-size: 0.6rem;
     font-weight: 700;
@@ -564,7 +565,7 @@ h1,h2,h3,h4 { color: #1c1e21 !important; font-family: 'Segoe UI', 'Roboto', sans
 }
 .freq-bar-track { background: #E4E6EB; border-radius: 4px; height: 4px; margin-top: 0.5rem; }
 .freq-val { font-size: 1.3rem; font-weight: 800; line-height: 1; }
-.freq-sub { font-size: 0.67rem; color: #606770; margin-top: 0.15rem; }
+.freq-sub { font-size: 0.67rem; color: #475569; margin-top: 0.15rem; }
 
 /* ---- CAMP CARD V2 ---- */
 .camp-v2 {
@@ -579,27 +580,27 @@ h1,h2,h3,h4 { color: #1c1e21 !important; font-family: 'Segoe UI', 'Roboto', sans
     margin-bottom: 0.75rem;
 }
 .camp-v2-metric { }
-.camp-v2-lbl { font-size: 0.63rem; text-transform: uppercase; letter-spacing: 0.1em; color: #606770; margin-bottom: 0.2rem; }
-.camp-v2-val { font-size: 1.05rem; font-weight: 700; color: #1c1e21; }
-.camp-v2-sub { font-size: 0.67rem; color: #8a8d91; margin-top: 0.1rem; }
+.camp-v2-lbl { font-size: 0.63rem; text-transform: uppercase; letter-spacing: 0.1em; color: #475569; margin-bottom: 0.2rem; }
+.camp-v2-val { font-size: 1.05rem; font-weight: 700; color: #0F172A; }
+.camp-v2-sub { font-size: 0.67rem; color: #64748B; margin-top: 0.1rem; }
 
 /* ---- BENCHMARK TABLE ---- */
 .bench-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; margin-top: 0.5rem; }
 .bench-table th {
     font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em;
-    color: #606770; font-weight: 600;
+    color: #475569; font-weight: 600;
     padding: 0.4rem 0.75rem; text-align: left;
-    border-bottom: 1px solid #dddfe2;
+    border-bottom: 1px solid #E2E8F0;
 }
-.bench-table td { padding: 0.5rem 0.75rem; color: #1c1e21; border-bottom: 1px solid #F0F2F5; }
+.bench-table td { padding: 0.5rem 0.75rem; color: #0F172A; border-bottom: 1px solid #F1F5F9; }
 .bench-table tr:last-child td { border-bottom: none; }
-.bench-ok   { color: #31A24C !important; font-weight: 600; }
-.bench-warn { color: #92400E !important; font-weight: 600; }
-.bench-bad  { color: #dd3c10 !important; font-weight: 600; }
+.bench-ok   { color: #059669 !important; font-weight: 600; }
+.bench-warn { color: #B45309 !important; font-weight: 600; }
+.bench-bad  { color: #DC2626 !important; font-weight: 600; }
 
 /* ---- STREAMLIT OVERRIDES ---- */
 .stButton > button {
-    background: #1877F2 !important;
+    background: #0F172A !important;
     color: white !important;
     border: none !important;
     border-radius: 6px !important;
@@ -609,21 +610,21 @@ h1,h2,h3,h4 { color: #1c1e21 !important; font-family: 'Segoe UI', 'Roboto', sans
     padding: 0.6rem 1.5rem !important;
     transition: background-color 0.2s !important;
 }
-.stButton > button:hover { background: #166FE5 !important; 
+.stButton > button:hover { background: #1E293B !important; 
     color: white !important;
     border-color: transparent !important;}
-.stExpander { background: #FFFFFF !important; border: 1px solid #dddfe2 !important; border-radius: 8px !important; }
+.stExpander { background: #FFFFFF !important; border: 1px solid #E2E8F0 !important; border-radius: 8px !important; }
 div[data-testid="stExpander"] > div:first-child { border-radius: 8px !important; }
 .stDateInput input, .stTextInput input, .stSelectbox select {
     background: #FFFFFF !important;
-    border: 1px solid #ccd0d5 !important;
-    color: #1c1e21 !important;
+    border: 1px solid #CBD5E1 !important;
+    color: #0F172A !important;
     border-radius: 6px !important;
 }
-.stRadio label { color: #1c1e21 !important; }
-.stMetric label { color: #606770 !important; font-size: 0.75rem !important; }
-.stMetric [data-testid="metric-container"] > div:nth-child(2) { color: #1c1e21 !important; }
-div[data-testid="stSidebar"] { background: #FFFFFF !important; border-right: 1px solid #dddfe2 !important; }
+.stRadio label { color: #0F172A !important; }
+.stMetric label { color: #475569 !important; font-size: 0.75rem !important; }
+.stMetric [data-testid="metric-container"] > div:nth-child(2) { color: #0F172A !important; }
+div[data-testid="stSidebar"] { background: #FFFFFF !important; border-right: 1px solid #E2E8F0 !important; }
 
 section.main > div {
     max-width: 1280px;
@@ -646,7 +647,7 @@ section.main > div {
 
 /* Fix white texts */
 label p, [data-testid="stWidgetLabel"] p, [data-testid="stCaptionContainer"] {
-    color: #1c1e21 !important;
+    color: #0F172A !important;
 }
 
 /* Fix all input text colors */
@@ -657,8 +658,8 @@ input[type="text"],
 input[type="password"],
 input[type="number"],
 input[type="email"] {
-    color: #1c1e21 !important;
-    -webkit-text-fill-color: #1c1e21 !important;
+    color: #0F172A !important;
+    -webkit-text-fill-color: #0F172A !important;
     background-color: #FFFFFF !important;
 }
 </style>
@@ -717,16 +718,16 @@ def render_performance_table(df: pd.DataFrame, plan: str, plan_limits: dict):
 
     def color_roas(val):
         if isinstance(val, (int, float)):
-            if val >= 3:   return 'background-color: rgba(100,220,150,0.2); color: #64DC96'
-            elif val >= 1.5: return 'background-color: rgba(251,191,36,0.2); color: #FBbf24'
-            elif val > 0:  return 'background-color: rgba(252,129,129,0.2); color: #FC8181'
+            if val >= 3:   return 'background-color: #E2E8F0; color: #059669'
+            elif val >= 1.5: return 'background-color: #E2E8F0; color: #D97706'
+            elif val > 0:  return 'background-color: #E2E8F0; color: #DC2626'
         return ''
 
     def color_ctr(val):
         if isinstance(val, (int, float)):
-            if val >= 2:   return 'color: #64DC96; font-weight: 500'
-            elif val >= 1: return 'color: #FBbf24'
-            elif val > 0:  return 'color: #FC8181'
+            if val >= 2:   return 'color: #059669; font-weight: 500'
+            elif val >= 1: return 'color: #D97706'
+            elif val > 0:  return 'color: #DC2626'
         return ''
 
     format_dict = {'spend': '${:.2f}', 'roas': '{:.2f}x', 'ctr': '{:.2f}%', 'cpc': '${:.2f}'}
@@ -765,9 +766,9 @@ def render_performance_table(df: pd.DataFrame, plan: str, plan_limits: dict):
 
     if not plan_limits['can_see_alerts']:
         st.markdown("""
-        <div style="background:rgba(138,106,224,0.07); border:1px solid rgba(138,106,224,0.18);
-             border-radius:12px; padding:1rem; font-size:0.82rem; color:rgba(28,30,33,0.55); margin-top:1rem;">
-            ✦ Mejora a <strong style="color:#A890F0;">PRO</strong> o <strong style="color:#C9A84C;">ENTERPRISE</strong>
+        <div style="background:#FFFFFF; border:1px solid #E2E8F0;
+             border-radius:12px; padding:1rem; font-size:0.82rem; color:#64748B; margin-top:1rem;">
+            ✦ Mejora a <strong style="color:#6366F1;">PRO</strong> o <strong style="color:#0F172A;">ENTERPRISE</strong>
             para ver recomendaciones personalizadas por anuncio.
         </div>
         """, unsafe_allow_html=True)
@@ -960,7 +961,7 @@ def render_account_score(score_data: dict, df: pd.DataFrame, date_from: str, dat
             f'<div style="text-align:center;padding:1.25rem 0 0.5rem;">'
             f'<div style="font-size:2.8rem;font-weight:900;color:{color};line-height:1;">{score}</div>'
             f'<div style="font-size:1rem;font-weight:700;color:{color};margin-top:0.15rem;">{grade}</div>'
-            f'<div style="font-size:0.6rem;color:rgba(28,30,33,0.3);text-transform:uppercase;'
+            f'<div style="font-size:0.6rem;color:#94A3B8;text-transform:uppercase;'
             f'letter-spacing:0.12em;margin-top:0.3rem;">Puntuación de Cuenta</div>'
             f'</div>',
             unsafe_allow_html=True
@@ -969,7 +970,7 @@ def render_account_score(score_data: dict, df: pd.DataFrame, date_from: str, dat
     with c_bars:
         st.markdown(
             '<div style="font-size:0.65rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;'
-            'color:rgba(28,30,33,0.3);margin-bottom:0.6rem;margin-top:1rem;">Desglose del score</div>',
+            'color:#94A3B8;margin-bottom:0.6rem;margin-top:1rem;">Desglose del score</div>',
             unsafe_allow_html=True
         )
         for lbl, val, mx in [
@@ -982,11 +983,11 @@ def render_account_score(score_data: dict, df: pd.DataFrame, date_from: str, dat
             st.markdown(
                 f'<div style="margin-bottom:0.45rem;">'
                 f'<div style="display:flex;justify-content:space-between;font-size:0.68rem;'
-                f'color:rgba(28,30,33,0.4);margin-bottom:0.2rem;">'
+                f'color:#94A3B8;margin-bottom:0.2rem;">'
                 f'<span>{lbl}</span>'
-                f'<span style="color:rgba(28,30,33,0.7);">{val}/{mx}</span>'
+                f'<span style="color:#334155;">{val}/{mx}</span>'
                 f'</div>'
-                f'<div style="background:rgba(0,0,0,0.04);border-radius:4px;height:4px;">'
+                f'<div style="background:#F8FAFC;border-radius:4px;height:4px;">'
                 f'<div style="width:{pct}%;background:{color};border-radius:4px;height:4px;"></div>'
                 f'</div>'
                 f'</div>',
@@ -996,11 +997,11 @@ def render_account_score(score_data: dict, df: pd.DataFrame, date_from: str, dat
     with c_info:
         st.markdown(
             f'<div style="padding:1rem 0;text-align:right;">'
-            f'<div style="font-size:0.7rem;color:rgba(28,30,33,0.3);margin-bottom:0.3rem;">'
+            f'<div style="font-size:0.7rem;color:#94A3B8;margin-bottom:0.3rem;">'
             f'{date_from} al {date_to}</div>'
-            f'<div style="font-size:0.82rem;color:rgba(28,30,33,0.55);margin-bottom:0.5rem;">'
+            f'<div style="font-size:0.82rem;color:#64748B;margin-bottom:0.5rem;">'
             f'{count} {level_label} analizados</div>'
-            f'<div style="font-size:0.84rem;color:rgba(28,30,33,0.8);line-height:1.4;">'
+            f'<div style="font-size:0.84rem;color:#1E293B;line-height:1.4;">'
             f'{insight}</div>'
             f'</div>',
             unsafe_allow_html=True
@@ -1111,14 +1112,14 @@ def render_spend_charts(df: pd.DataFrame, level: str):
             marker=dict(color=colors, line=dict(width=0)),
             text=[f'${v:,.0f}' for v in chart_df['spend']],
             textposition='outside',
-            textfont=dict(color='rgba(28,30,33,0.55)', size=10, family='Satoshi')
+            textfont=dict(color='#64748B', size=10, family='Satoshi')
         ))
         fig.update_layout(
             paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
             margin=dict(l=0, r=55, t=8, b=8), height=260,
             xaxis=dict(showgrid=False, showticklabels=False, zeroline=False),
             yaxis=dict(gridcolor='rgba(255,255,255,0)',
-                       tickfont=dict(color='rgba(28,30,33,0.55)', size=10, family='Satoshi'),
+                       tickfont=dict(color='#64748B', size=10, family='Satoshi'),
                        ticksuffix='  '),
             font=dict(family='Satoshi, sans-serif'),
         )
@@ -1139,7 +1140,7 @@ def render_spend_charts(df: pd.DataFrame, level: str):
             sc_df['frequency'] = 0
 
         def freq_color(f):
-            return '#64DC96' if f <= 2 else '#FBbf24' if f <= 4 else '#FC8181'
+            return '#059669' if f <= 2 else '#D97706' if f <= 4 else '#DC2626'
 
         fig2 = go.Figure()
         for _, row in sc_df.iterrows():
@@ -1154,7 +1155,7 @@ def render_spend_charts(df: pd.DataFrame, level: str):
                 ),
                 text=[row[name_col]],
                 textposition='top center',
-                textfont=dict(color='rgba(28,30,33,0.45)', size=9, family='Satoshi'),
+                textfont=dict(color='#64748B', size=9, family='Satoshi'),
                 showlegend=False,
                 hovertemplate=(
                     f"<b>{row[name_col]}</b><br>"
@@ -1171,24 +1172,24 @@ def render_spend_charts(df: pd.DataFrame, level: str):
         fig2.update_layout(
             paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
             margin=dict(l=10, r=10, t=8, b=30), height=260,
-            xaxis=dict(title=dict(text='Gasto ($)', font=dict(color='rgba(28,30,33,0.3)', size=9)),
-                       gridcolor='rgba(0,0,0,0.04)',
-                       tickfont=dict(color='rgba(28,30,33,0.4)', size=9, family='Satoshi'),
+            xaxis=dict(title=dict(text='Gasto ($)', font=dict(color='#94A3B8', size=9)),
+                       gridcolor='#F8FAFC',
+                       tickfont=dict(color='#94A3B8', size=9, family='Satoshi'),
                        zeroline=False),
-            yaxis=dict(title=dict(text='CTR (%)', font=dict(color='rgba(28,30,33,0.3)', size=9)),
-                       gridcolor='rgba(0,0,0,0.04)',
-                       tickfont=dict(color='rgba(28,30,33,0.4)', size=9, family='Satoshi'),
+            yaxis=dict(title=dict(text='CTR (%)', font=dict(color='#94A3B8', size=9)),
+                       gridcolor='#F8FAFC',
+                       tickfont=dict(color='#94A3B8', size=9, family='Satoshi'),
                        zeroline=False),
             font=dict(family='Satoshi, sans-serif'),
         )
         st.plotly_chart(fig2, use_container_width=True, config={'displayModeBar': False})
 
     st.markdown("""
-    <div style="display:flex;gap:1.5rem;font-size:0.69rem;color:rgba(28,30,33,0.38);
+    <div style="display:flex;gap:1.5rem;font-size:0.69rem;color:#94A3B8;
          margin-top:-0.75rem;margin-bottom:0.5rem;padding-left:52%;">
-        <span><span style="color:#64DC96;">●</span> Frecuencia ≤2 (saludable)</span>
-        <span><span style="color:#FBbf24;">●</span> 2–4 (monitorear)</span>
-        <span><span style="color:#FC8181;">●</span> >4 (saturación)</span>
+        <span><span style="color:#059669;">●</span> Frecuencia ≤2 (saludable)</span>
+        <span><span style="color:#D97706;">●</span> 2–4 (monitorear)</span>
+        <span><span style="color:#DC2626;">●</span> >4 (saturación)</span>
     </div>
     """, unsafe_allow_html=True)
 
@@ -1198,7 +1199,7 @@ def render_priority_queue(actions: list):
         return
     st.markdown('<div class="section-label">Inteligencia</div>', unsafe_allow_html=True)
     st.markdown('<div class="section-title">Cola de Prioridades</div>', unsafe_allow_html=True)
-    st.markdown('<div style="font-size:0.8rem;color:rgba(28,30,33,0.4);margin-bottom:1rem;">Acciones ordenadas por impacto. Completa de arriba hacia abajo.</div>', unsafe_allow_html=True)
+    st.markdown('<div style="font-size:0.8rem;color:#94A3B8;margin-bottom:1rem;">Acciones ordenadas por impacto. Completa de arriba hacia abajo.</div>', unsafe_allow_html=True)
 
     for i, a in enumerate(actions, 1):
         st.markdown(f"""
@@ -1242,11 +1243,11 @@ def render_frequency_panel(df: pd.DataFrame, level: str):
         bar_pct = min(round(freq / 8 * 100), 100)
 
         if freq > 5:
-            clr, status, bg, bc = '#FC8181', 'SATURADA', 'rgba(252,129,129,0.07)', '#FC818133'
+            clr, status, bg, bc = '#DC2626', 'SATURADA', '#FFFFFF', '#DC262633'
         elif freq > 3:
-            clr, status, bg, bc = '#FBbf24', 'ALERTA', 'rgba(251,191,36,0.07)', '#FBbf2433'
+            clr, status, bg, bc = '#D97706', 'ALERTA', '#FFFFFF', '#D9770633'
         else:
-            clr, status, bg, bc = '#64DC96', 'SALUDABLE', 'rgba(100,220,150,0.05)', '#64DC9633'
+            clr, status, bg, bc = '#059669', 'SALUDABLE', '#FFFFFF', '#05966933'
 
         rows_html.append(f"""
         <div class="freq-row" style="background:{bg};">
@@ -1255,7 +1256,7 @@ def render_frequency_panel(df: pd.DataFrame, level: str):
                     <span class="freq-name">{name}</span>
                     <span class="freq-badge" style="color:{clr};border-color:{bc};">{status}</span>
                 </div>
-                <div style="font-size:0.71rem;color:rgba(28,30,33,0.35);margin-top:0.3rem;">
+                <div style="font-size:0.71rem;color:#94A3B8;margin-top:0.3rem;">
                     {_fmt_big(impr)} impresiones · {_fmt_big(reach)} alcance · ${spend:,.0f} gastado
                 </div>
                 <div class="freq-bar-track">
@@ -1314,26 +1315,26 @@ def render_benchmark_table(df: pd.DataFrame, level: str):
         for i, m in enumerate(meta):
             # CTR
             if m['ctr'] >= m['b_ctr'] * 1.5:
-                styles.at[i, 'CTR'] = 'color:#64DC96;font-weight:600'
+                styles.at[i, 'CTR'] = 'color:#059669;font-weight:600'
             elif m['ctr'] >= m['b_ctr']:
-                styles.at[i, 'CTR'] = 'color:#FBbf24;font-weight:600'
+                styles.at[i, 'CTR'] = 'color:#D97706;font-weight:600'
             else:
-                styles.at[i, 'CTR'] = 'color:#FC8181;font-weight:600'
+                styles.at[i, 'CTR'] = 'color:#DC2626;font-weight:600'
             # CPC
             if m['cpc'] > 0:
                 if m['cpc'] <= m['b_cpc']:
-                    styles.at[i, 'CPC'] = 'color:#64DC96;font-weight:600'
+                    styles.at[i, 'CPC'] = 'color:#059669;font-weight:600'
                 elif m['cpc'] <= m['b_cpc'] * 1.5:
-                    styles.at[i, 'CPC'] = 'color:#FBbf24'
+                    styles.at[i, 'CPC'] = 'color:#D97706'
                 else:
-                    styles.at[i, 'CPC'] = 'color:#FC8181'
+                    styles.at[i, 'CPC'] = 'color:#DC2626'
             # Frecuencia
             if m['freq'] <= 2:
-                styles.at[i, 'Frecuencia'] = 'color:#64DC96'
+                styles.at[i, 'Frecuencia'] = 'color:#059669'
             elif m['freq'] <= 4:
-                styles.at[i, 'Frecuencia'] = 'color:#FBbf24'
+                styles.at[i, 'Frecuencia'] = 'color:#D97706'
             else:
-                styles.at[i, 'Frecuencia'] = 'color:#FC8181;font-weight:600'
+                styles.at[i, 'Frecuencia'] = 'color:#DC2626;font-weight:600'
         return styles
 
     st.dataframe(
@@ -1365,8 +1366,8 @@ def render_campaign_cards_v2(detailed: dict, level: str, plan_limits: dict):
         reach   = int(camp.get('reach', 0))
         roas    = float(camp.get('roas', 0))
 
-        ctr_c  = '#64DC96' if camp['ctr_rating'] == 'excelente' else '#FBbf24' if camp['ctr_rating'] == 'bueno' else '#FC8181'
-        freq_c = '#64DC96' if freq <= 2 else '#FBbf24' if freq <= 4 else '#FC8181'
+        ctr_c  = '#059669' if camp['ctr_rating'] == 'excelente' else '#D97706' if camp['ctr_rating'] == 'bueno' else '#DC2626'
+        freq_c = '#059669' if freq <= 2 else '#D97706' if freq <= 4 else '#DC2626'
 
         expander_label = f"{icon} {title_name[:55]}  ·  ${spend:,.2f}  ·  CTR {ctr:.2f}%  ·  Freq {freq:.1f}x"
         with st.expander(expander_label):
@@ -1399,7 +1400,7 @@ def render_campaign_cards_v2(detailed: dict, level: str, plan_limits: dict):
                     </div>
                     <div class="camp-v2-metric">
                         <div class="camp-v2-lbl">ROAS</div>
-                        <div class="camp-v2-val" style="color:{'#64DC96' if roas >= 2 else '#FBbf24' if roas >= 1 else '#FC8181' if roas > 0 else '#1c1e21'};">{f'{roas:.2f}x' if roas > 0 else 'N/A'}</div>
+                        <div class="camp-v2-val" style="color:{'#059669' if roas >= 2 else '#D97706' if roas >= 1 else '#DC2626' if roas > 0 else '#0F172A'};">{f'{roas:.2f}x' if roas > 0 else 'N/A'}</div>
                         <div class="camp-v2-sub">retorno sobre inversión</div>
                     </div>
                     <div class="camp-v2-metric">
@@ -1407,27 +1408,27 @@ def render_campaign_cards_v2(detailed: dict, level: str, plan_limits: dict):
                         <div class="camp-v2-val" style="font-size:0.9rem;">{get_objective_label(camp.get('objective',''))}</div>
                     </div>
                 </div>
-                <div style="border-top:1px solid rgba(0,0,0,0.04);padding-top:0.75rem;
+                <div style="border-top:1px solid #F8FAFC;padding-top:0.75rem;
                      display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;">
                     <div>
                         <div style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;
-                             color:rgba(28,30,33,0.3);margin-bottom:0.25rem;">CTR</div>
+                             color:#94A3B8;margin-bottom:0.25rem;">CTR</div>
                         <div style="font-size:0.82rem;color:{ctr_c};">{camp['ctr_emoji']} {camp['ctr_message']}</div>
                     </div>
                     <div>
                         <div style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;
-                             color:rgba(28,30,33,0.3);margin-bottom:0.25rem;">CPC</div>
-                        <div style="font-size:0.82rem;color:rgba(28,30,33,0.7);">{camp['cpc_emoji']} {camp['cpc_message']}</div>
+                             color:#94A3B8;margin-bottom:0.25rem;">CPC</div>
+                        <div style="font-size:0.82rem;color:#334155;">{camp['cpc_emoji']} {camp['cpc_message']}</div>
                     </div>
                     <div>
                         <div style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;
-                             color:rgba(28,30,33,0.3);margin-bottom:0.25rem;">Frecuencia</div>
+                             color:#94A3B8;margin-bottom:0.25rem;">Frecuencia</div>
                         <div style="font-size:0.82rem;color:{freq_c};">{camp['frequency_message']}</div>
                     </div>
                     <div>
                         <div style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;
-                             color:rgba(28,30,33,0.3);margin-bottom:0.25rem;">CPM estimado</div>
-                        <div style="font-size:0.82rem;color:rgba(28,30,33,0.7);">
+                             color:#94A3B8;margin-bottom:0.25rem;">CPM estimado</div>
+                        <div style="font-size:0.82rem;color:#334155;">
                             {f'${spend / impr * 1000:.2f} por mil imp.' if impr > 0 else 'N/A'}</div>
                     </div>
                 </div>
@@ -1444,10 +1445,10 @@ def render_campaign_cards_v2(detailed: dict, level: str, plan_limits: dict):
                 """, unsafe_allow_html=True)
             else:
                 st.markdown("""
-                <div style="background:rgba(138,106,224,0.07);border:1px solid rgba(138,106,224,0.18);
+                <div style="background:#FFFFFF;border:1px solid #E2E8F0;
                      border-radius:10px;padding:0.75rem 1rem;font-size:0.78rem;
-                     color:rgba(28,30,33,0.45);margin-top:0.5rem;">
-                    ✦ Actualiza a <strong style="color:#A890F0;">PRO</strong> para ver recomendaciones y acciones específicas.
+                     color:#64748B;margin-top:0.5rem;">
+                    ✦ Actualiza a <strong style="color:#6366F1;">PRO</strong> para ver recomendaciones y acciones específicas.
                 </div>
                 """, unsafe_allow_html=True)
 
@@ -1456,11 +1457,11 @@ def render_action_center(actions: list):
     """Renderiza el centro de acciones agrupadas por Kill, Scale, Fix."""
     if not actions:
         st.markdown("""
-        <div style="background:rgba(138,106,224,0.06); border:1px solid rgba(138,106,224,0.18);
+        <div style="background:#FFFFFF; border:1px solid #E2E8F0;
              border-radius:16px; padding:2rem; text-align:center;">
             <div style="font-family:'Satoshi',sans-serif; font-size:1.1rem; font-weight:700;
-                 color:#A890F0; margin-bottom:0.5rem;">✅ Todo bajo control</div>
-            <div style="font-size:0.85rem; color:rgba(28,30,33,0.4);">
+                 color:#6366F1; margin-bottom:0.5rem;">✅ Todo bajo control</div>
+            <div style="font-size:0.85rem; color:#94A3B8;">
                 No hay acciones urgentes pendientes. Tus campañas están funcionando correctamente.
             </div>
         </div>
@@ -1483,32 +1484,32 @@ def render_action_center(actions: list):
 
     st.markdown('<div class="section-label">Acción</div>', unsafe_allow_html=True)
     st.markdown('<div class="section-title">🚨 Acciones Prioritarias</div>', unsafe_allow_html=True)
-    st.markdown('<div style="font-size:0.8rem;color:rgba(28,30,33,0.4);margin-bottom:1.5rem;">Ordenadas por impacto. Enfócate en Kill primero, luego Fix, finalmente Scale.</div>', unsafe_allow_html=True)
+    st.markdown('<div style="font-size:0.8rem;color:#94A3B8;margin-bottom:1.5rem;">Ordenadas por impacto. Enfócate en Kill primero, luego Fix, finalmente Scale.</div>', unsafe_allow_html=True)
 
     # Contadores
     col1, col2, col3 = st.columns(3)
     with col1:
         st.markdown(f"""
-        <div style="background:rgba(252,129,129,0.07); border:1px solid rgba(252,129,129,0.2);
+        <div style="background:#FFFFFF; border:1px solid #E2E8F0;
              border-radius:12px; padding:1rem; text-align:center;">
-            <div style="font-size:1.5rem; font-weight:800; color:#FC8181;">{len(kill_actions)}</div>
-            <div style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em; color:#FC8181;">Detener</div>
+            <div style="font-size:1.5rem; font-weight:800; color:#DC2626;">{len(kill_actions)}</div>
+            <div style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em; color:#DC2626;">Detener</div>
         </div>
         """, unsafe_allow_html=True)
     with col2:
         st.markdown(f"""
-        <div style="background:rgba(251,191,36,0.07); border:1px solid rgba(251,191,36,0.2);
+        <div style="background:#FFFFFF; border:1px solid #E2E8F0;
              border-radius:12px; padding:1rem; text-align:center;">
-            <div style="font-size:1.5rem; font-weight:800; color:#FBbf24;">{len(fix_actions)}</div>
-            <div style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em; color:#FBbf24;">Corregir</div>
+            <div style="font-size:1.5rem; font-weight:800; color:#D97706;">{len(fix_actions)}</div>
+            <div style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em; color:#D97706;">Corregir</div>
         </div>
         """, unsafe_allow_html=True)
     with col3:
         st.markdown(f"""
-        <div style="background:rgba(100,220,150,0.07); border:1px solid rgba(100,220,150,0.2);
+        <div style="background:#FFFFFF; border:1px solid #E2E8F0;
              border-radius:12px; padding:1rem; text-align:center;">
-            <div style="font-size:1.5rem; font-weight:800; color:#64DC96;">{len(scale_actions)}</div>
-            <div style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em; color:#64DC96;">Escalar</div>
+            <div style="font-size:1.5rem; font-weight:800; color:#059669;">{len(scale_actions)}</div>
+            <div style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em; color:#059669;">Escalar</div>
         </div>
         """, unsafe_allow_html=True)
 
@@ -1516,25 +1517,25 @@ def render_action_center(actions: list):
 
     # Sección KILL
     if kill_actions:
-        st.markdown('<div style="font-size:0.9rem; font-weight:700; color:#FC8181; margin-bottom:0.75rem;">❌ Kill (Detener inmediatamente)</div>', unsafe_allow_html=True)
+        st.markdown('<div style="font-size:0.9rem; font-weight:700; color:#DC2626; margin-bottom:0.75rem;">❌ Kill (Detener inmediatamente)</div>', unsafe_allow_html=True)
         for a in kill_actions:
             st.markdown(f"""
-            <div style="background:rgba(252,129,129,0.05); border-left:3px solid #FC8181;
+            <div style="background:#FFFFFF; border-left:3px solid #DC2626;
                  border-radius:0 10px 10px 0; padding:1rem; margin-bottom:0.75rem;">
                 <div style="display:flex; align-items:start; gap:0.75rem;">
                     <div style="font-size:1.2rem;">{a['icon']}</div>
                     <div style="flex:1;">
-                        <div style="font-weight:700; color:#1c1e21; font-size:0.9rem;">{a['title']}</div>
-                        <div style="font-size:0.8rem; color:rgba(28,30,33,0.55); margin:0.25rem 0;">{a['detail']}</div>
+                        <div style="font-weight:700; color:#0F172A; font-size:0.9rem;">{a['title']}</div>
+                        <div style="font-size:0.8rem; color:#64748B; margin:0.25rem 0;">{a['detail']}</div>
                         <div style="display:flex; gap:0.75rem; margin-top:0.5rem; font-size:0.7rem;">
-                            <span style="color:#FC8181;">Confidence: {a.get('confidence', 'Medium')}</span>
-                            <span style="color:#FBbf24;">Impact: {a.get('impact', 'Medium')}</span>
-                            <span style="color:#64DC96;">{a.get('time_context', '')}</span>
+                            <span style="color:#DC2626;">Confidence: {a.get('confidence', 'Medium')}</span>
+                            <span style="color:#D97706;">Impact: {a.get('impact', 'Medium')}</span>
+                            <span style="color:#059669;">{a.get('time_context', '')}</span>
                         </div>
-                        <div style="font-size:0.8rem; color:#FC8181; font-weight:600;">→ {a['action']}</div>
+                        <div style="font-size:0.8rem; color:#DC2626; font-weight:600;">→ {a['action']}</div>
                     </div>
                     <div style="font-size:0.65rem; font-weight:800; text-transform:uppercase;
-                         color:#FC8181; background:rgba(252,129,129,0.15); padding:0.2rem 0.6rem;
+                         color:#DC2626; background:#F8FAFC; padding:0.2rem 0.6rem;
                          border-radius:20px;">{a['urgency']}</div>
                 </div>
             </div>
@@ -1542,25 +1543,25 @@ def render_action_center(actions: list):
 
     # Sección FIX
     if fix_actions:
-        st.markdown('<div style="font-size:0.9rem; font-weight:700; color:#FBbf24; margin-bottom:0.75rem;">⚠️ Fix (Optimizar/Corregir)</div>', unsafe_allow_html=True)
+        st.markdown('<div style="font-size:0.9rem; font-weight:700; color:#D97706; margin-bottom:0.75rem;">⚠️ Fix (Optimizar/Corregir)</div>', unsafe_allow_html=True)
         for a in fix_actions:
             st.markdown(f"""
-            <div style="background:rgba(251,191,36,0.05); border-left:3px solid #FBbf24;
+            <div style="background:#FFFFFF; border-left:3px solid #D97706;
                  border-radius:0 10px 10px 0; padding:1rem; margin-bottom:0.75rem;">
                 <div style="display:flex; align-items:start; gap:0.75rem;">
                     <div style="font-size:1.2rem;">{a['icon']}</div>
                     <div style="flex:1;">
-                        <div style="font-weight:700; color:#1c1e21; font-size:0.9rem;">{a['title']}</div>
-                        <div style="font-size:0.8rem; color:rgba(28,30,33,0.55); margin:0.25rem 0;">{a['detail']}</div>
+                        <div style="font-weight:700; color:#0F172A; font-size:0.9rem;">{a['title']}</div>
+                        <div style="font-size:0.8rem; color:#64748B; margin:0.25rem 0;">{a['detail']}</div>
                         <div style="display:flex; gap:0.75rem; margin-top:0.5rem; font-size:0.7rem;">
-                            <span style="color:#FC8181;">Confidence: {a.get('confidence', 'Medium')}</span>
-                            <span style="color:#FBbf24;">Impact: {a.get('impact', 'Medium')}</span>
-                            <span style="color:#64DC96;">{a.get('time_context', '')}</span>
+                            <span style="color:#DC2626;">Confidence: {a.get('confidence', 'Medium')}</span>
+                            <span style="color:#D97706;">Impact: {a.get('impact', 'Medium')}</span>
+                            <span style="color:#059669;">{a.get('time_context', '')}</span>
                         </div>
-                        <div style="font-size:0.8rem; color:#FBbf24; font-weight:600;">→ {a['action']}</div>
+                        <div style="font-size:0.8rem; color:#D97706; font-weight:600;">→ {a['action']}</div>
                     </div>
                     <div style="font-size:0.65rem; font-weight:800; text-transform:uppercase;
-                         color:#FBbf24; background:rgba(251,191,36,0.15); padding:0.2rem 0.6rem;
+                         color:#D97706; background:#F8FAFC; padding:0.2rem 0.6rem;
                          border-radius:20px;">{a['urgency']}</div>
                 </div>
             </div>
@@ -1568,25 +1569,25 @@ def render_action_center(actions: list):
 
     # Sección SCALE
     if scale_actions:
-        st.markdown('<div style="font-size:0.9rem; font-weight:700; color:#64DC96; margin-bottom:0.75rem;">✅ Scale (Aumentar/Escalar)</div>', unsafe_allow_html=True)
+        st.markdown('<div style="font-size:0.9rem; font-weight:700; color:#059669; margin-bottom:0.75rem;">✅ Scale (Aumentar/Escalar)</div>', unsafe_allow_html=True)
         for a in scale_actions:
             st.markdown(f"""
-            <div style="background:rgba(100,220,150,0.05); border-left:3px solid #64DC96;
+            <div style="background:#FFFFFF; border-left:3px solid #059669;
                  border-radius:0 10px 10px 0; padding:1rem; margin-bottom:0.75rem;">
                 <div style="display:flex; align-items:start; gap:0.75rem;">
                     <div style="font-size:1.2rem;">{a['icon']}</div>
                     <div style="flex:1;">
-                        <div style="font-weight:700; color:#1c1e21; font-size:0.9rem;">{a['title']}</div>
-                        <div style="font-size:0.8rem; color:rgba(28,30,33,0.55); margin:0.25rem 0;">{a['detail']}</div>
+                        <div style="font-weight:700; color:#0F172A; font-size:0.9rem;">{a['title']}</div>
+                        <div style="font-size:0.8rem; color:#64748B; margin:0.25rem 0;">{a['detail']}</div>
                         <div style="display:flex; gap:0.75rem; margin-top:0.5rem; font-size:0.7rem;">
-                            <span style="color:#FC8181;">Confidence: {a.get('confidence', 'Medium')}</span>
-                            <span style="color:#FBbf24;">Impact: {a.get('impact', 'Medium')}</span>
-                            <span style="color:#64DC96;">{a.get('time_context', '')}</span>
+                            <span style="color:#DC2626;">Confidence: {a.get('confidence', 'Medium')}</span>
+                            <span style="color:#D97706;">Impact: {a.get('impact', 'Medium')}</span>
+                            <span style="color:#059669;">{a.get('time_context', '')}</span>
                         </div>
-                        <div style="font-size:0.8rem; color:#64DC96; font-weight:600;">→ {a['action']}</div>
+                        <div style="font-size:0.8rem; color:#059669; font-weight:600;">→ {a['action']}</div>
                     </div>
                     <div style="font-size:0.65rem; font-weight:800; text-transform:uppercase;
-                         color:#64DC96; background:rgba(100,220,150,0.15); padding:0.2rem 0.6rem;
+                         color:#059669; background:#F8FAFC; padding:0.2rem 0.6rem;
                          border-radius:20px;">{a['urgency']}</div>
                 </div>
             </div>
@@ -1603,15 +1604,15 @@ def render_account_status_simple(score_data: dict):
     if score >= 75:
         status = "Óptimo"
         status_emoji = "✅"
-        status_color = "#64DC96"
+        status_color = "#059669"
     elif score >= 55:
         status = "Necesita Optimización"
         status_emoji = "⚠️"
-        status_color = "#FBbf24"
+        status_color = "#D97706"
     else:
         status = "Requiere Atención"
         status_emoji = "🔴"
-        status_color = "#FC8181"
+        status_color = "#DC2626"
 
     st.markdown('<div class="section-label">Estado</div>', unsafe_allow_html=True)
     st.markdown('<div class="section-title">📊 Estado de la Cuenta</div>', unsafe_allow_html=True)
@@ -1621,7 +1622,7 @@ def render_account_status_simple(score_data: dict):
         st.markdown(f"""
         <div style="text-align:center;">
             <div style="font-size:2.5rem; font-weight:900; color:{color}; line-height:1;">{score}</div>
-            <div style="font-size:0.7rem; color:rgba(28,30,33,0.3); text-transform:uppercase;
+            <div style="font-size:0.7rem; color:#94A3B8; text-transform:uppercase;
                  letter-spacing:0.1em; margin-top:0.2rem;">Puntuación</div>
         </div>
         """, unsafe_allow_html=True)
@@ -1629,7 +1630,7 @@ def render_account_status_simple(score_data: dict):
         st.markdown(f"""
         <div style="text-align:center;">
             <div style="font-size:1.8rem; font-weight:900; color:{color}; line-height:1;">{grade}</div>
-            <div style="font-size:0.7rem; color:rgba(28,30,33,0.3); text-transform:uppercase;
+            <div style="font-size:0.7rem; color:#94A3B8; text-transform:uppercase;
                  letter-spacing:0.1em; margin-top:0.2rem;">Calificación</div>
         </div>
         """, unsafe_allow_html=True)
@@ -1637,7 +1638,7 @@ def render_account_status_simple(score_data: dict):
         st.markdown(f"""
         <div style="text-align:center; padding-top:0.5rem;">
             <div style="font-size:1.1rem; font-weight:700; color:{status_color};">{status_emoji} {status}</div>
-            <div style="font-size:0.75rem; color:rgba(28,30,33,0.4); margin-top:0.25rem;">
+            <div style="font-size:0.75rem; color:#94A3B8; margin-top:0.25rem;">
                 {f"{score}/100 - "}{'Excelente rendimiento' if score >= 75 else 'Hay margen de mejora' if score >= 55 else 'Requiere atención urgente'}
             </div>
         </div>
@@ -1696,12 +1697,12 @@ def render_top_insights(df: pd.DataFrame):
 
     for emoji, title, detail in insights[:5]:  # Mostrar máximo 5
         st.markdown(f"""
-        <div style="background:rgba(138,106,224,0.05); border-radius:10px; padding:0.9rem 1rem;
+        <div style="background:#FFFFFF; border-radius:10px; padding:0.9rem 1rem;
              margin-bottom:0.5rem; display:flex; align-items:center; gap:0.75rem;">
             <div style="font-size:1.2rem;">{emoji}</div>
             <div style="flex:1;">
-                <div style="font-weight:700; color:#1c1e21; font-size:0.85rem;">{title}</div>
-                <div style="font-size:0.75rem; color:rgba(28,30,33,0.5);">{detail}</div>
+                <div style="font-weight:700; color:#0F172A; font-size:0.85rem;">{title}</div>
+                <div style="font-size:0.75rem; color:#64748B;">{detail}</div>
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -1711,22 +1712,22 @@ def render_today_summary(user_id: int, actions: list, score_data: dict, last_upd
     """Renderiza el resumen diario para crear hábito de uso."""
     if not actions:
         st.markdown("""
-        <div style="background:rgba(100,220,150,0.06); border:1px solid rgba(100,220,150,0.15);
+        <div style="background:rgba(100,220,150,0.06); border:1px solid #F8FAFC;
              border-radius:16px; padding:1.5rem; margin-bottom:1.5rem;">
             <div style="display:flex; justify-content:space-between; align-items:center;">
                 <div>
                     <div style="font-family:'Satoshi',sans-serif; font-size:0.9rem; font-weight:700;
-                         color:#64DC96; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.25rem;">
+                         color:#059669; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.25rem;">
                         🔁 Resumen de Hoy
                     </div>
-                    <div style="font-size:1.1rem; font-weight:700; color:#1c1e21;">✅ Todo se ve bien</div>
-                    <div style="font-size:0.8rem; color:rgba(28,30,33,0.4); margin-top:0.25rem;">
+                    <div style="font-size:1.1rem; font-weight:700; color:#0F172A;">✅ Todo se ve bien</div>
+                    <div style="font-size:0.8rem; color:#94A3B8; margin-top:0.25rem;">
                         No hay acciones urgentes hoy
                     </div>
                 </div>
                 <div style="text-align:right;">
-                    <div style="font-size:0.7rem; color:rgba(28,30,33,0.3);">Última actualización</div>
-                    <div style="font-size:0.8rem; color:#64DC96;">Justo ahora</div>
+                    <div style="font-size:0.7rem; color:#94A3B8;">Última actualización</div>
+                    <div style="font-size:0.8rem; color:#059669;">Justo ahora</div>
                 </div>
             </div>
         </div>
@@ -1754,53 +1755,53 @@ def render_today_summary(user_id: int, actions: list, score_data: dict, last_upd
     # Determinar estado general
     if kill_count > 0:
         status = "⚠️ Necesita Atención"
-        status_color = "#FBbf24"
+        status_color = "#D97706"
     elif fix_count > 0:
         status = "📊 Optimizar"
         status_color = "#60A5FA"
     else:
         status = "✅ Todo Bien"
-        status_color = "#64DC96"
+        status_color = "#059669"
 
     # Formatear última actualización
     update_text = last_update if last_update else "Justo ahora"
 
     st.markdown(f"""
-    <div style="background:rgba(138,106,224,0.06); border:1px solid rgba(138,106,224,0.15);
+    <div style="background:#FFFFFF; border:1px solid #E2E8F0;
          border-radius:16px; padding:1.5rem; margin-bottom:1.5rem;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
             <div>
                 <div style="font-family:'Satoshi',sans-serif; font-size:0.9rem; font-weight:700;
-                     color:#A890F0; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.25rem;">
+                     color:#6366F1; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.25rem;">
                     🔁 Resumen de Hoy
                 </div>
                 <div style="font-size:1.1rem; font-weight:700; color:{status_color};">{status}</div>
             </div>
             <div style="text-align:right;">
-                <div style="font-size:0.7rem; color:rgba(28,30,33,0.3);">Última actualización</div>
-                <div style="font-size:0.8rem; color:#A890F0;">{update_text}</div>
+                <div style="font-size:0.7rem; color:#94A3B8;">Última actualización</div>
+                <div style="font-size:0.8rem; color:#6366F1;">{update_text}</div>
             </div>
         </div>
 
         <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1rem;">
             <div style="text-align:center;">
-                <div style="font-size:1.5rem; font-weight:800; color:#FC8181;">{kill_count}</div>
-                <div style="font-size:0.75rem; color:rgba(28,30,33,0.5);">para detener</div>
+                <div style="font-size:1.5rem; font-weight:800; color:#DC2626;">{kill_count}</div>
+                <div style="font-size:0.75rem; color:#64748B;">para detener</div>
             </div>
             <div style="text-align:center;">
-                <div style="font-size:1.5rem; font-weight:800; color:#FBbf24;">{fix_count}</div>
-                <div style="font-size:0.75rem; color:rgba(28,30,33,0.5);">para corregir</div>
+                <div style="font-size:1.5rem; font-weight:800; color:#D97706;">{fix_count}</div>
+                <div style="font-size:0.75rem; color:#64748B;">para corregir</div>
             </div>
             <div style="text-align:center;">
-                <div style="font-size:1.5rem; font-weight:800; color:#64DC96;">{scale_count}</div>
-                <div style="font-size:0.75rem; color:rgba(28,30,33,0.5);">para escalar</div>
+                <div style="font-size:1.5rem; font-weight:800; color:#059669;">{scale_count}</div>
+                <div style="font-size:0.75rem; color:#64748B;">para escalar</div>
             </div>
         </div>
 
         <div style="margin-top:1rem; padding-top:1rem; border-top:1px solid rgba(0,0,0,0.08);">
-            <div style="font-size:0.8rem; color:rgba(28,30,33,0.5);">
-                Puntuación de hoy: <span style="color:#1c1e21; font-weight:600;">{score_data['score']}/100</span>
-                • Acciones totales: <span style="color:#1c1e21; font-weight:600;">{kill_count + fix_count + scale_count}</span>
+            <div style="font-size:0.8rem; color:#64748B;">
+                Puntuación de hoy: <span style="color:#0F172A; font-weight:600;">{score_data['score']}/100</span>
+                • Acciones totales: <span style="color:#0F172A; font-weight:600;">{kill_count + fix_count + scale_count}</span>
             </div>
         </div>
     </div>
@@ -1817,10 +1818,10 @@ def render_progress_history(user_id: int):
     if not progress_history and not completed_actions:
         # Mostrar mensaje motivacional para empezar
         st.markdown("""
-        <div style="background:rgba(138,106,224,0.05); border:1px solid rgba(138,106,224,0.1);
+        <div style="background:#FFFFFF; border:1px solid #E2E8F0;
              border-radius:12px; padding:1.5rem; text-align:center;">
-            <div style="font-size:1rem; font-weight:700; color:#A890F0; margin-bottom:0.5rem;">🚀 Comienza tu Camino</div>
-            <div style="font-size:0.8rem; color:rgba(28,30,33,0.4);">
+            <div style="font-size:1rem; font-weight:700; color:#6366F1; margin-bottom:0.5rem;">🚀 Comienza tu Camino</div>
+            <div style="font-size:0.8rem; color:#94A3B8;">
                 Completa tu primera acción para empezar a medir tu progreso
             </div>
         </div>
@@ -1834,10 +1835,10 @@ def render_progress_history(user_id: int):
     col1, col2, col3 = st.columns(3)
     with col1:
         st.markdown(f"""
-        <div style="background:rgba(100,220,150,0.07); border:1px solid rgba(100,220,150,0.15);
+        <div style="background:#FFFFFF; border:1px solid #F8FAFC;
              border-radius:12px; padding:1rem; text-align:center;">
-            <div style="font-size:1.5rem; font-weight:800; color:#64DC96;">{total_completed}</div>
-            <div style="font-size:0.7rem; color:rgba(28,30,33,0.5); text-transform:uppercase; letter-spacing:0.1em;">
+            <div style="font-size:1.5rem; font-weight:800; color:#059669;">{total_completed}</div>
+            <div style="font-size:0.7rem; color:#64748B; text-transform:uppercase; letter-spacing:0.1em;">
                 Acciones Completadas
             </div>
         </div>
@@ -1851,13 +1852,13 @@ def render_progress_history(user_id: int):
             score_improvement = latest - oldest
 
         improvement_text = f"+{score_improvement}" if score_improvement > 0 else f"{score_improvement}"
-        improvement_color = "#64DC96" if score_improvement > 0 else "#FC8181" if score_improvement < 0 else "#FBbf24"
+        improvement_color = "#059669" if score_improvement > 0 else "#DC2626" if score_improvement < 0 else "#D97706"
 
         st.markdown(f"""
-        <div style="background:rgba(138,106,224,0.07); border:1px solid rgba(138,106,224,0.15);
+        <div style="background:#FFFFFF; border:1px solid #E2E8F0;
              border-radius:12px; padding:1rem; text-align:center;">
             <div style="font-size:1.5rem; font-weight:800; color:{improvement_color};">{improvement_text}</div>
-            <div style="font-size:0.7rem; color:rgba(28,30,33,0.5); text-transform:uppercase; letter-spacing:0.1em;">
+            <div style="font-size:0.7rem; color:#64748B; text-transform:uppercase; letter-spacing:0.1em;">
                 Cambio en Puntuación (7d)
             </div>
         </div>
@@ -1866,10 +1867,10 @@ def render_progress_history(user_id: int):
     with col3:
         recent_completed = len(completed_actions)
         st.markdown(f"""
-        <div style="background:rgba(96,165,250,0.07); border:1px solid rgba(96,165,250,0.15);
+        <div style="background:#FFFFFF; border:1px solid #E2E8F0;
              border-radius:12px; padding:1rem; text-align:center;">
             <div style="font-size:1.5rem; font-weight:800; color:#60A5FA;">{recent_completed}</div>
-            <div style="font-size:0.7rem; color:rgba(28,30,33,0.5); text-transform:uppercase; letter-spacing:0.1em;">
+            <div style="font-size:0.7rem; color:#64748B; text-transform:uppercase; letter-spacing:0.1em;">
                 Esta Semana
             </div>
         </div>
@@ -1877,10 +1878,10 @@ def render_progress_history(user_id: int):
 
     # Mostrar últimas acciones completadas
     if completed_actions:
-        st.markdown('<div style="margin-top:1.5rem; font-size:0.8rem; color:rgba(28,30,33,0.4);">Completadas recientemente:</div>', unsafe_allow_html=True)
+        st.markdown('<div style="margin-top:1.5rem; font-size:0.8rem; color:#94A3B8;">Completadas recientemente:</div>', unsafe_allow_html=True)
         for action in completed_actions[:3]:  # Mostrar solo las 3 más recientes
             action_type = action['action_type']
-            type_color = '#FC8181' if action_type == 'kill' else '#FBbf24' if action_type == 'fix' else '#64DC96'
+            type_color = '#DC2626' if action_type == 'kill' else '#D97706' if action_type == 'fix' else '#059669'
             type_emoji = '❌' if action_type == 'kill' else '⚠️' if action_type == 'fix' else '✅'
 
             st.markdown(f"""
@@ -1888,8 +1889,8 @@ def render_progress_history(user_id: int):
                  border-radius:0 8px 8px 0; padding:0.75rem 1rem; margin-bottom:0.5rem;">
                 <div style="display:flex; align-items:center; gap:0.5rem;">
                     <span style="color:{type_color};">{type_emoji}</span>
-                    <span style="font-size:0.8rem; color:#1c1e21;">{action['campaign_name'][:30]}</span>
-                    <span style="font-size:0.7rem; color:rgba(28,30,33,0.4); margin-left:auto;">
+                    <span style="font-size:0.8rem; color:#0F172A;">{action['campaign_name'][:30]}</span>
+                    <span style="font-size:0.7rem; color:#94A3B8; margin-left:auto;">
                         {datetime.fromisoformat(action['completed_at']).strftime('%b %d') if 'completed_at' in action else ''}
                     </span>
                 </div>
@@ -1945,14 +1946,14 @@ def client_dashboard():
     # Banner y botones de Upgrade para usuarios del plan gratuito
     if plan == 'basic':
         st.markdown("""
-        <div style="background: #e7f3ff; border: 1px solid #bde4ff;
+        <div style="background: #F8FAFC; border: 1px solid #E2E8F0;
              border-radius:12px; padding:1rem 1.5rem; margin-bottom:1rem; display:flex; 
              justify-content:space-between; align-items:center;">
             <div>
-                <div style="color:#1877F2; font-weight:700; font-size:0.95rem; margin-bottom:0.25rem;">
+                <div style="color:#0F172A; font-weight:700; font-size:0.95rem; margin-bottom:0.25rem;">
                     🚀 Desbloquea todo el potencial de Ads Intelligence
                 </div>
-                <div style="color:#1c1e21; font-size:0.85rem;">
+                <div style="color:#0F172A; font-size:0.85rem;">
                     Actualiza a PRO para analizar hasta 20 campañas y recibir alertas de la IA.
                 </div>
             </div>
@@ -2054,9 +2055,9 @@ def client_dashboard():
             col_status, col_del = st.columns([4, 1])
             with col_status:
                 st.markdown("""
-                <div style="background:#ECFDF5; border:1px solid #A7F3D0;
+                <div style="background:#FFFFFF; border:1px solid #E2E8F0;
                      border-radius:10px; padding:0.55rem 1rem; font-size:0.8rem;
-                     color:#065F46;">
+                     color:#064E3B;">
                     ● Cuenta conectada
                 </div>
                 """, unsafe_allow_html=True)
@@ -2120,11 +2121,11 @@ def client_dashboard():
 
     if not st.session_state.get('fb_configured', False):
         st.markdown("""
-        <div style="background: #e7f3ff; border: 1px solid #bde4ff;
+        <div style="background: #F8FAFC; border: 1px solid #E2E8F0;
              border-radius:8px; padding:2rem; text-align:center;">
             <div style="font-family:'Segoe UI', 'Roboto', sans-serif; font-size:1.1rem; font-weight:700;
-                 color:#1877F2; margin-bottom:0.5rem;">Conecta tu cuenta de Facebook Ads</div>
-            <div style="font-size:0.85rem; color:#1c1e21;">
+                 color:#0F172A; margin-bottom:0.5rem;">Conecta tu cuenta de Facebook Ads</div>
+            <div style="font-size:0.85rem; color:#0F172A;">
                 Configura tus credenciales arriba para comenzar el análisis.
             </div>
         </div>
@@ -2209,7 +2210,7 @@ def client_dashboard():
             # ===== 4. DETALLED ANALYSIS (colapsable) =====
             st.markdown('<div class="section-label">Detalle</div>', unsafe_allow_html=True)
             st.markdown('<div class="section-title">📊 Análisis Detallado</div>', unsafe_allow_html=True)
-            st.markdown('<div style="font-size:0.8rem;color:rgba(28,30,33,0.4);margin-bottom:1rem;">Métricas avanzadas y visualizaciones para análisis profundo.</div>', unsafe_allow_html=True)
+            st.markdown('<div style="font-size:0.8rem;color:#94A3B8;margin-bottom:1rem;">Métricas avanzadas y visualizaciones para análisis profundo.</div>', unsafe_allow_html=True)
 
             # KPI Grid (8 métricas) - dentro de expander
             with st.expander("📈 KPIs Principales", expanded=False):
@@ -2293,25 +2294,25 @@ def client_dashboard():
                         st.markdown(f"""
                         <div class="roi-box">
                             <div class="roi-box-title">Estimación de ROI Potencial</div>
-                            <div class="roi-row">Tasa de conversión estimada: <strong style="color:#1c1e21;">{roi_estimate['conversion_rate_used']:.1f}%</strong></div>
+                            <div class="roi-row">Tasa de conversión estimada: <strong style="color:#0F172A;">{roi_estimate['conversion_rate_used']:.1f}%</strong></div>
                             <div class="roi-row">▸ ~{roi_estimate['estimated_conversions']:,} conversiones proyectadas</div>
-                            <div class="roi-row">▸ Ingreso estimado: <strong style="color:#065F46;">${roi_estimate['estimated_revenue']:,.2f}</strong></div>
-                            <div class="roi-row">▸ ROAS estimado: <strong style="color:#065F46;">{roi_estimate['estimated_roas']:.1f}x</strong></div>
+                            <div class="roi-row">▸ Ingreso estimado: <strong style="color:#064E3B;">${roi_estimate['estimated_revenue']:,.2f}</strong></div>
+                            <div class="roi-row">▸ ROAS estimado: <strong style="color:#064E3B;">{roi_estimate['estimated_roas']:.1f}x</strong></div>
                             <div class="roi-note">Estimación basada en promedios del mercado. Los resultados reales pueden variar.</div>
                         </div>
                         """, unsafe_allow_html=True)
 
                     st.markdown(f"""
                     <div class="rec-box">
-                        <div class="rec-title" style="color:{'#065F46' if card_cls=='elite' else '#1877F2' if card_cls=='solid' else '#92400E'};">{star['recommendation']}</div>
+                        <div class="rec-title" style="color:{'#064E3B' if card_cls=='elite' else '#0F172A' if card_cls=='solid' else '#B45309'};">{star['recommendation']}</div>
                         <div class="rec-text">📈 {star['projection']}</div>
                     </div>
                     """, unsafe_allow_html=True)
 
-                    st.markdown('<div style="margin-top:1rem; border-top:1px solid rgba(0,0,0,0.04); padding-top:1rem;"></div>', unsafe_allow_html=True)
-                    st.markdown('<div style="font-size:0.8rem; font-weight:700; color:#1c1e21; margin-bottom:0.5rem;">Próximos pasos recomendados:</div>', unsafe_allow_html=True)
+                    st.markdown('<div style="margin-top:1rem; border-top:1px solid #F8FAFC; padding-top:1rem;"></div>', unsafe_allow_html=True)
+                    st.markdown('<div style="font-size:0.8rem; font-weight:700; color:#0F172A; margin-bottom:0.5rem;">Próximos pasos recomendados:</div>', unsafe_allow_html=True)
                     for step in star['next_steps']:
-                        st.markdown(f"<div style='font-size:0.85rem; color:#1c1e21; padding-left:1rem; margin-bottom:0.25rem;'>{step}</div>", unsafe_allow_html=True)
+                        st.markdown(f"<div style='font-size:0.85rem; color:#0F172A; padding-left:1rem; margin-bottom:0.25rem;'>{step}</div>", unsafe_allow_html=True)
 
                 st.markdown('<div style="margin:1rem 0;"></div>', unsafe_allow_html=True)
 
@@ -2349,9 +2350,9 @@ def client_dashboard():
 
     except Exception as e:
         st.markdown(f"""
-        <div style="background: #fae0e0; border: 1px solid #f5c0c0;
-             border-radius:8px; padding:1.25rem; font-size:0.875rem; color:#dd3c10;">
+        <div style="background: #FFFFFF; border: 1px solid #E2E8F0;
+             border-radius:8px; padding:1.25rem; font-size:0.875rem; color:#DC2626;">
             <strong>Error al cargar datos</strong><br>
-            <span style="color:#1c1e21;">{e}</span>
+            <span style="color:#0F172A;">{e}</span>
         </div>
         """, unsafe_allow_html=True)
