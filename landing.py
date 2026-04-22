@@ -124,11 +124,11 @@ if st.session_state.page == 'strategy':
         .stApp { background: #FFFFFF; color: #0F172A; font-family: 'Satoshi', sans-serif; }
         .block-container { max-width: 900px !important; padding-top: 3rem !important; padding-bottom: 4rem !important; }
         .strategy-box { background: #F8FAFC; border: 1px solid #F8FAFC; border-radius: 20px; padding: 3rem; margin-top: 1rem; }
-        .strategy-box h1 { color: #0F172A; font-size: 2.2rem; margin-bottom: 1rem; line-height: 1.2; }
-        .strategy-box h2 { color: #6366F1; margin-top: 2.5rem; font-size: 1.6rem; border-bottom: 1px solid #F8FAFC; padding-bottom: 0.5rem; }
-        .strategy-box h3 { color: #0F172A; margin-top: 1.5rem; font-size: 1.2rem; }
-        .strategy-box p, .strategy-box li { color: #334155; line-height: 1.6; margin-bottom: 0.8rem; font-size: 0.95rem; }
-        .strategy-box hr { border-color: #E2E8F0; margin: 2rem 0; }
+        h1, .stMarkdown h1 { color: #0F172A !important; font-size: 2.2rem !important; margin-bottom: 1rem !important; line-height: 1.2 !important; }
+        h2, .stMarkdown h2 { color: #6366F1 !important; margin-top: 2.5rem !important; font-size: 1.6rem !important; border-bottom: 1px solid #E2E8F0 !important; padding-bottom: 0.5rem !important; }
+        h3, .stMarkdown h3 { color: #0F172A !important; margin-top: 1.5rem !important; font-size: 1.2rem !important; }
+        p, li, .stMarkdown p, .stMarkdown li { color: #334155 !important; line-height: 1.6 !important; margin-bottom: 0.8rem !important; font-size: 0.95rem !important; }
+        hr, .stMarkdown hr { border-color: #E2E8F0 !important; margin: 2rem 0 !important; }
         .back-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: #F8FAFC; border-radius: 8px; color: #0F172A; text-decoration: none; font-size: 0.9rem; transition: background 0.2s; }
         .back-btn:hover { background: #E2E8F0; }
     </style>
