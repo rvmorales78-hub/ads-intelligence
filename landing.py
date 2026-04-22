@@ -104,7 +104,7 @@ if st.session_state.page == 'reset_password':
 
 if st.session_state.page == 'demo':
     st.markdown("""
-    <div style='padding: 4rem 0; color: #E8E6F0;'>
+    <div style='padding: 4rem 0; color: #0F172A;'>
         <h1 style='font-size: 2.5rem; margin-bottom: 1rem;'>Demo de Ads Intelligence</h1>
         <p style='max-width: 680px; color: #334155; margin-bottom: 1.5rem;'>Aquí puedes mostrar un video de demo, capturas de pantalla o un dashboard de ejemplo para que los usuarios vean la experiencia antes de registrarse.</p>
         <div style='background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 20px; padding: 2rem;'>
@@ -121,7 +121,7 @@ if st.session_state.page == 'strategy':
         [data-testid="stSidebar"] { display: none; }
         [data-testid="stSidebarCollapsedControl"] { display: none; }
         .stApp > header { display: none; }
-        .stApp { background: #FFFFFF; color: #E8E6F0; font-family: 'Satoshi', sans-serif; }
+        .stApp { background: #FFFFFF; color: #0F172A; font-family: 'Satoshi', sans-serif; }
         .block-container { max-width: 900px !important; padding-top: 3rem !important; padding-bottom: 4rem !important; }
         .strategy-box { background: #F8FAFC; border: 1px solid #F8FAFC; border-radius: 20px; padding: 3rem; margin-top: 1rem; }
         .strategy-box h1 { color: #0F172A; font-size: 2.2rem; margin-bottom: 1rem; line-height: 1.2; }
